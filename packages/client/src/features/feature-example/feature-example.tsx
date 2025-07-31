@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import './app/app.css'
 
 function ExampleFeature() {
   useEffect(() => {
