@@ -1,4 +1,8 @@
 import { useEffect } from 'react'
+// Пример использования алиасов
+// import { someUtil } from '@/shared/utils'
+// import { UserEntity } from '@/entities/user'
+// import { SomeWidget } from '@/widgets/some-widget'
 
 function ExampleFeature() {
   useEffect(() => {
