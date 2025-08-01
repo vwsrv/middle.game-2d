@@ -5,11 +5,12 @@ import {
   NotFoundErrorPage,
   ForumPage,
   MainPage,
+  LeaderBoardPage,
 } from '@/pages'
 import { RouteObject } from 'react-router-dom'
 import { ProtectedRoute } from './protected-route'
 import { PublicOnlyRoute } from './public-only-route'
-import { EPages } from './types'
+import { EPages } from '@/shared/constants/paths'
 
 export const routes: RouteObject[] = [
   {
@@ -53,6 +54,14 @@ export const routes: RouteObject[] = [
     element: (
       <ProtectedRoute>
         <ForumPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: `/${EPages.LEADER_BOARD_PAGE}`,
+    element: (
+      <ProtectedRoute>
+        <LeaderBoardPage />
       </ProtectedRoute>
     ),
   },
