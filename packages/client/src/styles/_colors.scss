@@ -1,0 +1,19 @@
+:root {
+  --color-basic-font: #222;
+  --color-light-text: #999;
+  --color-accent: green;
+  --color-accent-background: #c2fbd7;
+  --color-basic-background: #f5fafa;
+  --color-dark-border: #777;
+  --color-medium-border: #999;
+  --color-lighter-border: #eae3e3;
+  --color-light-border: #f5efef;
+  --color-focus-visible: #cfcdcd;
+  --color-message-background: #E4FDF0;
+  --color-disabled-font: #a0a0a0;
+  --color-error: #fb2263;
+  --warn-color: #ff5a5a;
+}
+
+/* stylelint-disable-next-line block-no-empty */
+@media (prefers-color-scheme: light) {}
