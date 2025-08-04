@@ -1,3 +1,3 @@
 export function NotFoundErrorPage() {
-  return <div>404 Not Found</div>
+  return <div>404 Not Found</div>;
 }

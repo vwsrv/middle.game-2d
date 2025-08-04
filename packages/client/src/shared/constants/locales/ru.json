@@ -1,0 +1,11 @@
+{
+  "app_title": "middle 2D game",
+  "title": "Главная страница",
+  "page_title": "Страница приложения",
+  "error": {
+    "common": "Ошибка"
+  },
+  "api": {
+    "title": "Ошибка сервера"
+  }
+}
