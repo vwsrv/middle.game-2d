@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 // Пример использования алиасов
 // import { someUtil } from '@/shared/utils'
 // import { UserEntity } from '@/entities/user'
@@ -11,11 +11,11 @@ export function ExampleFeature() {
       //   const response = await fetch(url)
       //   const data = await response.json()
       //   console.log(data)
-    }
+    };
 
-    fetchServerData()
-  }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+    fetchServerData();
+  }, []);
+  return <div className="App">Вот тут будет жить ваше приложение :)</div>;
 }
 
-export default ExampleFeature
+export default ExampleFeature;

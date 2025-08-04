@@ -1,3 +1,3 @@
 export function RegisterPage() {
-  return <div>LoginPage Component</div>
+  return <div>LoginPage Component</div>;
 }

@@ -1,4 +1,4 @@
-import { GameBoard } from '@/widgets'
+import { GameBoard } from '@/widgets';
 
 export function GamePage() {
   return (
@@ -6,5 +6,5 @@ export function GamePage() {
       GamePage Component
       <GameBoard />
     </div>
-  )
+  );
 }

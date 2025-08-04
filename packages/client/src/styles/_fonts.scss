@@ -2,10 +2,11 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Bold.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-Bold.ttf') format('ttf');
-    // eslint-disable-next-line @conarti/feature-sliced/absolute-relative
+  src: url('../../public/fonts/ALSHauss-Bold.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Bold.ttf')
+      format('ttf');
+  // eslint-disable-next-line @conarti/feature-sliced/absolute-relative
   font-weight: 700;
   font-style: normal;
 }
@@ -13,9 +14,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-BoldItalic.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-BoldItalic.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-BoldItalic.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-BoldItalic.ttf')
+      format('ttf');
   font-weight: 700;
   font-style: italic;
 }
@@ -24,9 +26,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Medium.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-Medium.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-Medium.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Medium.ttf')
+      format('ttf');
   font-weight: 500;
   font-style: normal;
 }
@@ -34,9 +37,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-MediumItalic.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-MediumItalic.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-MediumItalic.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-MediumItalic.ttf')
+      format('ttf');
   font-weight: 500;
   font-style: italic;
 }
@@ -45,9 +49,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Regular.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-Regular.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-Regular.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Regular.ttf')
+      format('ttf');
   font-weight: 400;
   font-style: normal;
 }
@@ -55,9 +60,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-RegularItalic.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-RegularItalic.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-RegularItalic.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-RegularItalic.ttf')
+      format('ttf');
   font-weight: 400;
   font-style: italic;
 }
@@ -66,9 +72,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Light.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-Light.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-Light.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Light.ttf')
+      format('ttf');
   font-weight: 300;
   font-style: normal;
 }
@@ -76,9 +83,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-LightItalic.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-LightItalic.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-LightItalic.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-LightItalic.ttf')
+      format('ttf');
   font-weight: 300;
   font-style: italic;
 }
@@ -87,9 +95,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Thin.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-Thin.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-Thin.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Thin.ttf')
+      format('ttf');
   font-weight: 200;
   font-style: normal;
 }
@@ -97,9 +106,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('/public/fonts/ALSHauss-ThinItalic.woff') format('woff'),
-    url('/public/fonts/ALSHauss-ThinItalic.ttf') format('ttf');
+  src: url('/public/fonts/ALSHauss-ThinItalic.woff')
+      format('woff'),
+    url('/public/fonts/ALSHauss-ThinItalic.ttf')
+      format('ttf');
   font-weight: 200;
   font-style: italic;
 }
@@ -108,9 +118,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Hairline.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-Hairline.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-Hairline.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Hairline.ttf')
+      format('ttf');
   font-weight: 100;
   font-style: normal;
 }
@@ -118,9 +129,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-HairlineItalic.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-HairlineItalic.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-HairlineItalic.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-HairlineItalic.ttf')
+      format('ttf');
   font-weight: 100;
   font-style: italic;
 }
@@ -129,9 +141,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-Black.ttf') format('woff'),
-    url('../../public/fonts/ALSHauss-Black.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-Black.ttf')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-Black.ttf')
+      format('ttf');
   font-weight: 900;
   font-style: normal;
 }
@@ -139,9 +152,10 @@
 @font-face {
   font-family: 'ALSHauss';
   font-display: swap;
-  src:
-    url('../../public/fonts/ALSHauss-BlackItalic.woff') format('woff'),
-    url('../../public/fonts/ALSHauss-BlackItalic.ttf') format('ttf');
+  src: url('../../public/fonts/ALSHauss-BlackItalic.woff')
+      format('woff'),
+    url('../../public/fonts/ALSHauss-BlackItalic.ttf')
+      format('ttf');
   font-weight: 900;
   font-style: italic;
 }

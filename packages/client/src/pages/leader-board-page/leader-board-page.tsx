@@ -1,3 +1,3 @@
 export function LeaderBoardPage() {
-  return <div>LeaderBoardPage Component</div>
+  return <div>LeaderBoardPage Component</div>;
 }

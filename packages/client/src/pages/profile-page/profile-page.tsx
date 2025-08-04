@@ -1,3 +1,3 @@
 export function ProfilePage() {
-  return <div>ProfilePage Component</div>
+  return <div>ProfilePage Component</div>;
 }

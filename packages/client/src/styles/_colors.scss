@@ -9,11 +9,12 @@
   --color-lighter-border: #eae3e3;
   --color-light-border: #f5efef;
   --color-focus-visible: #cfcdcd;
-  --color-message-background: #E4FDF0;
+  --color-message-background: #e4fdf0;
   --color-disabled-font: #a0a0a0;
   --color-error: #fb2263;
   --warn-color: #ff5a5a;
 }
 
 /* stylelint-disable-next-line block-no-empty */
-@media (prefers-color-scheme: light) {}
+@media (prefers-color-scheme: light) {
+}

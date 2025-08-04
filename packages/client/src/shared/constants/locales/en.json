@@ -1,0 +1,11 @@
+{
+  "app_title": "middle 2D game",
+  "title": "Middle 2D Home",
+  "page_title": "Middle 2D Page",
+  "error": {
+    "common": "title"
+  },
+  "api": {
+    "title": "Server error"
+  }
+}
