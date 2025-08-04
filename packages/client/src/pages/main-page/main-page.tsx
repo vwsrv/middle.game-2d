@@ -12,7 +12,7 @@ export const MainPage = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ background: '#fff', boxShadow: '0 2px 8px #f0f1f2' }}>
+      <Header>
         <div className="logo" style={{ float: 'left', marginRight: '24px' }}>
           <Title level={3} style={{ margin: 0 }}>
             <span style={{ color: '#ff4d4f' }}>Apple</span>
@@ -34,9 +34,18 @@ export const MainPage = () => {
             <Col key={index} xs={24} sm={12} md={8} lg={6}>
               <Card
                 hoverable
-                cover={<div style={{ margin: '24px 0' }}>{card.icon}</div>}
+                cover={
+                  <div
+                    style={{
+                      margin: '24px 0',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}>
+                    {card.icon}
+                  </div>
+                }
                 onClick={() => (window.location.href = card.path)}
-                style={{ height: '100%' }}>
+                style={{ height: '100%', border: '1px solid rgba(0 0 0 / 0)' }}>
                 <Card.Meta title={card.title} description={card.description} />
               </Card>
             </Col>
