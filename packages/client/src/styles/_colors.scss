@@ -1,19 +1,37 @@
 :root {
-  --color-basic-font: #222;
-  --color-light-text: #999;
-  --color-accent: green;
-  --color-accent-background: #c2fbd7;
-  --color-basic-background: #f5fafa;
-  --color-dark-border: #777;
-  --color-medium-border: #999;
-  --color-lighter-border: #eae3e3;
-  --color-light-border: #f5efef;
-  --color-focus-visible: #cfcdcd;
-  --color-message-background: #E4FDF0;
-  --color-disabled-font: #a0a0a0;
-  --color-error: #fb2263;
-  --warn-color: #ff5a5a;
+  /* Основные цвета */
+  --ant-primary-color: #D17600;
+  --ant-primary-color-hover: #E88800;
+  --ant-primary-color-active: #B56300;
+  --ant-primary-bg: #eff1f4;
+  --ant-primary-color-text: #FFFFFF;
+
+  --ant-secondary-color-text: #29292973;
+  
+  /* Текст и фон */
+  --ant-text-color: rgba(0, 0, 0, 0.9);
+  --ant-dark-text-color: #141414; /* Для текста на светлых элементах в dark mode */
+  --ant-bg-container: #FAFAFA;
+  --ant-border-color: #D9D9D9;
+
+  --game-primary-bg: #d2f2ff;
 }
 
-/* stylelint-disable-next-line block-no-empty */
-@media (prefers-color-scheme: light) {}
+[data-theme="dark"] {
+  /* Основные цвета */
+  --ant-primary-color: #E69500;
+  --ant-primary-color-hover: #FFA500;
+  --ant-primary-color-active: #CC8400;
+  --ant-primary-bg: #2B2111;
+  --ant-primary-color-text: #000000;
+
+  --ant-secondary-color-text: #ffffff73;
+  
+  /* Текст и фон */
+  --ant-text-color: rgba(255, 255, 255, 0.92);
+  --ant-bg-container: #1A1A1A;
+  --ant-border-color: #444;
+
+  --game-primary-bg: #123540;
+}
+
