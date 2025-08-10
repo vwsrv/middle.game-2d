@@ -6,6 +6,8 @@ import {
   ForumPage,
   MainPage,
   LeaderBoardPage,
+  RegisterPage,
+  ProfilePage,
 } from '@/pages';
 import { RouteObject } from 'react-router-dom';
 import { ProtectedRoute } from './protected-route';
@@ -29,7 +31,7 @@ export const routes: RouteObject[] = [
     path: `/${EPages.REGISTER_PAGE}`,
     element: (
       <PublicOnlyRoute>
-        <LoginPage />
+        <RegisterPage />
       </PublicOnlyRoute>
     ),
   },
@@ -37,7 +39,7 @@ export const routes: RouteObject[] = [
     path: `/${EPages.PROFILE_PAGE}`,
     element: (
       <ProtectedRoute>
-        <LoginPage />
+        <ProfilePage />
       </ProtectedRoute>
     ),
   },

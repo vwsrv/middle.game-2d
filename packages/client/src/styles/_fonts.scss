@@ -131,3 +131,11 @@
   font-weight: 900;
   font-style: italic;
 }
+
+@font-face {
+  font-family: 'Blob Spongey';
+  src: url('../../public/fonts/BlobSpongeyLowercase.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 0.1em;
+}
