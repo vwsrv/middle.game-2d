@@ -55,6 +55,7 @@ export const getMenuItems = (isMobile: boolean) => {
 
 export const featureCards = [
   {
+    key: 'game',
     path: EPages.GAME_PAGE,
     icon: (
       <PlayCircleOutlined
@@ -68,6 +69,7 @@ export const featureCards = [
     description: 'Начните играть прямо сейчас!',
   },
   {
+    key: 'forum',
     path: EPages.FORUM_PAGE,
     icon: (
       <MessageOutlined
@@ -81,6 +83,7 @@ export const featureCards = [
     description: 'Обсудите игру с другими игроками',
   },
   {
+    key: 'leaderboard',
     path: EPages.LEADER_BOARD_PAGE,
     icon: (
       <TrophyOutlined
@@ -94,6 +97,7 @@ export const featureCards = [
     description: 'Смотрите топ игроков',
   },
   {
+    key: 'profile',
     path: EPages.PROFILE_PAGE,
     icon: (
       <ProfileOutlined
@@ -107,6 +111,7 @@ export const featureCards = [
     description: 'Ваши достижения и статистика',
   },
   {
+    key: 'login',
     path: EPages.LOGIN_PAGE,
     icon: (
       <LoginOutlined
@@ -120,6 +125,7 @@ export const featureCards = [
     description: 'Войдите в свой аккаунт',
   },
   {
+    key: 'register',
     path: EPages.REGISTER_PAGE,
     icon: (
       <UserAddOutlined
@@ -133,6 +139,7 @@ export const featureCards = [
     description: 'Создайте новый аккаунт',
   },
   {
+    key: 'server_error',
     path: EPages.SERVER_ERROR_PAGE,
     icon: (
       <WarningOutlined
@@ -146,6 +153,7 @@ export const featureCards = [
     description: 'Тестовая страница ошибки сервера',
   },
   {
+    key: 'not_found',
     path: EPages.NOT_FOUND_PAGE,
     icon: (
       <FrownOutlined

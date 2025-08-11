@@ -7,5 +7,58 @@
   },
   "api": {
     "title": "Ошибка сервера"
+  },
+  "main_page": {
+    "hero": {
+      "title": "AppleWorm - классическая змейка с новыми возможностями",
+      "subtitle": "Играйте, общайтесь, соревнуйтесь!"
+    },
+    "navigation": {
+      "home": "Главная",
+      "game": "Игра",
+      "forum": "Форум",
+      "leaderboard": "Рейтинг",
+      "login": "Вход",
+      "register": "Регистрация"
+    },
+    "feature_cards": {
+      "game": {
+        "title": "Играть",
+        "description": "Начните играть прямо сейчас!"
+      },
+      "forum": {
+        "title": "Форум",
+        "description": "Обсудите игру с другими игроками"
+      },
+      "leaderboard": {
+        "title": "Рейтинг",
+        "description": "Смотрите топ игроков"
+      },
+      "profile": {
+        "title": "Профиль",
+        "description": "Ваши достижения и статистика"
+      },
+      "login": {
+        "title": "Вход",
+        "description": "Войдите в свой аккаунт"
+      },
+      "register": {
+        "title": "Регистрация",
+        "description": "Создайте новый аккаунт"
+      }
+    },
+    "error_pages": {
+      "server_error": {
+        "title": "Ошибка 500",
+        "description": "Тестовая страница ошибки сервера"
+      },
+      "not_found": {
+        "title": "Ошибка 404",
+        "description": "Тестовая страница 'Не найдено'"
+      }
+    },
+    "footer": {
+      "copyright": "AppleWorm © {{year}}"
+    }
   }
 }

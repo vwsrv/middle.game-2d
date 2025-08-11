@@ -4,7 +4,7 @@ import '../styles/index.scss';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import ErrorBoundary from '@/shared/error-boundary/error-boundary';
-import AppAI18NextProvider from '@/app/app-i18-wrapper';
+import AppAI18NextProvider from '@/app/app-ai-18-next-provider';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

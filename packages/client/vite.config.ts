@@ -23,6 +23,7 @@ export default defineConfig({
       '@/widgets': path.resolve(__dirname, './src/widgets'),
       '@/pages': path.resolve(__dirname, './src/pages'),
       '@/app': path.resolve(__dirname, './src/app'),
+      '@/styles/': path.resolve(__dirname, './src/styles'),
     },
   },
 });
