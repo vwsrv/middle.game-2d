@@ -11,38 +11,43 @@ export const ApiErrorBoundary = ({
   const { t } = useTranslation();
 
   const errorHandler = useCallback(
-    (error: Error) => {
-      if (error instanceof AxiosError) {
-        const config = error.config as TRequestConfig;
+    (error: AxiosError) => {
+      const config = error.config as TRequestConfig;
 
-        if (config?.ignoreAllErrors) {
+      if (config?.ignoreAllErrors) {
+        throw error;
+      }
+
+      if (config.ignoreErrorStatuses?.length) {
+        if (
+          config.ignoreErrorStatuses.includes(error.response?.status as number)
+        ) {
           throw error;
         }
+      }
 
-        if (config.ignoreErrorStatuses?.length) {
-          if (config.ignoreErrorStatuses.includes(error.status as number)) {
-            throw error;
-          }
-        }
+      let description: string = error.message;
 
-        let description: string = error.message;
-
-        if (typeof error.response?.data?.error?.message === 'string') {
-          description = error.response.data.error.message;
-        } else if (typeof error.response?.data?.error === 'string') {
-          description = error.response.data.error;
+      if (error.response?.data && typeof error.response.data === 'object') {
+        const responseData = error.response.data as any;
+        if (typeof responseData.error?.message === 'string') {
+          description = responseData.error.message;
+        } else if (typeof responseData.error === 'string') {
+          description = responseData.error;
         } else {
           description = error.message || `Request failed ${error.config?.url}`;
         }
-
-        console.log(description);
-        notification.error({
-          message: t('error.api.title'),
-          description,
-        });
-
-        throw error;
+      } else {
+        description = error.message || `Request failed ${error.config?.url}`;
       }
+
+      console.log(description);
+      notification.error({
+        message: t('error.api.title'),
+        description,
+      });
+
+      throw error;
     },
     [t],
   );

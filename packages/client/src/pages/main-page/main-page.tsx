@@ -10,7 +10,7 @@ import {
   Button,
 } from 'antd';
 import { featureCards, getMenuItems } from './constants/data';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/shared/i18n';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
