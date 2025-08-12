@@ -1,6 +1,6 @@
 @mixin flex-layout {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin flex-center($direction: row) {

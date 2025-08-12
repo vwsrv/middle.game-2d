@@ -21,9 +21,7 @@
       "@/index": ["./index"]
     }
   },
-  "include": [
-    "**/*.ts"
-  ],
+  "include": ["**/*.ts"],
   "exclude": [
     "node_modules",
     "dist",
@@ -31,4 +29,4 @@
     "**/*.mock.ts",
     "__tests__"
   ]
-} 
+}

@@ -1,9 +1,9 @@
-import dotenv from 'dotenv'
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
-import path from 'path'
+import dotenv from 'dotenv';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import path from 'path';
 
-dotenv.config()
+dotenv.config();
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,4 +26,4 @@ export default defineConfig({
       '@/styles/': path.resolve(__dirname, './src/styles'),
     },
   },
-})
+});

@@ -1,1 +1,1 @@
-export * from './forum-page'
+export * from './forum-page';

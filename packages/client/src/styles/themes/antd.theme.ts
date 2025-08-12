@@ -1,4 +1,4 @@
-import { ThemeConfig, theme } from 'antd'
+import { ThemeConfig, theme } from 'antd';
 
 export const antdTheme: ThemeConfig = {
   algorithm: theme.defaultAlgorithm,
@@ -48,7 +48,7 @@ export const antdTheme: ThemeConfig = {
       colorTextSecondary: 'var(--ant-secondary-color-text)',
     },
   },
-}
+};
 
 export const antdDarkTheme: ThemeConfig = {
   algorithm: theme.darkAlgorithm,
@@ -77,4 +77,4 @@ export const antdDarkTheme: ThemeConfig = {
       colorTextDisabled: 'rgba(255, 255, 255, 0.25)',
     },
   },
-}
+};

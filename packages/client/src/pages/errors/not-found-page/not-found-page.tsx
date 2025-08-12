@@ -1,10 +1,10 @@
-import { Button } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import './not-found-page.scss'
-import { ArrowLeftOutlined } from '@ant-design/icons'
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import './not-found-page.scss';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 export const NotFoundErrorPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
@@ -18,5 +18,5 @@ export const NotFoundErrorPage = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
