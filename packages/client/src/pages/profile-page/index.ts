@@ -1,1 +1,1 @@
-export * from './profile-page'
+export * from './components/profile-page/profile-page'

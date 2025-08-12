@@ -2,6 +2,7 @@
 @use './_variables.scss' as *;
 @use './_colors.scss' as *;
 @use './_mixins.scss' as *;
+@use './_fonts.scss' as *;
 
 @forward './normalize';
 @forward './globals';
