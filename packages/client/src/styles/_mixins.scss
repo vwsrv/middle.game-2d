@@ -10,6 +10,13 @@
   gap: 1rem;
 }
 
+@mixin layout-2-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 @mixin flex-center($direction: row) {
   display: flex;
   justify-content: center;
