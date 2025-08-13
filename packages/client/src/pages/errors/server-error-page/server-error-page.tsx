@@ -16,5 +16,5 @@ export const ServerErrorPage = () => {
         На главную
       </Button>
     </div>
-  )
-}
+  );
+};

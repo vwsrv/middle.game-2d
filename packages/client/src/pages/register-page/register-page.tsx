@@ -1,27 +1,27 @@
-import { Button, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import PageWrapper from '@/shared/components/PageWrapper'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import { EPages } from '@/shared/constants/paths'
-import './register-page.scss'
+import { Button, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import PageWrapper from '@/shared/components/PageWrapper';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EPages } from '@/shared/constants/paths';
+import './register-page.scss';
 
 type TFormValues = {
-  first_name: string
-  second_name: string
-  email: string
-  phone: string
-  login: string
-  password: string
-}
+  first_name: string;
+  second_name: string;
+  email: string;
+  phone: string;
+  login: string;
+  password: string;
+};
 
 export function RegisterPage() {
-  const navigate = useNavigate()
-  const { handleSubmit } = useForm<TFormValues>()
+  const navigate = useNavigate();
+  const { handleSubmit } = useForm<TFormValues>();
 
   const onSubmit: SubmitHandler<TFormValues> = data => {
-    console.log(data)
-  }
+    console.log(data);
+  };
 
   return (
     <PageWrapper title="Регистрация">
@@ -56,5 +56,5 @@ export function RegisterPage() {
         </Button>
       </form>
     </PageWrapper>
-  )
+  );
 }

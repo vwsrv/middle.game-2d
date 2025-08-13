@@ -1,23 +1,23 @@
-import { Button, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import PageWrapper from '@/shared/components/PageWrapper'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import { EPages } from '@/shared/constants/paths'
-import './login-page.scss'
+import { Button, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import PageWrapper from '@/shared/components/PageWrapper';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EPages } from '@/shared/constants/paths';
+import './login-page.scss';
 
 type TFormValues = {
-  login: string
-  password: string
-}
+  login: string;
+  password: string;
+};
 
 export function LoginPage() {
-  const navigate = useNavigate()
-  const { handleSubmit } = useForm<TFormValues>()
+  const navigate = useNavigate();
+  const { handleSubmit } = useForm<TFormValues>();
 
   const onSubmit: SubmitHandler<TFormValues> = data => {
-    console.log(data)
-  }
+    console.log(data);
+  };
 
   return (
     <PageWrapper title="Вход">
@@ -48,5 +48,5 @@ export function LoginPage() {
         </Button>
       </form>
     </PageWrapper>
-  )
+  );
 }
