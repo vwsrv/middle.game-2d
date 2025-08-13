@@ -1,5 +1,5 @@
-import { Button, Card, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Button, Card, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import {
   ArrowLeftOutlined,
   EyeInvisibleOutlined,
@@ -11,11 +11,11 @@ import { LogoutBtn } from '@/features/auth/components/logout-btn'
 import './change-password.scss'
 
 export const ChangePassword = () => {
-  return <div>ProfilePage Component</div>
-}
+  return <div>ProfilePage Component</div>;
+};
 
 const ChangePasswordPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="change-password-page">
@@ -23,7 +23,7 @@ const ChangePasswordPage = () => {
         <div className="actions__start">
           <Button
             type="link"
-            onClick={() => navigate('/')}
+            onClick={() => navigate(`/${EPages.PROFILE_PAGE}`)}
             icon={<ArrowLeftOutlined />}
             size="small">
             Назад
@@ -71,7 +71,7 @@ const ChangePasswordPage = () => {
         </form>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default ChangePasswordPage
+export default ChangePasswordPage;
