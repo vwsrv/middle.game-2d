@@ -1,41 +1,20 @@
-import { Button, Card, Input, Modal } from 'antd'
+import { Button, Card, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeftOutlined,
   EyeInvisibleOutlined,
   EyeTwoTone,
-  LockOutlined,
-  LogoutOutlined,
-  SettingOutlined,
 } from '@ant-design/icons'
 import { EPages } from '@/shared/constants/paths'
 import './change-password.scss'
+import { LogoutBtn } from '@/features/auth/components/logout-btn'
 
 export const ChangePassword = () => {
   return <div>ProfilePage Component</div>
 }
 
-type TChangePasswordProps = {
-  login: string
-  password: string
-}
-
 const ChangePasswordPage = () => {
   const navigate = useNavigate()
-
-  const handleLogout = () => {
-    Modal.confirm({
-      title: 'Вы уверены, что хотите выйти?',
-      okText: 'Выйти',
-      cancelText: 'Отмена',
-      okButtonProps: { danger: true },
-      onOk: () => {
-        console.log('Пользователь вышел')
-        navigate('/')
-        // Ваш код выхода (например, очистка localStorage, редирект)
-      },
-    })
-  }
 
   return (
     <div className="change-password-page">
@@ -51,14 +30,7 @@ const ChangePasswordPage = () => {
         </div>
 
         <div className="actions__end">
-          <Button
-            type="primary"
-            danger
-            icon={<LogoutOutlined />}
-            size="small"
-            onClick={handleLogout}>
-            Выйти
-          </Button>
+          <LogoutBtn />
         </div>
       </div>
       <Card className="form-layout">
