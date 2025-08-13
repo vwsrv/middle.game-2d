@@ -1,22 +1,19 @@
-import { ProfileDataItem } from '../data-item/data-item'
-import './profile-page.scss'
-
-import { FC } from 'react'
-import { Button, Card, Modal, Typography } from 'antd'
+import { Button, Card, Typography } from 'antd'
 import {
   UserOutlined,
   MailOutlined,
   PhoneOutlined,
   LoginOutlined,
   ArrowLeftOutlined,
-  LogoutOutlined,
-  EditOutlined,
   SettingOutlined,
   LockOutlined,
 } from '@ant-design/icons'
 import { AppAvatar } from '@/shared/components/app-avatar'
 import { useNavigate } from 'react-router-dom'
 import { EPages } from '@/shared/constants/paths'
+import { LogoutBtn } from '@/features/auth/components/logout-btn'
+import { ProfileDataItem } from '../data-item/data-item'
+import './profile-page.scss'
 
 const { Title } = Typography
 
@@ -44,19 +41,6 @@ const tempUser: TUser = {
 const ProfilePage = () => {
   const user = tempUser
   const navigate = useNavigate()
-
-  const handleLogout = () => {
-    Modal.confirm({
-      title: 'Вы уверены, что хотите выйти?',
-      okText: 'Выйти',
-      cancelText: 'Отмена',
-      okButtonProps: { danger: true },
-      onOk: () => {
-        console.log('Пользователь вышел')
-        navigate('/')
-      },
-    })
-  }
 
   return (
     <div className="profile-page">
@@ -88,14 +72,7 @@ const ProfilePage = () => {
             Поменять пароль
           </Button>
 
-          <Button
-            type="primary"
-            danger
-            icon={<LogoutOutlined />}
-            size="small"
-            onClick={handleLogout}>
-            Выйти
-          </Button>
+          <LogoutBtn />
         </div>
       </div>
       <div className="profile-content">
