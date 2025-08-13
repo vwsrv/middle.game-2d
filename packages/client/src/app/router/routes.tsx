@@ -8,11 +8,16 @@ import {
   LeaderBoardPage,
   RegisterPage,
   ProfilePage,
+  ChangePasswordPage,
+  EditProfilePage,
+  ProfileLayout
 } from '@/pages';
 import { RouteObject } from 'react-router-dom';
 import { ProtectedRoute } from './protected-route';
 import { PublicOnlyRoute } from './public-only-route';
 import { EPages } from '@/shared/constants/paths';
+import { Spin } from 'antd'
+import { Suspense } from 'react'
 
 export const routes: RouteObject[] = [
   {
@@ -39,9 +44,37 @@ export const routes: RouteObject[] = [
     path: `/${EPages.PROFILE_PAGE}`,
     element: (
       <ProtectedRoute>
-        <ProfilePage />
+        <Suspense fallback={<Spin size="large" style={{ margin: '20%' }} />}>
+          <ProfileLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<Spin size="large" style={{ margin: '20%' }} />}>
+            <ProfilePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: EPages.CHANGE_PASSWORD_PAGE,
+        element: (
+          <Suspense fallback={<Spin size="large" style={{ margin: '20%' }} />}>
+            <ChangePasswordPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: EPages.EDIT_PROFILE_PAGE,
+        element: (
+          <Suspense fallback={<Spin size="large" style={{ margin: '20%' }} />}>
+            <EditProfilePage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: `/${EPages.GAME_PAGE}`,
