@@ -1,15 +1,15 @@
-import { Button, Card, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Button, Card, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import {
   ArrowLeftOutlined,
   EyeTwoTone,
   EyeInvisibleOutlined,
-} from '@ant-design/icons'
-import { EPages } from '@/shared/constants/paths'
-import { LogoutBtn } from '@/features/auth/components/logout-btn'
+} from '@ant-design/icons';
+import { EPages } from '@/shared/constants/paths';
+import { LogoutBtn } from '@/features/auth/components/logout-btn';
 
 const EditProfilePage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="change-password-page">
@@ -17,7 +17,7 @@ const EditProfilePage = () => {
         <div className="actions__start">
           <Button
             type="link"
-            onClick={() => navigate('/')}
+            onClick={() => navigate(`/${EPages.PROFILE_PAGE}`)}
             icon={<ArrowLeftOutlined />}
             size="small">
             Назад
@@ -55,7 +55,7 @@ const EditProfilePage = () => {
         </form>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default EditProfilePage
+export default EditProfilePage;
