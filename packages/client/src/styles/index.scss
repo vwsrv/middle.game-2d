@@ -4,5 +4,5 @@
 @use './_mixins.scss' as *;
 @use './_fonts.scss' as *;
 
-@forward './normalize';
-@forward './globals';
+@forward './_normalize';
+@forward './_globals';
