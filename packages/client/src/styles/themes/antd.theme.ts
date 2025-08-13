@@ -18,6 +18,8 @@ export const antdTheme: ThemeConfig = {
 
     colorBorderSecondary: 'var(--ant-border-color-secondary)',
     colorTextSecondary: 'var(--ant-secondary-color-text)',
+
+    colorTextPlaceholder: 'var(--ant-placeholder-color)',
   },
   components: {
     Button: {
@@ -30,6 +32,8 @@ export const antdTheme: ThemeConfig = {
 
       colorBgContainerDisabled: 'rgba(0, 0, 0, 0.04)', // цвет disabled-состояния
       colorTextDisabled: 'rgba(0, 0, 0, 0.25)', // текст disabled
+
+      colorTextPlaceholder: 'var(--ant-placeholder-color)',
     },
     Input: {
       colorBorder: 'var(--ant-input-border-color)',
