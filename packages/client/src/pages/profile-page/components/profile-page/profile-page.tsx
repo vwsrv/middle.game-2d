@@ -1,3 +1,4 @@
+import './profile-page.scss'
 import { Button, Card, Typography } from 'antd'
 import {
   UserOutlined,

@@ -18,7 +18,7 @@ import { PublicOnlyRoute } from './public-only-route';
 import { EPages } from '@/shared/constants/paths';
 import { Suspense } from 'react'
 import { Spin } from 'antd';
-import { AppSpinner } from '@/shared/components/app-spinner/app-spinner';
+import { AppSpinner } from '@/shared/components/app-spinner';
 
 export const routes: RouteObject[] = [
   {

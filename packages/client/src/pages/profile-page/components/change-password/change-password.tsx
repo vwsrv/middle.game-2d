@@ -8,6 +8,7 @@ import {
 import { EPages } from '@/shared/constants/paths'
 import './change-password.scss'
 import { LogoutBtn } from '@/features/auth/components/logout-btn'
+import './change-password.scss'
 
 export const ChangePassword = () => {
   return <div>ProfilePage Component</div>

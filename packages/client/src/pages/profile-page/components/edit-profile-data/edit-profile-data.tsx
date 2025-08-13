@@ -1,10 +1,6 @@
 import { Button, Card, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import {
-  ArrowLeftOutlined,
-  EyeTwoTone,
-  EyeInvisibleOutlined,
-} from '@ant-design/icons'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 import { EPages } from '@/shared/constants/paths'
 import { LogoutBtn } from '@/features/auth/components/logout-btn'
 
