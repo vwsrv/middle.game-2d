@@ -6,12 +6,8 @@ import {
   EyeTwoTone,
 } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
-import './change-password.scss';
+import './change-password-page.scss';
 import { LogoutBtn } from '@/features/auth/components/logout-btn';
-
-export const ChangePassword = () => {
-  return <div>ProfilePage Component</div>;
-};
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();

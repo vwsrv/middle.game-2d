@@ -10,13 +10,13 @@ import {
   ProfilePage,
   ChangePasswordPage,
   EditProfilePage,
-  ProfileLayout
+  ProfileLayout,
 } from '@/pages';
 import { RouteObject } from 'react-router-dom';
 import { ProtectedRoute } from './protected-route';
 import { PublicOnlyRoute } from './public-only-route';
 import { EPages } from '@/shared/constants/paths';
-import { Suspense } from 'react'
+import { Suspense } from 'react';
 import { Spin } from 'antd';
 import { AppSpinner } from '@/shared/components/app-spinner';
 

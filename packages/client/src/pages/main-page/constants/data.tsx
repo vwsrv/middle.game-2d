@@ -6,7 +6,6 @@ import {
   ProfileOutlined,
   MessageOutlined,
   TrophyOutlined,
-  TeamOutlined,
   WarningOutlined,
   FrownOutlined,
 } from '@ant-design/icons';
