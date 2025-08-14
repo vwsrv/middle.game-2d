@@ -1,5 +1,4 @@
-import './profile-page.scss'
-import { Button, Card, Typography } from 'antd'
+import { Button, Card, Typography } from 'antd';
 import {
   UserOutlined,
   MailOutlined,
@@ -8,25 +7,25 @@ import {
   ArrowLeftOutlined,
   SettingOutlined,
   LockOutlined,
-} from '@ant-design/icons'
-import { AppAvatar } from '@/shared/components/app-avatar'
-import { useNavigate } from 'react-router-dom'
-import { EPages } from '@/shared/constants/paths'
-import { LogoutBtn } from '@/features/auth/components/logout-btn'
-import { ProfileDataItem } from '../data-item/data-item'
-import './profile-page.scss'
+} from '@ant-design/icons';
+import { AppAvatar } from '@/shared/components/app-avatar';
+import { useNavigate } from 'react-router-dom';
+import { EPages } from '@/shared/constants/paths';
+import { LogoutBtn } from '@/features/auth/components/logout-btn';
+import { ProfileDataItem } from '../data-item/data-item';
+import './profile-page.scss';
 
-const { Title } = Typography
+const { Title } = Typography;
 
 type TUser = {
-  firstName: string
-  lastName: string
-  username: string
-  login: string
-  email: string
-  phone?: string
-  avatar?: string
-}
+  firstName: string;
+  lastName: string;
+  username: string;
+  login: string;
+  email: string;
+  phone?: string;
+  avatar?: string;
+};
 
 // TODO: это моки, нужно будет удалить
 const tempUser: TUser = {
@@ -37,11 +36,11 @@ const tempUser: TUser = {
   email: 'ivan@example.com',
   phone: '+7 (123) 456-78-90',
   avatar: 'https://example.com/path/to/avatar.jpg', // можно оставить undefined для дефолтного аватара
-}
+};
 
 const ProfilePage = () => {
-  const user = tempUser
-  const navigate = useNavigate()
+  const user = tempUser;
+  const navigate = useNavigate();
 
   return (
     <div className="profile-page">
@@ -108,7 +107,7 @@ const ProfilePage = () => {
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

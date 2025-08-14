@@ -4,11 +4,10 @@ import {
   ArrowLeftOutlined,
   EyeInvisibleOutlined,
   EyeTwoTone,
-} from '@ant-design/icons'
-import { EPages } from '@/shared/constants/paths'
-import './change-password.scss'
-import { LogoutBtn } from '@/features/auth/components/logout-btn'
-import './change-password.scss'
+} from '@ant-design/icons';
+import { EPages } from '@/shared/constants/paths';
+import './change-password.scss';
+import { LogoutBtn } from '@/features/auth/components/logout-btn';
 
 export const ChangePassword = () => {
   return <div>ProfilePage Component</div>;
