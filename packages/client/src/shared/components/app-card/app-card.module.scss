@@ -1,0 +1,15 @@
+@use '@/styles/_mixins.scss' as *;
+
+.card {
+  @include flex-layout;
+
+  gap: 1rem;
+  border: 1px solid var(--color-light-border);
+  border-radius: 1rem;
+  box-shadow: 0 0 3px 2px rgb(0 0 0 / 10%);
+  padding: 2.5rem;
+
+  &__title {
+    margin-block: 0 1rem;
+  }
+}
