@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import {
+  ArrowUpOutlined,
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+} from '@ant-design/icons';
 import './apple-worn-game.scss';
+import { Button } from 'antd';
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 type Position = { x: number; y: number };
 type GameState = 'PLAYING' | 'GAME_OVER' | 'LEVEL_COMPLETE';
 
-const GRID_SIZE = 30;
-const CELL_SIZE = 30;
+const GRID_SIZE = 20;
+const CELL_SIZE = 40;
 
 const level = {
   walls: [
@@ -74,9 +80,9 @@ const AppleWormGame: React.FC = () => {
   const [score, setScore] = useState(0);
   const [isFalling, setIsFalling] = useState(false);
 
-  const isOnPlatform = useCallback((pos: Position): boolean => {
-    return level.walls.some(w => w.x === pos.x && w.y === pos.y + 1);
-  }, []);
+  // const isOnPlatform = useCallback((pos: Position): boolean => {
+  //   return level.walls.some(w => w.x === pos.x && w.y === pos.y + 1);
+  // }, []);
 
   const isReachedBottom = useCallback((pos: Position): boolean => {
     return pos.y >= GRID_SIZE - 1;
@@ -86,10 +92,7 @@ const AppleWormGame: React.FC = () => {
     return snake.some(segment => {
       // Проверяем для каждого сегмента:
 
-      // 1. Если сегмент на дне
-      if (segment.y >= GRID_SIZE - 1) return true;
-
-      // 2. Если под сегментом есть стена
+      // Если под сегментом есть стена
       if (level.walls.some(w => w.x === segment.x && w.y === segment.y + 1))
         return true;
 
@@ -100,131 +103,110 @@ const AppleWormGame: React.FC = () => {
   const initGame = useCallback(() => {
     const startSnake = [...level.start];
     setSnake(startSnake);
-    setApples([...level.apples]); // Используем фиксированные яблоки
-    setGameState('PLAYING');
+    setApples([...level.apples]);
     setScore(0);
+    setGameState('PLAYING');
   }, []);
-
-  const generateApple = useCallback(
-    (snake: Position[]): Position => {
-      let newApple: Position;
-      let attempts = 0;
-      const maxAttempts = 100;
-      do {
-        newApple = {
-          x: Math.floor(Math.random() * GRID_SIZE),
-          y: Math.floor(Math.random() * GRID_SIZE),
-        };
-        attempts++;
-        if (attempts >= maxAttempts) return { x: 10, y: 10 };
-      } while (
-        snake.some(s => s.x === newApple.x && s.y === newApple.y) ||
-        level.walls.some(w => w.x === newApple.x && w.y === newApple.y) ||
-        !isSegmentSupported(snake) // !!!!
-      );
-      return newApple;
-    },
-    [isSegmentSupported],
-  );
 
   const checkCollision = useCallback(
     (head: Position, snake: Position[]): boolean => {
       const hasWallCollision = level.walls.some(w => {
-        console.log('Collision with wall', w.x === head.x && w.y === head.y, w);
         return w.x === head.x && w.y === head.y;
       });
       if (hasWallCollision) {
         return true;
       }
+      // коллизия с полями игрового поля
       if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0) return true;
+      // коллизия с собой
       return snake.slice(1).some(s => s.x === head.x && s.y === head.y);
     },
     [],
   );
+
+  // процесс падения червяка
+  const processFall = (
+    snake: Position[],
+    setSnake: (s: Position[]) => void,
+  ) => {
+    const needsToFall = !isSegmentSupported(snake);
+
+    if (!needsToFall) {
+      setIsFalling(false);
+      return;
+    }
+
+    const fallenSnake = snake.map(seg => ({
+      ...seg,
+      y: seg.y + 1,
+    }));
+
+    if (fallenSnake.some(isReachedBottom)) {
+      setGameState('GAME_OVER');
+      setIsFalling(false);
+      return;
+    }
+
+    setIsFalling(true);
+    setTimeout(() => {
+      setSnake(fallenSnake);
+      processFall(fallenSnake, setSnake);
+    }, 100);
+  };
 
   const handleMove = useCallback(
     (dir: Direction) => {
       if (gameState !== 'PLAYING' || isFalling) return;
 
       setSnake(prevSnake => {
-        // 1. Двигаем голову
+        // Движение головы
         const head = { ...prevSnake[0] };
-        switch (dir) {
-          case 'UP':
-            head.y -= 1;
-            break;
-          case 'DOWN':
-            head.y += 1;
-            break;
-          case 'LEFT':
-            head.x -= 1;
-            break;
-          case 'RIGHT':
-            head.x += 1;
-            break;
-        }
+        moveHead(head, dir);
 
         if (checkCollision(head, prevSnake)) return prevSnake;
 
-        // 2. Пересоздаем червяка с обновленной позицией
+        // Создание нового червя
         const newSnake = [head, ...prevSnake];
-        if (apples.some(a => a.x === head.x && a.y === head.y)) {
-          setScore(s => s + 1);
-          setApples(apples.filter(a => !(a.x === head.x && a.y === head.y)));
-          // Не удаляем сегмент хвоста при съедании яблока
+
+        const appleToEat = apples.find(a => a.x === head.x && a.y === head.y);
+
+        if (appleToEat) {
+          // Атомарное обновление сразу двух состояний
+          setApples(prev => prev.filter(a => a !== appleToEat));
+          setScore(prev => prev + 1); // Гарантированно +1
         } else {
           newSnake.pop();
         }
 
-        // 3. Проверяем опору и запускаем падение если нужно
+        // Запуск падения
+        processFall(newSnake, setSnake);
 
-        const fall = (currentSnake: Position[]) => {
-          const needsToFall = currentSnake.some(
-            seg => !isSegmentSupported(currentSnake),
-          );
-
-          if (!needsToFall) {
-            setIsFalling(false);
-            return currentSnake; // Падение не требуется
-          }
-
-          const fallenSnake = currentSnake.map(seg => ({
-            ...seg,
-            y: seg.y + 1,
-          }));
-
-          if (fallenSnake.some(isReachedBottom)) {
-            setGameState('GAME_OVER');
-            setIsFalling(false);
-            return currentSnake;
-          }
-
-          setIsFalling(true);
-          setTimeout(() => {
-            setSnake(fallenSnake);
-            fall(fallenSnake); // Рекурсивно продолжаем падение
-          }, 100);
-
-          return fallenSnake;
-        };
-
-        return fall(newSnake);
+        return newSnake;
       });
     },
-    [
-      apples,
-      checkCollision,
-      gameState,
-      generateApple,
-      isReachedBottom,
-      isSegmentSupported,
-      isFalling,
-    ],
+    [checkCollision, gameState, isFalling, isReachedBottom, isSegmentSupported],
   );
+
+  const moveHead = (head: Position, direction: Direction) => {
+    switch (direction) {
+      case 'UP':
+        head.y -= 1;
+        break;
+      case 'DOWN':
+        head.y += 1;
+        break;
+      case 'LEFT':
+        head.x -= 1;
+        break;
+      case 'RIGHT':
+        head.x += 1;
+        break;
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (gameState !== 'PLAYING') return;
+      if (gameState !== 'PLAYING' || isFalling) return;
       switch (e.key) {
         case 'ArrowUp':
           handleMove('UP');
@@ -243,7 +225,7 @@ const AppleWormGame: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, handleMove]);
+  }, [gameState, isFalling]);
 
   useEffect(() => {
     initGame();
@@ -302,28 +284,42 @@ const AppleWormGame: React.FC = () => {
       </div>
 
       <div className="aw-controls">
-        <button
+        <Button
+          type="primary"
+          icon={<ArrowUpOutlined />}
+          size="large"
+          shape="circle"
           className="aw-control-btn aw-up"
-          onClick={() => handleMove('UP')}>
-          ↑
-        </button>
+          onClick={() => handleMove('UP')}
+        />
+
         <div>
-          <button
+          <Button
+            type="primary"
+            icon={<ArrowLeftOutlined />}
+            size="large"
+            shape="circle"
             className="aw-control-btn aw-left"
-            onClick={() => handleMove('LEFT')}>
-            ←
-          </button>
-          <button
+            onClick={() => handleMove('LEFT')}
+          />
+          &nbsp;&nbsp;&nbsp;
+          <Button
+            type="primary"
+            icon={<ArrowRightOutlined />}
+            size="large"
+            shape="circle"
             className="aw-control-btn aw-right"
-            onClick={() => handleMove('RIGHT')}>
-            →
-          </button>
+            onClick={() => handleMove('RIGHT')}
+          />
         </div>
-        <button
+        <Button
+          type="primary"
+          icon={<ArrowRightOutlined />}
+          size="large"
+          shape="circle"
           className="aw-control-btn aw-down"
-          onClick={() => handleMove('DOWN')}>
-          ↓
-        </button>
+          onClick={() => handleMove('DOWN')}
+        />
       </div>
 
       {gameState !== 'PLAYING' && (
