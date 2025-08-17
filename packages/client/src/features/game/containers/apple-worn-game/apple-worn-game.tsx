@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   ArrowUpOutlined,
   ArrowLeftOutlined,
@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import './apple-worn-game.scss';
 import { Button } from 'antd';
+import { GameBoard } from '../../ui/game-board/game-board';
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 type Position = { x: number; y: number };
@@ -65,7 +66,7 @@ const level = {
     { x: 4, y: 14 },
     { x: 15, y: 15 },
   ],
-  exit: { x: 18, y: 18 },
+  exit: { x: 18, y: 15 },
   start: [
     { x: 6, y: 12 },
     { x: 6, y: 13 },
@@ -79,26 +80,23 @@ const AppleWormGame: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>('PLAYING');
   const [score, setScore] = useState(0);
   const [isFalling, setIsFalling] = useState(false);
-
-  // const isOnPlatform = useCallback((pos: Position): boolean => {
-  //   return level.walls.some(w => w.x === pos.x && w.y === pos.y + 1);
-  // }, []);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
 
   const isReachedBottom = useCallback((pos: Position): boolean => {
     return pos.y >= GRID_SIZE - 1;
   }, []);
 
-  const isSegmentSupported = useCallback((snake: Position[]): boolean => {
-    return snake.some(segment => {
-      // Проверяем для каждого сегмента:
-
-      // Если под сегментом есть стена
-      if (level.walls.some(w => w.x === segment.x && w.y === segment.y + 1))
-        return true;
-
-      return false;
-    });
-  }, []);
+  const isSegmentSupported = useCallback(
+    (snake: Position[]): boolean => {
+      return snake.some(segment => {
+        if (level.walls.some(w => w.x === segment.x && w.y === segment.y + 1))
+          return true;
+        return false;
+      });
+    },
+    [snake],
+  );
 
   const initGame = useCallback(() => {
     const startSnake = [...level.start];
@@ -116,15 +114,12 @@ const AppleWormGame: React.FC = () => {
       if (hasWallCollision) {
         return true;
       }
-      // коллизия с полями игрового поля
       if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0) return true;
-      // коллизия с собой
       return snake.slice(1).some(s => s.x === head.x && s.y === head.y);
     },
     [],
   );
 
-  // процесс падения червяка
   const processFall = (
     snake: Position[],
     setSnake: (s: Position[]) => void,
@@ -159,32 +154,35 @@ const AppleWormGame: React.FC = () => {
       if (gameState !== 'PLAYING' || isFalling) return;
 
       setSnake(prevSnake => {
-        // Движение головы
         const head = { ...prevSnake[0] };
         moveHead(head, dir);
 
         if (checkCollision(head, prevSnake)) return prevSnake;
 
-        // Создание нового червя
         const newSnake = [head, ...prevSnake];
 
         const appleToEat = apples.find(a => a.x === head.x && a.y === head.y);
 
         if (appleToEat) {
-          // Атомарное обновление сразу двух состояний
           setApples(prev => prev.filter(a => a !== appleToEat));
-          setScore(prev => prev + 1); // Гарантированно +1
+          setScore(prev => prev + 1);
         } else {
           newSnake.pop();
         }
 
-        // Запуск падения
         processFall(newSnake, setSnake);
 
         return newSnake;
       });
     },
-    [checkCollision, gameState, isFalling, isReachedBottom, isSegmentSupported],
+    [
+      checkCollision,
+      gameState,
+      isFalling,
+      isReachedBottom,
+      isSegmentSupported,
+      apples,
+    ],
   );
 
   const moveHead = (head: Position, direction: Direction) => {
@@ -225,63 +223,185 @@ const AppleWormGame: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, isFalling]);
+  }, [gameState, isFalling, handleMove]);
 
   useEffect(() => {
     initGame();
-  }, []);
+  }, [initGame]);
 
-  const renderGame = () => {
-    return Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, i) => {
-      const x = i % GRID_SIZE;
-      const y = Math.floor(i / GRID_SIZE);
-      const isSnake = snake.some(s => s.x === x && s.y === y);
-      const isHead = snake[0]?.x === x && snake[0]?.y === y;
-      const isApple = apples.some(a => a.x === x && a.y === y);
-      const isWall = level.walls.some(w => w.x === x && w.y === y);
-      const isExit = level.exit.x === x && level.exit.y === y;
+  // Функция отрисовки игры на Canvas
+  const drawGame = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      let cellClass = 'aw-cell';
-      if (isHead) cellClass += ' aw-head';
-      else if (isSnake) cellClass += ' aw-snake';
-      else if (isApple) cellClass += ' aw-apple';
-      else if (isWall) cellClass += ' aw-wall';
-      else if (isExit) cellClass += ' aw-exit';
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      return (
-        <div
-          key={i}
-          className={cellClass}
-          style={{
-            left: x * CELL_SIZE,
-            top: y * CELL_SIZE,
-            width: CELL_SIZE,
-            height: CELL_SIZE,
-          }}
-        />
+    // Очищаем canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Рисуем сетку
+    // TODO: вынести в отдельную функцию и сделать опциональной
+    ctx.strokeStyle = '#eee';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= GRID_SIZE; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * CELL_SIZE, 0);
+      ctx.lineTo(i * CELL_SIZE, GRID_SIZE * CELL_SIZE);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, i * CELL_SIZE);
+      ctx.lineTo(GRID_SIZE * CELL_SIZE, i * CELL_SIZE);
+      ctx.stroke();
+    }
+
+    // Рисуем стены
+    ctx.fillStyle = '#8B4513'; // коричневый цвет для стен
+    level.walls.forEach(wall => {
+      ctx.fillRect(
+        wall.x * CELL_SIZE,
+        wall.y * CELL_SIZE,
+        CELL_SIZE,
+        CELL_SIZE,
       );
     });
-  };
+
+    // Рисуем яблоки с листиками
+    apples.forEach(apple => {
+      // Основная часть яблока
+      ctx.fillStyle = '#FF0000';
+      ctx.beginPath();
+      ctx.arc(
+        apple.x * CELL_SIZE + CELL_SIZE / 2,
+        apple.y * CELL_SIZE + CELL_SIZE / 2,
+        CELL_SIZE / 2 - 2,
+        0,
+        Math.PI * 2,
+      );
+      ctx.fill();
+
+      // Стебелек
+      ctx.strokeStyle = '#8B4513';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE + 2);
+      ctx.lineTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE - 5);
+      ctx.stroke();
+
+      // Большой листик
+      ctx.fillStyle = '#228B22';
+      ctx.beginPath();
+      ctx.ellipse(
+        apple.x * CELL_SIZE + CELL_SIZE / 2 + 5,
+        apple.y * CELL_SIZE - 8,
+        8,
+        4,
+        Math.PI / 4,
+        0,
+        Math.PI * 2,
+      );
+      ctx.fill();
+
+      // Линия на листике
+      ctx.strokeStyle = '#1A6A1A';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE - 5);
+      ctx.lineTo(
+        apple.x * CELL_SIZE + CELL_SIZE / 2 + 8,
+        apple.y * CELL_SIZE - 10,
+      );
+      ctx.stroke();
+    });
+
+    // Рисуем выход
+    ctx.fillStyle = '#FFFF00';
+    ctx.beginPath();
+    ctx.arc(
+      level.exit.x * CELL_SIZE + CELL_SIZE / 2,
+      level.exit.y * CELL_SIZE + CELL_SIZE / 2,
+      CELL_SIZE / 2 - 2,
+      0,
+      Math.PI * 2,
+    );
+    ctx.fill();
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Рисуем змейку с улыбкой
+    snake.forEach((segment, index) => {
+      const centerX = segment.x * CELL_SIZE + CELL_SIZE / 2;
+      const centerY = segment.y * CELL_SIZE + CELL_SIZE / 2;
+      const radius = CELL_SIZE / 2 - 2;
+
+      if (index === 0) {
+        // Голова - зеленый с деталями
+        ctx.fillStyle = '#006400';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Белки глаз
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(centerX - 5, centerY - 5, 3, 0, Math.PI * 2);
+        ctx.arc(centerX + 5, centerY - 5, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Зрачки
+        ctx.fillStyle = '#000000';
+        ctx.beginPath();
+        ctx.arc(centerX - 5, centerY - 5, 1.5, 0, Math.PI * 2);
+        ctx.arc(centerX + 5, centerY - 5, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Улыбка
+        ctx.strokeStyle = '#ff5100ff';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY + 3, radius / 2, 0.1 * Math.PI, 0.9 * Math.PI);
+        ctx.stroke();
+      } else {
+        // Тело - простые зеленые круги
+        ctx.fillStyle = '#00AA00';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#7d9b05ff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    });
+
+    animationRef.current = requestAnimationFrame(drawGame);
+  }, [snake, apples]);
+
+  useEffect(() => {
+    // Запускаем отрисовку при монтировании
+    drawGame();
+
+    // Останавливаем анимацию при размонтировании
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [drawGame]);
 
   return (
     <div className="aw-game-container" tabIndex={0}>
       <div className="aw-game-info">
-        <div>Счет: {score}</div>
-        <div>
-          Состояние:{' '}
-          {gameState === 'PLAYING'
-            ? 'Играем'
-            : gameState === 'GAME_OVER'
-            ? 'Проиграли'
-            : 'Победа!'}
-        </div>
+        <GameBoard score={score} gameState={gameState} />
       </div>
 
-      <div
+      <canvas
+        ref={canvasRef}
         className="aw-game-board"
-        style={{ width: GRID_SIZE * CELL_SIZE, height: GRID_SIZE * CELL_SIZE }}>
-        {renderGame()}
-      </div>
+        width={GRID_SIZE * CELL_SIZE}
+        height={GRID_SIZE * CELL_SIZE}
+      />
 
       <div className="aw-controls">
         <Button
