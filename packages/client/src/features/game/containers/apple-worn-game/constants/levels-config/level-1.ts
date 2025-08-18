@@ -1,4 +1,4 @@
-const level = {
+export const LEVEL_1 = {
   walls: [
     { x: 10, y: 3 },
     { x: 11, y: 3 },

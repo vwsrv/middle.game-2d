@@ -7,72 +7,7 @@ import {
 import './apple-worn-game.scss';
 import { Button } from 'antd';
 import { GameBoard } from '../../ui/game-board/game-board';
-
-type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
-type Position = { x: number; y: number };
-type GameState = 'PLAYING' | 'GAME_OVER' | 'LEVEL_COMPLETE';
-
-const GRID_SIZE = 20;
-const CELL_SIZE = 40;
-
-const level = {
-  walls: [
-    { x: 10, y: 3 },
-    { x: 11, y: 3 },
-    { x: 10, y: 4 },
-    { x: 3, y: 5 },
-    { x: 4, y: 5 },
-    { x: 5, y: 5 },
-    { x: 6, y: 5 },
-    { x: 7, y: 5 },
-    { x: 10, y: 5 },
-    { x: 12, y: 5 },
-    { x: 10, y: 6 },
-    { x: 12, y: 7 },
-    { x: 5, y: 8 },
-    { x: 5, y: 9 },
-    { x: 5, y: 10 },
-    { x: 13, y: 10 },
-    { x: 12, y: 10 },
-    { x: 14, y: 10 },
-    { x: 5, y: 11 },
-    { x: 9, y: 12 },
-    { x: 10, y: 12 },
-    { x: 11, y: 12 },
-    { x: 12, y: 12 },
-    { x: 15, y: 12 },
-    { x: 15, y: 13 },
-    { x: 10, y: 14 },
-    { x: 11, y: 14 },
-    { x: 12, y: 14 },
-    { x: 9, y: 14 },
-    { x: 7, y: 14 },
-    { x: 15, y: 14 },
-    { x: 4, y: 15 },
-    { x: 5, y: 15 },
-    { x: 6, y: 15 },
-    { x: 7, y: 15 },
-    { x: 8, y: 15 },
-  ],
-  apples: [
-    { x: 2, y: 2 },
-    { x: 8, y: 3 },
-    { x: 5, y: 7 },
-    { x: 15, y: 8 },
-    { x: 15, y: 10 },
-    { x: 2, y: 13 },
-    { x: 8, y: 14 },
-    { x: 7, y: 13 },
-    { x: 4, y: 14 },
-    { x: 15, y: 15 },
-  ],
-  exit: { x: 18, y: 15 },
-  start: [
-    { x: 6, y: 12 },
-    { x: 6, y: 13 },
-    { x: 6, y: 14 },
-  ],
-};
+import { CELL_SIZE, GRID_SIZE, levels } from './constants/constants';
 
 const AppleWormGame: React.FC = () => {
   const [snake, setSnake] = useState<Position[]>([]);
@@ -80,6 +15,10 @@ const AppleWormGame: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>('PLAYING');
   const [score, setScore] = useState(0);
   const [isFalling, setIsFalling] = useState(false);
+
+  const [currentLevelNum, setCurrentLevel] = useState(0);
+  const [exit, setExit] = useState<Position>({ x: 0, y: 0 });
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
 
@@ -89,6 +28,7 @@ const AppleWormGame: React.FC = () => {
 
   const isSegmentSupported = useCallback(
     (snake: Position[]): boolean => {
+      const level = levels[currentLevelNum];
       return snake.some(segment => {
         if (level.walls.some(w => w.x === segment.x && w.y === segment.y + 1))
           return true;
@@ -98,16 +38,19 @@ const AppleWormGame: React.FC = () => {
     [snake],
   );
 
-  const initGame = useCallback(() => {
+  const initGame = useCallback((levelIndex: number) => {
+    const level = levels[levelIndex];
     const startSnake = [...level.start];
     setSnake(startSnake);
     setApples([...level.apples]);
     setScore(0);
     setGameState('PLAYING');
+    setExit(level.exit);
   }, []);
 
   const checkCollision = useCallback(
     (head: Position, snake: Position[]): boolean => {
+      const level = levels[currentLevelNum];
       const hasWallCollision = level.walls.some(w => {
         return w.x === head.x && w.y === head.y;
       });
@@ -119,6 +62,10 @@ const AppleWormGame: React.FC = () => {
     },
     [],
   );
+
+  const checkExit = useCallback((head: Position, exit: Position): boolean => {
+    return head.x === exit.x && head.y === exit.y;
+  }, []);
 
   const processFall = (
     snake: Position[],
@@ -161,6 +108,20 @@ const AppleWormGame: React.FC = () => {
 
         const newSnake = [head, ...prevSnake];
 
+        const currentLevelData = levels[currentLevelNum];
+
+        // Проверка выхода
+        if (checkExit(head, exit)) {
+          if (currentLevelNum < levels.length - 1) {
+            setCurrentLevel(prev => prev + 1);
+            initGame(currentLevelNum + 1);
+            return prevSnake;
+          } else {
+            setGameState('LEVEL_COMPLETE');
+            return prevSnake;
+          }
+        }
+
         const appleToEat = apples.find(a => a.x === head.x && a.y === head.y);
 
         if (appleToEat) {
@@ -182,6 +143,9 @@ const AppleWormGame: React.FC = () => {
       isReachedBottom,
       isSegmentSupported,
       apples,
+      currentLevelNum,
+      exit,
+      checkExit,
     ],
   );
 
@@ -226,7 +190,7 @@ const AppleWormGame: React.FC = () => {
   }, [gameState, isFalling, handleMove]);
 
   useEffect(() => {
-    initGame();
+    initGame(currentLevelNum);
   }, [initGame]);
 
   // Функция отрисовки игры на Canvas
@@ -255,6 +219,8 @@ const AppleWormGame: React.FC = () => {
       ctx.lineTo(GRID_SIZE * CELL_SIZE, i * CELL_SIZE);
       ctx.stroke();
     }
+
+    const level = levels[currentLevelNum];
 
     // Рисуем стены
     ctx.fillStyle = '#8B4513'; // коричневый цвет для стен
@@ -304,7 +270,7 @@ const AppleWormGame: React.FC = () => {
       ctx.fill();
 
       // Линия на листике
-      ctx.strokeStyle = '#1A6A1A';
+      ctx.strokeStyle = '#0a2a0aff';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE - 5);
@@ -390,10 +356,19 @@ const AppleWormGame: React.FC = () => {
     };
   }, [drawGame]);
 
+  const restartGame = useCallback(() => {
+    initGame(0);
+    setCurrentLevel(0);
+  }, [initGame]);
+
   return (
-    <div className="aw-game-container" tabIndex={0}>
+    <div className="aw-game-container">
       <div className="aw-game-info">
-        <GameBoard score={score} gameState={gameState} />
+        <GameBoard
+          score={score}
+          gameState={gameState}
+          levelNum={currentLevelNum}
+        />
       </div>
 
       <canvas
@@ -448,14 +423,20 @@ const AppleWormGame: React.FC = () => {
             <>
               <h2>Игра окончена!</h2>
               <p>Счет: {score}</p>
-              <button className="aw-restart-btn" onClick={initGame}>
+              <p>Уровень: {currentLevelNum + 1}</p>
+              <button className="aw-restart-btn" onClick={restartGame}>
                 Играть снова
               </button>
             </>
           ) : (
             <>
-              <h2>Уровень пройден!</h2>
-              <button className="aw-restart-btn" onClick={initGame}>
+              <h2>
+                {currentLevelNum < levels.length - 1
+                  ? 'Уровень пройден!'
+                  : 'Игра пройдена!'}
+              </h2>
+              <p>Финальный счет: {score}</p>
+              <button className="aw-restart-btn" onClick={restartGame}>
                 Начать заново
               </button>
             </>
