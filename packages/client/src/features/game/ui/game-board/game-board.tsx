@@ -1,3 +1,5 @@
+import './game-board.scss';
+
 type GameBoardProps = {
   score: number;
   gameState: GameState;
@@ -9,11 +11,17 @@ export const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
 
   return (
     <>
-      <div>Уровень: {levelNum}</div>
-      <div>Счет: {score}</div>
+      <div>
+        <span className="label">Уровень:</span> {levelNum}
+      </div>
+      <div>
+        <span className="label">Счет:</span>
+        {score}
+        {'🍏'.repeat(score)}
+      </div>
       <br />
       <div>
-        Состояние:{' '}
+        <span className="label">Состояние:</span>
         {gameState === 'PLAYING'
           ? 'Играем'
           : gameState === 'GAME_OVER'

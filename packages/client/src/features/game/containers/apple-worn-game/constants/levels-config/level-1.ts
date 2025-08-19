@@ -49,7 +49,7 @@ export const LEVEL_1 = {
     { x: 4, y: 14 },
     { x: 15, y: 15 },
   ],
-  exit: { x: 18, y: 18 },
+  exit: { x: 17, y: 12 },
   start: [
     { x: 6, y: 12 },
     { x: 6, y: 13 },

@@ -3,6 +3,7 @@ import {
   ArrowUpOutlined,
   ArrowLeftOutlined,
   ArrowRightOutlined,
+  ArrowDownOutlined,
 } from '@ant-design/icons';
 import './apple-worn-game.scss';
 import { Button } from 'antd';
@@ -107,8 +108,6 @@ const AppleWormGame: React.FC = () => {
         if (checkCollision(head, prevSnake)) return prevSnake;
 
         const newSnake = [head, ...prevSnake];
-
-        const currentLevelData = levels[currentLevelNum];
 
         // Проверка выхода
         if (checkExit(head, exit)) {
@@ -223,7 +222,7 @@ const AppleWormGame: React.FC = () => {
     const level = levels[currentLevelNum];
 
     // Рисуем стены
-    ctx.fillStyle = '#8B4513'; // коричневый цвет для стен
+    ctx.fillStyle = '#6c3813ff'; // коричневый цвет для стен
     level.walls.forEach(wall => {
       ctx.fillRect(
         wall.x * CELL_SIZE,
@@ -247,38 +246,41 @@ const AppleWormGame: React.FC = () => {
       );
       ctx.fill();
 
-      // Стебелек
-      ctx.strokeStyle = '#8B4513';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE + 2);
-      ctx.lineTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE - 5);
-      ctx.stroke();
-
-      // Большой листик
-      ctx.fillStyle = '#228B22';
+      // Блик (белый полупрозрачный овал)
+      ctx.fillStyle = 'rgba(241, 250, 217, 0.3)';
       ctx.beginPath();
       ctx.ellipse(
-        apple.x * CELL_SIZE + CELL_SIZE / 2 + 5,
-        apple.y * CELL_SIZE - 8,
-        8,
-        4,
+        apple.x * CELL_SIZE + CELL_SIZE / 2 + 7,
+        apple.y * CELL_SIZE + CELL_SIZE / 2 - 8,
+        6,
+        3,
         Math.PI / 4,
         0,
         Math.PI * 2,
       );
       ctx.fill();
 
-      // Линия на листике
-      ctx.strokeStyle = '#0a2a0aff';
-      ctx.lineWidth = 1;
+      // Стебелек
+      ctx.strokeStyle = '#754e1aff';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE - 5);
-      ctx.lineTo(
-        apple.x * CELL_SIZE + CELL_SIZE / 2 + 8,
-        apple.y * CELL_SIZE - 10,
-      );
+      ctx.moveTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE + 2);
+      ctx.lineTo(apple.x * CELL_SIZE + CELL_SIZE / 2, apple.y * CELL_SIZE - 7);
       ctx.stroke();
+
+      // Большой листик
+      ctx.fillStyle = '#228B22';
+      ctx.beginPath();
+      ctx.ellipse(
+        apple.x * CELL_SIZE + CELL_SIZE / 2 + 7,
+        apple.y * CELL_SIZE - 4,
+        8,
+        4,
+        Math.PI / 6,
+        0,
+        Math.PI * 2,
+      );
+      ctx.fill();
     });
 
     // Рисуем выход
@@ -292,9 +294,18 @@ const AppleWormGame: React.FC = () => {
       Math.PI * 2,
     );
     ctx.fill();
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#362020ff';
+    ctx.lineWidth = 1;
     ctx.stroke();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#362020ff';
+    ctx.font = '12px sans-serif';
+    ctx.fillText(
+      'выход',
+      level.exit.x * CELL_SIZE + CELL_SIZE / 2,
+      level.exit.y * CELL_SIZE + CELL_SIZE / 2,
+    );
 
     // Рисуем змейку с улыбкой
     snake.forEach((segment, index) => {
@@ -362,59 +373,61 @@ const AppleWormGame: React.FC = () => {
   }, [initGame]);
 
   return (
-    <div className="aw-game-container">
-      <div className="aw-game-info">
-        <GameBoard
-          score={score}
-          gameState={gameState}
-          levelNum={currentLevelNum}
-        />
-      </div>
+    <>
+      <div className="aw-game-container">
+        <section className="aw-game">
+          <div className="aw-game-info">
+            <GameBoard
+              score={score}
+              gameState={gameState}
+              levelNum={currentLevelNum}
+            />
+          </div>
 
-      <canvas
-        ref={canvasRef}
-        className="aw-game-board"
-        width={GRID_SIZE * CELL_SIZE}
-        height={GRID_SIZE * CELL_SIZE}
-      />
-
-      <div className="aw-controls">
-        <Button
-          type="primary"
-          icon={<ArrowUpOutlined />}
-          size="large"
-          shape="circle"
-          className="aw-control-btn aw-up"
-          onClick={() => handleMove('UP')}
-        />
-
-        <div>
+          <canvas
+            ref={canvasRef}
+            className="aw-game-board"
+            width={GRID_SIZE * CELL_SIZE}
+            height={GRID_SIZE * CELL_SIZE}
+          />
+        </section>
+        <section className="aw-controls">
           <Button
             type="primary"
-            icon={<ArrowLeftOutlined />}
+            icon={<ArrowUpOutlined />}
             size="large"
             shape="circle"
-            className="aw-control-btn aw-left"
-            onClick={() => handleMove('LEFT')}
+            className="aw-controls__btn"
+            onClick={() => handleMove('UP')}
           />
-          &nbsp;&nbsp;&nbsp;
+          <div>
+            <Button
+              type="primary"
+              icon={<ArrowLeftOutlined />}
+              size="large"
+              shape="circle"
+              className="aw-controls__btn"
+              onClick={() => handleMove('LEFT')}
+            />
+            &nbsp;&nbsp;&nbsp;
+            <Button
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              size="large"
+              shape="circle"
+              className="aw-controls__btn"
+              onClick={() => handleMove('RIGHT')}
+            />
+          </div>
           <Button
             type="primary"
-            icon={<ArrowRightOutlined />}
+            icon={<ArrowDownOutlined />}
             size="large"
             shape="circle"
-            className="aw-control-btn aw-right"
-            onClick={() => handleMove('RIGHT')}
+            className="aw-controls__btn"
+            onClick={() => handleMove('DOWN')}
           />
-        </div>
-        <Button
-          type="primary"
-          icon={<ArrowRightOutlined />}
-          size="large"
-          shape="circle"
-          className="aw-control-btn aw-down"
-          onClick={() => handleMove('DOWN')}
-        />
+        </section>
       </div>
 
       {gameState !== 'PLAYING' && (
@@ -424,9 +437,9 @@ const AppleWormGame: React.FC = () => {
               <h2>Игра окончена!</h2>
               <p>Счет: {score}</p>
               <p>Уровень: {currentLevelNum + 1}</p>
-              <button className="aw-restart-btn" onClick={restartGame}>
+              <Button type="primary" size="large" onClick={restartGame}>
                 Играть снова
-              </button>
+              </Button>
             </>
           ) : (
             <>
@@ -436,14 +449,14 @@ const AppleWormGame: React.FC = () => {
                   : 'Игра пройдена!'}
               </h2>
               <p>Финальный счет: {score}</p>
-              <button className="aw-restart-btn" onClick={restartGame}>
+              <Button type="primary" size="large" onClick={restartGame}>
                 Начать заново
-              </button>
+              </Button>
             </>
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
