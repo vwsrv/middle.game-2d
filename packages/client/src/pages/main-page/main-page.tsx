@@ -1,32 +1,14 @@
-import { Layout, Menu, Card, Row, Col, Space, Typography, Grid } from 'antd'
-import { featureCards, getMenuItems } from './constants/data'
+import { Layout, Card, Row, Col, Space, Typography } from 'antd'
+import { featureCards } from './constants/data'
+import { HeaderApp } from '@/widgets/header'
 
-const { Header, Content, Footer } = Layout
+const { Content, Footer } = Layout
 const { Title, Text } = Typography
-const { useBreakpoint } = Grid
 
 export const MainPage = () => {
-  const screens = useBreakpoint()
-  const isMobile = !screens.md
-  const menuItems = getMenuItems(isMobile)
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ background: '#fff', boxShadow: '0 2px 8px #f0f1f2' }}>
-        <div className="logo" style={{ float: 'left', marginRight: '24px' }}>
-          <Title level={3} style={{ margin: 0 }}>
-            <span style={{ color: '#ff4d4f' }}>Apple</span>
-            <span style={{ color: '#52c41a' }}>Worm</span>
-          </Title>
-        </div>
-        <Menu
-          theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={['home']}
-          items={menuItems}
-          style={{ flex: 1 }}
-        />
-      </Header>
+      <HeaderApp />
 
       <Content style={{ padding: '50px 50px 0', flex: 1 }}>
         <Row gutter={[24, 24]} justify="center">

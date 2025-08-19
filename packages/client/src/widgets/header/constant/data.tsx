@@ -42,14 +42,12 @@ export const getMenuItems = (isMobile: boolean) => {
   const authItems = [
     {
       key: 'login',
-      path: '/login',
       label: <a href={EPages.LOGIN_PAGE}>Вход</a>,
       icon: !isMobile && <LoginOutlined />,
       style: { marginLeft: 'auto' },
     },
     {
       key: 'register',
-      path: '/register',
       label: <a href={EPages.REGISTER_PAGE}>Регистрация</a>,
       icon: !isMobile && <UserAddOutlined />,
     },
