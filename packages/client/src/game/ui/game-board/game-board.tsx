@@ -1,3 +1,4 @@
+import { GameState } from '@/game/types/types';
 import './game-board.scss';
 
 type GameBoardProps = {

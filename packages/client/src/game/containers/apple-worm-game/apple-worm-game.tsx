@@ -1,199 +1,32 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowUpOutlined,
   ArrowLeftOutlined,
   ArrowRightOutlined,
   ArrowDownOutlined,
 } from '@ant-design/icons';
-import './apple-worn-game.scss';
+import './apple-worm-game.scss';
 import { Button } from 'antd';
-import { GameBoard } from '../../ui/game-board/game-board';
-import { CELL_SIZE, GRID_SIZE, levels } from './constants/constants';
+import { AppleWormGameEngine } from '@/game/core/game-engine';
+import { Direction, Game } from '@/game/types/types';
+import { CELL_SIZE, GRID_SIZE, levels } from '@/game/constants/constants';
+import { GameBoard } from '@/game/ui/game-board/game-board';
 
-const AppleWormGame: React.FC = () => {
-  const [snake, setSnake] = useState<Position[]>([]);
-  const [apples, setApples] = useState<Position[]>([]);
-  const [gameState, setGameState] = useState<GameState>('PLAYING');
-  const [score, setScore] = useState(0);
-  const [isFalling, setIsFalling] = useState(false);
-
-  const [currentLevelNum, setCurrentLevel] = useState(0);
-  const [exit, setExit] = useState<Position>({ x: 0, y: 0 });
-
+export const AppleWormGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
-
-  const isReachedBottom = useCallback((pos: Position): boolean => {
-    return pos.y >= GRID_SIZE - 1;
-  }, []);
-
-  const isSegmentSupported = useCallback(
-    (snake: Position[]): boolean => {
-      const level = levels[currentLevelNum];
-      return snake.some(segment => {
-        if (level.walls.some(w => w.x === segment.x && w.y === segment.y + 1))
-          return true;
-        return false;
-      });
-    },
-    [snake],
-  );
-
-  const initGame = useCallback((levelIndex: number) => {
-    const level = levels[levelIndex];
-    const startSnake = [...level.start];
-    setSnake(startSnake);
-    setApples([...level.apples]);
-    setScore(0);
-    setGameState('PLAYING');
-    setExit(level.exit);
-  }, []);
-
-  const checkCollision = useCallback(
-    (head: Position, snake: Position[]): boolean => {
-      const level = levels[currentLevelNum];
-      const hasWallCollision = level.walls.some(w => {
-        return w.x === head.x && w.y === head.y;
-      });
-      if (hasWallCollision) {
-        return true;
-      }
-      if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0) return true;
-      return snake.slice(1).some(s => s.x === head.x && s.y === head.y);
-    },
-    [],
-  );
-
-  const checkExit = useCallback((head: Position, exit: Position): boolean => {
-    return head.x === exit.x && head.y === exit.y;
-  }, []);
-
-  const processFall = (
-    snake: Position[],
-    setSnake: (s: Position[]) => void,
-  ) => {
-    const needsToFall = !isSegmentSupported(snake);
-
-    if (!needsToFall) {
-      setIsFalling(false);
-      return;
-    }
-
-    const fallenSnake = snake.map(seg => ({
-      ...seg,
-      y: seg.y + 1,
-    }));
-
-    if (fallenSnake.some(isReachedBottom)) {
-      setGameState('GAME_OVER');
-      setIsFalling(false);
-      return;
-    }
-
-    setIsFalling(true);
-    setTimeout(() => {
-      setSnake(fallenSnake);
-      processFall(fallenSnake, setSnake);
-    }, 100);
-  };
-
-  const handleMove = useCallback(
-    (dir: Direction) => {
-      if (gameState !== 'PLAYING' || isFalling) return;
-
-      setSnake(prevSnake => {
-        const head = { ...prevSnake[0] };
-        moveHead(head, dir);
-
-        if (checkCollision(head, prevSnake)) return prevSnake;
-
-        const newSnake = [head, ...prevSnake];
-
-        // Проверка выхода
-        if (checkExit(head, exit)) {
-          if (currentLevelNum < levels.length - 1) {
-            setCurrentLevel(prev => prev + 1);
-            initGame(currentLevelNum + 1);
-            return prevSnake;
-          } else {
-            setGameState('LEVEL_COMPLETE');
-            return prevSnake;
-          }
-        }
-
-        const appleToEat = apples.find(a => a.x === head.x && a.y === head.y);
-
-        if (appleToEat) {
-          setApples(prev => prev.filter(a => a !== appleToEat));
-          setScore(prev => prev + 1);
-        } else {
-          newSnake.pop();
-        }
-
-        processFall(newSnake, setSnake);
-
-        return newSnake;
-      });
-    },
-    [
-      checkCollision,
-      gameState,
-      isFalling,
-      isReachedBottom,
-      isSegmentSupported,
-      apples,
-      currentLevelNum,
-      exit,
-      checkExit,
-    ],
-  );
-
-  const moveHead = (head: Position, direction: Direction) => {
-    switch (direction) {
-      case 'UP':
-        head.y -= 1;
-        break;
-      case 'DOWN':
-        head.y += 1;
-        break;
-      case 'LEFT':
-        head.x -= 1;
-        break;
-      case 'RIGHT':
-        head.x += 1;
-        break;
-    }
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (gameState !== 'PLAYING' || isFalling) return;
-      switch (e.key) {
-        case 'ArrowUp':
-          handleMove('UP');
-          break;
-        case 'ArrowDown':
-          handleMove('DOWN');
-          break;
-        case 'ArrowLeft':
-          handleMove('LEFT');
-          break;
-        case 'ArrowRight':
-          handleMove('RIGHT');
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, isFalling, handleMove]);
-
-  useEffect(() => {
-    initGame(currentLevelNum);
-  }, [initGame]);
+  const gameEngineRef = useRef<AppleWormGameEngine | null>(null);
+  const [gameState, setGameState] = useState<Game>({
+    snake: [],
+    apples: [],
+    score: 0,
+    state: 'PLAYING',
+    currentLevel: 0,
+    exit: { x: 0, y: 0 },
+    isFalling: false,
+  });
 
   // Функция отрисовки игры на Canvas
-  const drawGame = useCallback(() => {
+  const drawGame = (game: Game) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -219,10 +52,10 @@ const AppleWormGame: React.FC = () => {
       ctx.stroke();
     }
 
-    const level = levels[currentLevelNum];
+    const level = levels[game.currentLevel];
 
     // Рисуем стены
-    ctx.fillStyle = '#6c3813ff'; // коричневый цвет для стен
+    ctx.fillStyle = '#6c3813ff';
     level.walls.forEach(wall => {
       ctx.fillRect(
         wall.x * CELL_SIZE,
@@ -233,7 +66,7 @@ const AppleWormGame: React.FC = () => {
     });
 
     // Рисуем яблоки с листиками
-    apples.forEach(apple => {
+    game.apples.forEach(apple => {
       // Основная часть яблока
       ctx.fillStyle = '#FF0000';
       ctx.beginPath();
@@ -245,6 +78,9 @@ const AppleWormGame: React.FC = () => {
         Math.PI * 2,
       );
       ctx.fill();
+      ctx.strokeStyle = '#790303ff';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
 
       // Блик (белый полупрозрачный овал)
       ctx.fillStyle = 'rgba(241, 250, 217, 0.3)';
@@ -281,9 +117,13 @@ const AppleWormGame: React.FC = () => {
         Math.PI * 2,
       );
       ctx.fill();
+
+      ctx.strokeStyle = '#023802ff';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
     });
 
-    // Рисуем выход
+    // Draw выход
     ctx.fillStyle = '#FFFF00';
     ctx.beginPath();
     ctx.arc(
@@ -308,17 +148,21 @@ const AppleWormGame: React.FC = () => {
     );
 
     // Рисуем змейку с улыбкой
-    snake.forEach((segment, index) => {
+    game.snake.forEach((segment, index) => {
       const centerX = segment.x * CELL_SIZE + CELL_SIZE / 2;
       const centerY = segment.y * CELL_SIZE + CELL_SIZE / 2;
       const radius = CELL_SIZE / 2 - 2;
 
       if (index === 0) {
-        // Голова - зеленый с деталями
+        // Голова
         ctx.fillStyle = '#006400';
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
         ctx.fill();
+
+        ctx.strokeStyle = '#013d01ff';
+        ctx.lineWidth = 1;
+        ctx.stroke();
 
         // Белки глаз
         ctx.fillStyle = '#FFFFFF';
@@ -351,26 +195,53 @@ const AppleWormGame: React.FC = () => {
         ctx.stroke();
       }
     });
-
-    animationRef.current = requestAnimationFrame(drawGame);
-  }, [snake, apples]);
+  };
 
   useEffect(() => {
-    // Запускаем отрисовку при монтировании
-    drawGame();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!gameEngineRef.current) return;
 
-    // Останавливаем анимацию при размонтировании
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      switch (e.key) {
+        case 'ArrowUp':
+          gameEngineRef.current.move('UP');
+          break;
+        case 'ArrowDown':
+          gameEngineRef.current.move('DOWN');
+          break;
+        case 'ArrowLeft':
+          gameEngineRef.current.move('LEFT');
+          break;
+        case 'ArrowRight':
+          gameEngineRef.current.move('RIGHT');
+          break;
       }
     };
-  }, [drawGame]);
 
-  const restartGame = useCallback(() => {
-    initGame(0);
-    setCurrentLevel(0);
-  }, [initGame]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const handleGameUpdate = (game: Game) => {
+      setGameState(game);
+      drawGame(game);
+    };
+
+    gameEngineRef.current = new AppleWormGameEngine(levels, handleGameUpdate);
+    gameEngineRef.current.start();
+
+    return () => {
+      gameEngineRef.current?.stop();
+    };
+  }, []);
+
+  const handleMove = (direction: Direction) => {
+    gameEngineRef.current?.move(direction);
+  };
+
+  const restartGame = () => {
+    gameEngineRef.current?.restart();
+  };
 
   return (
     <>
@@ -378,9 +249,9 @@ const AppleWormGame: React.FC = () => {
         <section className="aw-game">
           <div className="aw-game-info">
             <GameBoard
-              score={score}
-              gameState={gameState}
-              levelNum={currentLevelNum}
+              score={gameState.score}
+              gameState={gameState.state}
+              levelNum={gameState.currentLevel}
             />
           </div>
 
@@ -430,13 +301,13 @@ const AppleWormGame: React.FC = () => {
         </section>
       </div>
 
-      {gameState !== 'PLAYING' && (
+      {gameState.state !== 'PLAYING' && (
         <div className="aw-game-overlay">
-          {gameState === 'GAME_OVER' ? (
+          {gameState.state === 'GAME_OVER' ? (
             <>
               <h2>Игра окончена!</h2>
-              <p>Счет: {score}</p>
-              <p>Уровень: {currentLevelNum + 1}</p>
+              <p>Счет: {gameState.score}</p>
+              <p>Уровень: {gameState.currentLevel + 1}</p>
               <Button type="primary" size="large" onClick={restartGame}>
                 Играть снова
               </Button>
@@ -444,11 +315,11 @@ const AppleWormGame: React.FC = () => {
           ) : (
             <>
               <h2>
-                {currentLevelNum < levels.length - 1
+                {gameState.currentLevel < levels.length - 1
                   ? 'Уровень пройден!'
                   : 'Игра пройдена!'}
               </h2>
-              <p>Финальный счет: {score}</p>
+              <p>Финальный счет: {gameState.score}</p>
               <Button type="primary" size="large" onClick={restartGame}>
                 Начать заново
               </Button>
@@ -459,5 +330,3 @@ const AppleWormGame: React.FC = () => {
     </>
   );
 };
-
-export default AppleWormGame;
