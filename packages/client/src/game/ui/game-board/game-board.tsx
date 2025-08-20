@@ -11,24 +11,25 @@ export const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
   const { score, gameState, levelNum } = props;
 
   return (
-    <>
+    <div className="aw-game-info">
       <div>
-        <span className="label">Уровень:</span> {levelNum}
+        ⭐ <span className="label">Уровень:</span> {levelNum}
       </div>
+
       <div>
-        <span className="label">Счет:</span>
+        🍏 <span className="label">Количество очков: </span>
         {score}
-        {'🍏'.repeat(score)}
+        {/* {'🍏'.repeat(score)} */}
       </div>
-      <br />
+
       <div>
         <span className="label">Состояние:</span>
         {gameState === 'PLAYING'
-          ? 'Играем'
+          ? 'Играем 🎮'
           : gameState === 'GAME_OVER'
-          ? 'Проиграли'
-          : 'Победа!'}
+          ? 'Проиграли ☠️'
+          : 'Победа ✨'}
       </div>
-    </>
+    </div>
   );
 };

@@ -27,6 +27,7 @@ export const AppleWormGame: React.FC = () => {
 
   // Функция отрисовки игры на Canvas
   const drawGame = (game: Game) => {
+    console.log('DROW GAME');
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -182,7 +183,24 @@ export const AppleWormGame: React.FC = () => {
         ctx.strokeStyle = '#ff5100ff';
         ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.arc(centerX, centerY + 3, radius / 2, 0.1 * Math.PI, 0.9 * Math.PI);
+        if (game.state !== 'GAME_OVER') {
+          ctx.arc(
+            centerX,
+            centerY + 3,
+            radius / 2,
+            0.1 * Math.PI,
+            0.9 * Math.PI,
+          );
+        } else {
+          ctx.arc(
+            centerX,
+            centerY + 17,
+            radius / 2,
+            1.2 * Math.PI,
+            Math.PI * 1.8,
+          );
+        }
+
         ctx.stroke();
       } else {
         // Тело - простые зеленые круги
@@ -223,7 +241,8 @@ export const AppleWormGame: React.FC = () => {
 
   useEffect(() => {
     const handleGameUpdate = (game: Game) => {
-      setGameState(game);
+      console.log('setGameState', game);
+      setGameState({ ...game });
       drawGame(game);
     };
 
@@ -247,13 +266,11 @@ export const AppleWormGame: React.FC = () => {
     <>
       <div className="aw-game-container">
         <section className="aw-game">
-          <div className="aw-game-info">
-            <GameBoard
-              score={gameState.score}
-              gameState={gameState.state}
-              levelNum={gameState.currentLevel}
-            />
-          </div>
+          <GameBoard
+            score={gameState.score}
+            gameState={gameState.state}
+            levelNum={gameState.currentLevel}
+          />
 
           <canvas
             ref={canvasRef}
@@ -300,12 +317,11 @@ export const AppleWormGame: React.FC = () => {
           />
         </section>
       </div>
-
       {gameState.state !== 'PLAYING' && (
         <div className="aw-game-overlay">
           {gameState.state === 'GAME_OVER' ? (
             <>
-              <h2>Игра окончена!</h2>
+              <h2>🍎 Игра окончена! 🍏</h2>
               <p>Счет: {gameState.score}</p>
               <p>Уровень: {gameState.currentLevel + 1}</p>
               <Button type="primary" size="large" onClick={restartGame}>
@@ -316,8 +332,8 @@ export const AppleWormGame: React.FC = () => {
             <>
               <h2>
                 {gameState.currentLevel < levels.length - 1
-                  ? 'Уровень пройден!'
-                  : 'Игра пройдена!'}
+                  ? '🙌 Уровень пройден! ✌️✨'
+                  : '🏆 Игра пройдена! 👑'}
               </h2>
               <p>Финальный счет: {gameState.score}</p>
               <Button type="primary" size="large" onClick={restartGame}>

@@ -27,7 +27,7 @@ export class AppleWormGameEngine {
 
   start() {
     this.initLevel(0);
-    this.runGameLoop();
+    this.runGame();
   }
 
   stop() {
@@ -45,12 +45,8 @@ export class AppleWormGameEngine {
     return this.game;
   }
 
-  private runGameLoop() {
-    const loop = () => {
-      this.onUpdate(this.game);
-      this.animationFrameId = requestAnimationFrame(loop);
-    };
-    this.animationFrameId = requestAnimationFrame(loop);
+  private runGame() {
+    this.onUpdate(this.game);
   }
 
   private initLevel(levelIndex: number) {
@@ -65,6 +61,7 @@ export class AppleWormGameEngine {
       exit: level.exit,
       isFalling: false,
     };
+    this.onUpdate(this.game);
   }
 
   move(direction: Direction) {
@@ -81,12 +78,11 @@ export class AppleWormGameEngine {
     if (this.checkExit(head, this.game.exit)) {
       if (this.game.currentLevel < this.levels.length - 1) {
         this.initLevel(this.game.currentLevel + 1);
-        return;
       } else {
         this.game.state = 'LEVEL_COMPLETE';
-        this.onUpdate(this.game);
-        return;
       }
+      this.onUpdate(this.game);
+      return;
     }
 
     const appleIndex = this.game.apples.findIndex(
@@ -102,6 +98,7 @@ export class AppleWormGameEngine {
 
     this.game.snake = newSnake;
     this.processFall();
+    this.onUpdate(this.game);
   }
 
   private moveHead(head: Position, direction: Direction) {
@@ -168,6 +165,7 @@ export class AppleWormGameEngine {
 
     this.game.isFalling = true;
     this.game.snake = fallenSnake;
+    this.onUpdate(this.game);
 
     setTimeout(() => {
       this.processFall();

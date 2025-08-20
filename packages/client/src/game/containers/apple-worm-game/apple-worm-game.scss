@@ -13,15 +13,8 @@
   background-color: transparent;
 }
 
-.aw-game-info {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-around;
-  border: 1px solid #ccc;
-}
-
 .aw-game-overlay {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
