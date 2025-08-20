@@ -16,14 +16,52 @@ html {
 }
 
 body {
-  /* max-width: 1280px; */
   height: 100%;
   margin: 0 auto;
-  text-align: center;
   overflow: auto;
+  font-family: 'Roboto', system-ui, sans-serif; 
 }
 
 #root {
   height: 100%;
   position: relative;
+}
+
+/* Анимация текста */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+text {
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Эффект для яблока */
+#apple-gradient {
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

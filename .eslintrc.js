@@ -17,8 +17,9 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     
-    // Kebab-case для файлов (только предупреждения)
-    'filenames/match-regex': [1, '^[a-z][a-z0-9-]*[a-z0-9]$', true],
+    'comma-dangle': ['error', 'always-multiline'],
+    
+    'filenames/match-regex': [1, '^[a-z][a-z0-9-]*[a-z0-9](\\.[a-z0-9]+)*$', true],
     'filenames/match-exported': [1, 'kebab'],
   },
   ignorePatterns: ['packages/*/dist/', 'node_modules/', '*.js.map', '*.d.ts.map'],

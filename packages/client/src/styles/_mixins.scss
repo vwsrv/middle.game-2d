@@ -1,6 +1,20 @@
 @mixin flex-layout {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin layout-2-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@mixin layout-2-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 @mixin flex-center($direction: row) {
@@ -8,4 +22,16 @@
   justify-content: center;
   align-items: center;
   flex-direction: $direction;
+}
+
+@mixin sm {
+    @media (max-width: 1000px) {
+        @content;
+    }
+}
+
+@mixin xs {
+    @media (max-width: 1000px) {
+        @content;
+    }
 }

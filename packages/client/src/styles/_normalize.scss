@@ -22,7 +22,6 @@ html {
 
 body {
   margin: 0;
-  background-color: #eff1f4;
 }
 
 /**
@@ -182,4 +181,15 @@ details {
 
 summary {
   display: list-item;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  margin-inline: 0;
+  margin-block: 0;
 }

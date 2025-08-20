@@ -1,0 +1,64 @@
+{
+  "app_title": "middle 2D game",
+  "title": "Main Page",
+  "page_title": "Application Page",
+  "error": {
+    "common": "Error"
+  },
+  "api": {
+    "title": "Server Error"
+  },
+  "main_page": {
+    "hero": {
+      "title": "AppleWorm - classic snake with new possibilities",
+      "subtitle": "Play, communicate, compete!"
+    },
+    "navigation": {
+      "home": "Home",
+      "game": "Game",
+      "forum": "Forum",
+      "leaderboard": "Leaderboard",
+      "login": "Login",
+      "register": "Register"
+    },
+    "feature_cards": {
+      "game": {
+        "title": "Play",
+        "description": "Start playing right now!"
+      },
+      "forum": {
+        "title": "Forum",
+        "description": "Discuss the game with other players"
+      },
+      "leaderboard": {
+        "title": "Leaderboard",
+        "description": "View top players"
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "Your achievements and statistics"
+      },
+      "login": {
+        "title": "Login",
+        "description": "Sign in to your account"
+      },
+      "register": {
+        "title": "Register",
+        "description": "Create a new account"
+      }
+    },
+    "error_pages": {
+      "server_error": {
+        "title": "Error 500",
+        "description": "Test server error page"
+      },
+      "not_found": {
+        "title": "Error 404",
+        "description": "Test 'Not Found' page"
+      }
+    },
+    "footer": {
+      "copyright": "AppleWorm © {{year}}"
+    }
+  }
+}

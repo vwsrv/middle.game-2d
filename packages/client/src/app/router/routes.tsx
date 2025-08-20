@@ -6,11 +6,19 @@ import {
   ForumPage,
   MainPage,
   LeaderBoardPage,
-} from '@/pages'
-import { RouteObject } from 'react-router-dom'
-import { ProtectedRoute } from './protected-route'
-import { PublicOnlyRoute } from './public-only-route'
-import { EPages } from '@/shared/constants/paths'
+  RegisterPage,
+  ProfilePage,
+  ChangePasswordPage,
+  EditProfilePage,
+  ProfileLayout,
+} from '@/pages';
+import { RouteObject } from 'react-router-dom';
+import { ProtectedRoute } from './protected-route';
+import { PublicOnlyRoute } from './public-only-route';
+import { EPages } from '@/shared/constants/paths';
+import { Suspense } from 'react';
+import { Spin } from 'antd';
+import { AppSpinner } from '@/shared/components/app-spinner';
 
 export const routes: RouteObject[] = [
   {
@@ -29,7 +37,7 @@ export const routes: RouteObject[] = [
     path: `/${EPages.REGISTER_PAGE}`,
     element: (
       <PublicOnlyRoute>
-        <LoginPage />
+        <RegisterPage />
       </PublicOnlyRoute>
     ),
   },
@@ -37,9 +45,37 @@ export const routes: RouteObject[] = [
     path: `/${EPages.PROFILE_PAGE}`,
     element: (
       <ProtectedRoute>
-        <LoginPage />
+        <Suspense fallback={<Spin size="large" style={{ margin: '20%' }} />}>
+          <ProfileLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<AppSpinner />}>
+            <ProfilePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: EPages.CHANGE_PASSWORD_PAGE,
+        element: (
+          <Suspense fallback={<AppSpinner />}>
+            <ChangePasswordPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: EPages.EDIT_PROFILE_PAGE,
+        element: (
+          <Suspense fallback={<AppSpinner />}>
+            <EditProfilePage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: `/${EPages.GAME_PAGE}`,
@@ -77,4 +113,4 @@ export const routes: RouteObject[] = [
     path: '*', // Любой несуществующий путь → 404
     element: <NotFoundErrorPage />,
   },
-]
+];
