@@ -16,5 +16,5 @@ export const NotFoundErrorPage = () => {
         На главную
       </Button>
     </div>
-  )
-}
+  );
+};

@@ -1,8 +1,8 @@
-import { Button, Card, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { ArrowLeftOutlined } from '@ant-design/icons'
-import { EPages } from '@/shared/constants/paths'
-import { LogoutBtn } from '@/features/auth/components/logout-btn'
+import { Button, Card, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { EPages } from '@/shared/constants/paths';
+import { LogoutBtn } from '@/features/auth/components/logout-btn';
 
 const EditProfilePage = () => {
   const navigate = useNavigate();

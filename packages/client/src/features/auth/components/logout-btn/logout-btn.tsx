@@ -1,12 +1,12 @@
-import { Button, Modal } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { LogoutOutlined } from '@ant-design/icons'
-import { useLogout } from '../../hooks/logout'
-import { EPages } from '@/shared/constants/paths'
+import { Button, Modal } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { LogoutOutlined } from '@ant-design/icons';
+import { useLogout } from '../../hooks/logout';
+import { EPages } from '@/shared/constants/paths';
 
 export const LogoutBtn = () => {
-  const navigate = useNavigate()
-  const logout = useLogout()
+  const navigate = useNavigate();
+  const logout = useLogout();
 
   const handleLogout = () => {
     Modal.confirm({
@@ -15,12 +15,12 @@ export const LogoutBtn = () => {
       cancelText: 'Отмена',
       okButtonProps: { danger: true },
       onOk: () => {
-        logout()
-        console.log('Пользователь вышел')
-        navigate(`/${EPages.LOGIN_PAGE}`)
+        logout();
+        console.log('Пользователь вышел');
+        navigate(`/${EPages.LOGIN_PAGE}`);
       },
-    })
-  }
+    });
+  };
 
   return (
     <Button
@@ -31,5 +31,5 @@ export const LogoutBtn = () => {
       onClick={handleLogout}>
       Выйти
     </Button>
-  )
-}
+  );
+};

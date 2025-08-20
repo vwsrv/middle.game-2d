@@ -1,13 +1,13 @@
-import { FC } from 'react'
-import stypes from './card.module.scss'
+import { FC } from 'react';
+import stypes from './card.module.scss';
 
 type TCard = {
-  className?: string
-  children: React.ReactNode
-}
+  className?: string;
+  children: React.ReactNode;
+};
 
 export const Card: FC<TCard> = (props: TCard) => {
-  const { children, className } = props
+  const { children, className } = props;
 
   return (
     <>
@@ -15,5 +15,5 @@ export const Card: FC<TCard> = (props: TCard) => {
         {children}
       </section>
     </>
-  )
-}
+  );
+};

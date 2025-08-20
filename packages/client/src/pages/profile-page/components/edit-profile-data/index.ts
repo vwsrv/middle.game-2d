@@ -1,1 +1,1 @@
-export { default } from './edit-profile-data'
+export { default } from './edit-profile-data';

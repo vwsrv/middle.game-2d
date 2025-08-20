@@ -1,5 +1,7 @@
 # Middle Game 2D
 
+## Preview: https://clck.ru/3NcJKR
+
 ## Алиасы (Path Mapping)
 
 Проект поддерживает алиасы для удобства импорта модулей.

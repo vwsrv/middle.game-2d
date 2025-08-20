@@ -1,12 +1,12 @@
-import { FC } from 'react'
-import './app-avatar.scss'
-import { Avatar } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
+import { FC } from 'react';
+import './app-avatar.scss';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 type TAppAvatar = {
-  size: number
-  src?: string
-}
+  size: number;
+  src?: string;
+};
 
 export const AppAvatar: FC<TAppAvatar> = (props: TAppAvatar) => {
   return (
@@ -16,5 +16,5 @@ export const AppAvatar: FC<TAppAvatar> = (props: TAppAvatar) => {
       icon={<UserOutlined />}
       className="profile-avatar"
     />
-  )
-}
+  );
+};
