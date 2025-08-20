@@ -51,6 +51,20 @@ export const antdTheme: ThemeConfig = {
     Typography: {
       colorTextSecondary: 'var(--ant-secondary-color-text)',
     },
+    Table: {
+      colorBgContainer: 'var(--ant-bg-container)',
+      colorText: 'var(--ant-text-color)',
+      colorTextHeading: 'var(--ant-text-color)',
+      colorBorderSecondary: 'var(--ant-border-color-secondary)',
+      headerBg: 'var(--ant-primary-bg)',
+      headerColor: 'var(--ant-text-color)',
+      rowHoverBg: 'rgba(0, 0, 0, 0.02)',
+      headerSplitColor: 'var(--ant-border-color)',
+      borderColor: 'var(--ant-border-color)',
+      headerBorderRadius: 8,
+      cellPaddingBlock: 16,
+      cellPaddingInline: 16,
+    },
   },
 };
 
@@ -79,6 +93,20 @@ export const antdDarkTheme: ThemeConfig = {
       colorPrimaryText: 'var(--ant-primary-color-text)',
       colorBgContainerDisabled: 'rgba(255, 255, 255, 0.04)',
       colorTextDisabled: 'rgba(255, 255, 255, 0.25)',
+    },
+    Table: {
+      colorBgContainer: 'var(--ant-bg-container)',
+      colorText: 'var(--ant-text-color)',
+      colorTextHeading: 'var(--ant-text-color)',
+      colorBorderSecondary: 'var(--ant-border-color-secondary)',
+      headerBg: 'var(--ant-primary-bg)',
+      headerColor: 'var(--ant-text-color)',
+      rowHoverBg: 'rgba(255, 255, 255, 0.03)',
+      headerSplitColor: 'var(--ant-border-color)',
+      borderColor: 'var(--ant-border-color)',
+      headerBorderRadius: 8,
+      cellPaddingBlock: 16,
+      cellPaddingInline: 16,
     },
   },
 };

@@ -15,6 +15,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
   }, []);
 
+  console.log(isDarkMode, 'isDarkMode');
+
   return (
     <ConfigProvider theme={isDarkMode ? antdDarkTheme : antdTheme}>
       {children}
