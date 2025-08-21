@@ -35,3 +35,10 @@
         @content;
     }
 }
+
+@mixin main-background {
+  background-image: url('/fones/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
