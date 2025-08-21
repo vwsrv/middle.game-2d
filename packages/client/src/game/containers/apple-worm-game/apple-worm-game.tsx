@@ -27,7 +27,6 @@ export const AppleWormGame: React.FC = () => {
 
   // Функция отрисовки игры на Canvas
   const drawGame = (game: Game) => {
-    console.log('DROW GAME');
     const canvas = canvasRef.current;
     if (!canvas) return;
 
