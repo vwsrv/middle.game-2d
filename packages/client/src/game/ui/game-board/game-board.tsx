@@ -19,7 +19,6 @@ export const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
       <div>
         🍏 <span className="label">Количество очков: </span>
         {score}
-        {/* {'🍏'.repeat(score)} */}
       </div>
 
       <div>
