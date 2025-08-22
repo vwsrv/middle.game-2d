@@ -22,6 +22,19 @@ body {
   font-family: 'Roboto', system-ui, sans-serif; 
 }
 
+h1 {
+  font-family: 'Blob Spongey', sans-serif;
+  margin: 0 0 30px 0;
+  letter-spacing: 5px;
+}
+
+h2 {
+  font-family: 'Blob Spongey', sans-serif;
+  margin: 0 0 20px 0;
+  letter-spacing: 3px;
+  font-weight: normal;
+}
+
 #root {
   height: 100%;
   position: relative;
