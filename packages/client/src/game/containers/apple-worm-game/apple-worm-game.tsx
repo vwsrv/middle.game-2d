@@ -9,12 +9,11 @@ import './apple-worm-game.scss';
 import { Button } from 'antd';
 import { AppleWormGameEngine } from '@/game/core/game-engine';
 import { Direction, Game } from '@/game/types/types';
-import { CELL_SIZE, GRID_SIZE, levels } from '@/game/constants/constants';
+import { levels } from '@/game/constants/constants';
 import { GameBoard } from '@/game/ui/game-board/game-board';
 import { GameCanvas } from '@/game/ui/game-canvas/game-canvas';
 
 export const AppleWormGame: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameEngineRef = useRef<AppleWormGameEngine | null>(null);
   const [gameState, setGameState] = useState<Game>({
     snake: [],

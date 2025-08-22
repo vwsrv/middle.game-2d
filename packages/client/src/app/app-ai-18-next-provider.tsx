@@ -1,5 +1,4 @@
 import { I18nextProvider } from 'react-i18next';
-import * as React from 'react';
 import i18n from '@/shared/i18n/i18n';
 import { PropsWithChildren } from 'react';
 
