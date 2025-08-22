@@ -86,6 +86,14 @@ export const routes: RouteObject[] = [
     ),
   },
   {
+    path: `/${EPages.APPLE_WORN_GAME_PAGE}`,
+    element: (
+      <ProtectedRoute>
+        <GamePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: `/${EPages.FORUM_PAGE}`,
     element: (
       <ProtectedRoute>
