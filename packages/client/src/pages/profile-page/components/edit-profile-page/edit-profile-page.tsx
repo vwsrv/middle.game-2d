@@ -34,7 +34,7 @@ const EditProfilePage = () => {
         <div className="actions__start">
           <Button
             type="link"
-            onClick={() => navigate(`/${EPages.PROFILE_PAGE}`)}
+            onClick={() => navigate(-1)}
             icon={<ArrowLeftOutlined />}
             size="small">
             Назад
