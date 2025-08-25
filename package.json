@@ -26,5 +26,9 @@
     "eslint-plugin-import": "^2.32.0",
     "lerna": "^5.4.3",
     "react-hook-form": "^7.62.0"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "react-redux": "^9.2.0"
   }
 }

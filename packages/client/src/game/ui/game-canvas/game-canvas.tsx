@@ -194,7 +194,6 @@ export const GameCanvas: React.FC<GameCavasProps> = (props: GameCavasProps) => {
 
         ctx.stroke();
       } else {
-        // Тело - простые зеленые круги
         ctx.fillStyle = '#00AA00';
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);

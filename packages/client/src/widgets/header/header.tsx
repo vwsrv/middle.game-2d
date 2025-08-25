@@ -4,10 +4,13 @@ import { getMenuItems } from '@/pages/main-page/constants/data';
 import useBreakpoint from 'antd/es/grid/hooks/useBreakpoint';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/shared/i18n';
+import { useDispatch } from 'react-redux';
+import { setLanguage } from '@/features/global-slice/globalSlice';
 
 const { Title } = Typography;
 
 export const HeaderApp = () => {
+  const dispatch = useDispatch();
   const { i18n } = useTranslation();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
@@ -16,8 +19,9 @@ export const HeaderApp = () => {
   const selectedKey =
     menuItems.find(item => item.path === location.pathname)?.key || 'home';
 
-  const onChangeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
+  const onChangeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+    dispatch(setLanguage(lang));
   };
 
   return (

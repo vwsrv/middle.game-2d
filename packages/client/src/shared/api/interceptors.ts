@@ -5,7 +5,7 @@ import {
 } from 'axios';
 import { GLOBAL_STORE_KEY } from '@/shared/constants/store/store-key.constant';
 import { getItem } from '@/utils/local-storage.util';
-import { IGlobalStore } from '@/shared/store/sources/interfaces/global-store.interface';
+import { IGlobalStore } from '@/shared/global-store/global-store.interface';
 import { TRequestConfig } from '@/shared/types/api.type';
 
 export interface IConsoleError {
