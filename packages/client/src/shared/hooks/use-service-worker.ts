@@ -3,6 +3,8 @@ import {
   register,
   unregister,
   send as sendMessage,
+  isSupported,
+  get,
 } from '@/utils/service-worker.util';
 
 interface IProps {
@@ -26,52 +28,50 @@ export const useServiceWorker = (auto = true): IProps => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const checkSupport = () => {
-      const isSupportedResult = 'serviceWorker' in navigator;
-      setSupported(isSupportedResult);
+    setSupported(isSupported());
+  }, []);
 
-      if (isSupportedResult && auto) {
-        initServiceWorker();
-      }
-    };
+  const refresh = useCallback((): Promise<void> => {
+    if (!supported) {
+      return Promise.resolve();
+    }
 
-    checkSupport();
-  }, [auto]);
+    setLoading(true);
+    return get()
+      .then(({ active: isActive, registration: reg }) => {
+        setActive(isActive);
+        setRegistration(reg);
+        setError(null);
+      })
+      .catch(err => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [supported]);
 
-  const initServiceWorker = useCallback(
-    (path = './sw.js', scope = '/') => {
-      if (!supported) {
-        return Promise.resolve();
-      }
+  const init = useCallback(
+    async (path?: string, scope?: string): Promise<void> => {
+      if (!supported) return;
 
       setLoading(true);
-      setError(null);
+      try {
+        const reg = await register(path, scope);
+        setRegistration(reg);
 
-      return register(path, scope)
-        .then(reg => {
-          setRegistration(reg);
+        if (reg) {
+          await navigator.serviceWorker.ready;
+          const status = await get();
+          setActive(status.active);
+        }
 
-          if (reg) {
-            const checkActive = () => {
-              setActive(reg.active?.state === 'activated');
-            };
-
-            checkActive();
-
-            reg.addEventListener('updatefound', () => {
-              const newWorker = reg.installing;
-              if (newWorker) {
-                newWorker.addEventListener('statechange', checkActive);
-              }
-            });
-          }
-        })
-        .catch(err => {
-          setError(err as Error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+        setError(null);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
     },
     [supported],
   );
@@ -106,13 +106,19 @@ export const useServiceWorker = (auto = true): IProps => {
     [supported, registration],
   );
 
+  useEffect(() => {
+    if (auto && supported) {
+      void refresh();
+    }
+  }, []);
+
   return {
     supported,
     registration,
     active,
     loading,
     error,
-    init: initServiceWorker,
+    init: init,
     close,
     send,
   };

@@ -6,7 +6,7 @@ export const ServiceWorkerProvider: FC<ComponentPropsWithoutRef<'div'>> = ({
   children,
 }) => {
   const sw = useServiceWorker();
-  console.log(sw);
+
   useEffect(() => {
     if (sw.error) {
       notification.warning({
@@ -14,7 +14,6 @@ export const ServiceWorkerProvider: FC<ComponentPropsWithoutRef<'div'>> = ({
         description:
           'В случае отключения от сети прогресс игры не будет сохранен',
       });
-      return;
     } else if (sw.active) {
       notification.success({
         message: 'Уведомление',

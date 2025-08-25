@@ -34,6 +34,25 @@ export const register = (
     });
 };
 
+export const get = (): Promise<{
+  active: boolean;
+  registration: ServiceWorkerRegistration | null;
+}> => {
+  if (!isSupported()) {
+    return Promise.resolve({ active: false, registration: null });
+  }
+
+  return navigator.serviceWorker.ready
+    .then(registration => ({
+      active: registration.active?.state === 'activated',
+      registration,
+    }))
+    .catch(() => ({
+      active: false,
+      registration: null,
+    }));
+};
+
 export const unregister = (): Promise<boolean> => {
   if (!isSupported()) return Promise.resolve(false);
 
