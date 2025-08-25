@@ -45,9 +45,7 @@
       "register": {
         "title": "Register",
         "description": "Create a new account"
-      }
-    },
-    "error_pages": {
+      },
       "server_error": {
         "title": "Error 500",
         "description": "Test server error page"

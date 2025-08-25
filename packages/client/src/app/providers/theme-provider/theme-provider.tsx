@@ -6,7 +6,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // Проверяем предпочтения пользователя
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)',
     ).matches;
@@ -14,8 +13,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
   }, []);
-
-  console.log(isDarkMode, 'isDarkMode');
 
   return (
     <ConfigProvider theme={isDarkMode ? antdDarkTheme : antdTheme}>

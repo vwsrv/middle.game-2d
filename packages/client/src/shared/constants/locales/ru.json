@@ -45,9 +45,7 @@
       "register": {
         "title": "Регистрация",
         "description": "Создайте новый аккаунт"
-      }
-    },
-    "error_pages": {
+      },
       "server_error": {
         "title": "Ошибка 500",
         "description": "Тестовая страница ошибки сервера"
