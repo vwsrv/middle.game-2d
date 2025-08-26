@@ -18,6 +18,7 @@ self.addEventListener('fetch', (e) => {
     e.respondWith(
         caches.match(e.request)
             .then((res) => {
+              //TODO Создать white-list или признаки по которым будем получать только нужные для кэширование запросы
                 if (res) {
                     return res;
                 }

@@ -9,6 +9,7 @@ export const ServiceWorkerProvider: FC<ComponentPropsWithoutRef<'div'>> = ({
 
   useEffect(() => {
     if (sw.error) {
+      //TODO Прогресс игры стоит сохранять в localstorage
       notification.warning({
         message: 'Предупреждение',
         description:
