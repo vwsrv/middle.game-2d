@@ -48,13 +48,7 @@ export const HeaderApp = () => {
           <span style={{ color: '#52c41a' }}>Worm</span>
         </Title>
       </div>
-      <Menu
-        theme="light"
-        mode="horizontal"
-        selectedKeys={[selectedKey]}
-        items={menuItems}
-        style={{ flex: 1 }}
-      />
+      <Menu mode="horizontal" selectedKeys={[selectedKey]} items={menuItems} />
 
       <Space style={{ float: 'right' }}>
         <Button

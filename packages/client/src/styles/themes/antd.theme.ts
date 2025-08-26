@@ -65,6 +65,15 @@ export const antdTheme: ThemeConfig = {
       cellPaddingBlock: 16,
       cellPaddingInline: 16,
     },
+    Menu: {
+      itemSelectedColor: 'var(--ant-menu-item-selected-color)',
+      itemSelectedBg: 'var(--ant-primary-color)',
+      darkItemSelectedColor: 'var(--ant-menu-item-selected-color)',
+      darkItemSelectedBg: 'var(--ant-primary-color)',
+      // Добавляем для горизонтального меню
+      horizontalItemSelectedColor: 'var(--ant-menu-item-selected-color)',
+      horizontalItemSelectedBg: 'transparent',
+    },
   },
 };
 
@@ -107,6 +116,15 @@ export const antdDarkTheme: ThemeConfig = {
       headerBorderRadius: 8,
       cellPaddingBlock: 16,
       cellPaddingInline: 16,
+    },
+    Menu: {
+      itemSelectedColor: 'var(--ant-menu-item-selected-color)',
+      itemSelectedBg: 'var(--ant-primary-color)',
+      darkItemSelectedColor: 'var(--ant-menu-item-selected-color)',
+      darkItemSelectedBg: 'var(--ant-primary-color)',
+      // Добавляем для горизонтального меню
+      horizontalItemSelectedColor: 'var(--ant-menu-item-selected-color)',
+      horizontalItemSelectedBg: 'transparent',
     },
   },
 };
