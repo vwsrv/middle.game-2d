@@ -4,6 +4,8 @@ import { getMenuItems } from '@/pages/main-page/constants/data';
 import useBreakpoint from 'antd/es/grid/hooks/useBreakpoint';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/shared/i18n';
+import useAudio from '@/shared/hooks/useAudio';
+import { SoundOutlined, MutedOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { setLanguage } from '@/features/global-slice/globalSlice';
 
@@ -24,6 +26,20 @@ export const HeaderApp = () => {
     dispatch(setLanguage(lang));
   };
 
+  const {
+    isPlaying,
+    play: playMusic,
+    pause: pauseMusic,
+  } = useAudio('/audio/fon.mp3', true);
+
+  const toggle = () => {
+    if (isPlaying) {
+      pauseMusic();
+    } else {
+      playMusic();
+    }
+  };
+
   return (
     <Header>
       <div className="logo" style={{ float: 'left', marginRight: '24px' }}>
@@ -41,6 +57,12 @@ export const HeaderApp = () => {
       />
 
       <Space style={{ float: 'right' }}>
+        <Button
+          type={isPlaying ? 'primary' : 'default'}
+          size="small"
+          onClick={toggle}
+          icon={isPlaying ? <SoundOutlined /> : <MutedOutlined />}
+        />
         <Button
           type={i18n.language === 'ru' ? 'primary' : 'default'}
           size="small"
