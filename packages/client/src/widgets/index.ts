@@ -1,1 +1,1 @@
-export * from './game-header';
+export * from '../game/ui/game-header';
