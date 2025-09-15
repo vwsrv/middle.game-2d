@@ -35,12 +35,6 @@ export const HeaderApp = () => {
       <Menu mode="horizontal" selectedKeys={[selectedKey]} items={menuItems} />
 
       <Space style={{ float: 'right' }}>
-        {/* <Button
-          type={isPlaying ? 'primary' : 'default'}
-          size="small"
-          onClick={toggle}
-          icon={isPlaying ? <SoundOutlined /> : <MutedOutlined />}
-        /> */}
         <Button
           type={i18n.language === 'ru' ? 'primary' : 'default'}
           size="small"
