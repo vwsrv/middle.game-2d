@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import stypes from './card.module.scss';
+import styles from './card.module.scss';
 
 type TCard = {
   className?: string;
@@ -11,7 +11,7 @@ export const Card: FC<TCard> = (props: TCard) => {
 
   return (
     <>
-      <section className={`${stypes.card} ${className || ''}`.trim()}>
+      <section className={`${styles.card} ${className || ''}`.trim()}>
         {children}
       </section>
     </>

@@ -52,7 +52,6 @@ export const AppleWormGame: React.FC = () => {
   useEffect(() => {
     const handleGameUpdate = (game: Game) => {
       setGameState({ ...game });
-      // drawGame(game);
     };
 
     gameEngineRef.current = new AppleWormGameEngine(levels, handleGameUpdate);
