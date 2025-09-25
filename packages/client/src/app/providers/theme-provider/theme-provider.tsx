@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { antdDarkTheme, antdTheme } from '@/styles/themes/antd.theme';
 
@@ -6,6 +6,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)',
     ).matches;

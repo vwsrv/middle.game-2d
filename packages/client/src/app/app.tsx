@@ -4,21 +4,22 @@ import '../styles/index.scss';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
-import ErrorBoundary from '@/shared/error-boundary/error-boundary';
-import AppAI18NextProvider from '@/app/app-ai-18-next-provider';
-import ServiceWorkerProvider from '@/app/providers';
+import ErrorBoundary from '@/shared/ui/error-boundary/error-boundary';
+import AppAi18NextProvider from '@/app/providers/app-ai18-next/app-ai-18-next.provider';
+import { ServiceWorkerProvider } from '@/app/providers/servce-worker';
 import { ThemeProvider } from './providers/theme-provider/theme-provider';
 import global_store from '@/shared/global-store/global-store';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <React.StrictMode>
     <ErrorBoundary>
       <ServiceWorkerProvider>
         <ThemeProvider>
           <Provider store={global_store}>
-            <AppAI18NextProvider>
+            <AppAi18NextProvider>
               <RouterProvider router={router} />
-            </AppAI18NextProvider>
+            </AppAi18NextProvider>
           </Provider>
         </ThemeProvider>
       </ServiceWorkerProvider>

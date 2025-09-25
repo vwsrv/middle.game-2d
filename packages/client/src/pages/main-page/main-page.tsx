@@ -1,6 +1,6 @@
-import { Layout, Card, Row, Col, Space, Typography } from 'antd';
+import { Card, Col, Layout, Row, Space, Typography } from 'antd';
 import { featureCards } from './constants/data';
-import { HeaderApp } from '@/widgets/header';
+import Header from '@/widgets/header/header';
 import { useTranslation } from '@/shared/i18n';
 
 const { Content, Footer } = Layout;
@@ -10,7 +10,7 @@ export const MainPage = () => {
   const { t } = useTranslation();
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <HeaderApp />
+      <Header />
 
       <Content style={{ padding: '50px 50px 0', flex: 1 }}>
         <Row gutter={[24, 24]} justify="center">

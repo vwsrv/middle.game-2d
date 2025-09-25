@@ -1,14 +1,14 @@
 import { Button, Card, Typography } from 'antd';
 import {
-  UserOutlined,
+  ArrowLeftOutlined,
+  LockOutlined,
+  LoginOutlined,
   MailOutlined,
   PhoneOutlined,
-  LoginOutlined,
-  ArrowLeftOutlined,
   SettingOutlined,
-  LockOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
-import { AppAvatar } from '@/shared/components/app-avatar';
+import AppAvatar from '@/shared/ui/app-avatar/app-avatar';
 import { useNavigate } from 'react-router-dom';
 import { EPages } from '@/shared/constants/paths';
 import { LogoutBtn } from '@/features/auth/components/logout-btn';
