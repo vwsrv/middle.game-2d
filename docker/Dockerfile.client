@@ -1,13 +1,13 @@
-ARG NODE_VERSION=18
+ARG NODE_VERSION=24
+ARG BASE_OS_VERSION=bookworm
+ARG BASE_IMAGE_TYPE=slim
 ARG CLIENT_PORT=3001
 
-FROM node:$NODE_VERSION-buster as base
+FROM node:${NODE_VERSION}-${BASE_OS_VERSION}-${BASE_IMAGE_TYPE} AS builder
 
 WORKDIR /app
 
-FROM base as builder
-
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock lerna.json ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
@@ -16,7 +16,7 @@ RUN yarn lerna bootstrap
 RUN rm -rf /app/packages/client/dist/ && yarn build --scope=client
 
 
-FROM nginx:latest as production
+FROM nginx:1.29.1-alpine-slim AS production
 WORKDIR /app
 
 COPY --from=builder /app/packages/client/dist/ /app/

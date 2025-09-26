@@ -1,5 +1,5 @@
 {
-  "name": "client-server-template-with-vite",
+  "name": "middlegame-2d",
   "private": true,
   "scripts": {
     "bootstrap": "yarn && node init.js && lerna clean && yarn && lerna bootstrap",
@@ -17,7 +17,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=15"
+    "node": ">=24.0.0"
   },
   "devDependencies": {
     "@conarti/eslint-plugin-feature-sliced": "^1.0.5",

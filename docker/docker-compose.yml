@@ -1,12 +1,10 @@
-version: "3.9"
-
 services:
     client:
-        container_name: prakticum-client
-        image: prakticum-client
+        container_name: 2d-game-client-cnt
+        image: 2d-game-client-image
         build:
-            context: .
-            dockerfile: Dockerfile.client
+            context: ..
+            dockerfile: docker/Dockerfile.client
             args:
               CLIENT_PORT: ${CLIENT_PORT}
         restart: always
@@ -15,12 +13,14 @@ services:
         environment:
           - CLIENT_PORT=${CLIENT_PORT}
           - SERVER_PORT=${SERVER_PORT}
+        env_file:
+            - .env
     server:
-        container_name: prakticum-server
-        image: prackicum-server
+        container_name: 2d-game-server-cnt
+        image: 2d-game-server-image
         build:
-            context: .
-            dockerfile: Dockerfile.server
+            context: ..
+            dockerfile: docker/Dockerfile.server
             args:
               SERVER_PORT: ${SERVER_PORT}
         restart: always
@@ -28,9 +28,11 @@ services:
             - "${SERVER_PORT}:${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
+        env_file:
+            - .env
 
     postgres:
-      image: postgres:14     
+      image: postgres:17-alpine    
       ports:
         - "${POSTGRES_PORT}:${POSTGRES_PORT}"
       environment:
