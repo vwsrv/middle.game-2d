@@ -1,8 +1,8 @@
 import axios, { type AxiosInstance } from 'axios';
 import {
+  errorInterceptor,
   requestInterceptor,
   successInterceptor,
-  errorInterceptor,
 } from './interceptors';
 
 export const api: AxiosInstance = axios.create({

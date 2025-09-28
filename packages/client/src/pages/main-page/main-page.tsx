@@ -1,16 +1,19 @@
-import { Layout, Card, Row, Col, Space, Typography } from 'antd';
+import { Card, Col, Layout, Row, Space, Typography } from 'antd';
 import { featureCards } from './constants/data';
-import { HeaderApp } from '@/widgets/header';
+import Header from '@/widgets/header/header';
 import { useTranslation } from '@/shared/i18n';
+import { useSSRConfig } from '@/shared/contexts/ssr-context';
 
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
 export const MainPage = () => {
   const { t } = useTranslation();
+  const { currentYear } = useSSRConfig();
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <HeaderApp />
+      <Header />
 
       <Content style={{ padding: '50px 50px 0', flex: 1 }}>
         <Row gutter={[24, 24]} justify="center">
@@ -28,7 +31,9 @@ export const MainPage = () => {
                     {card.icon}
                   </div>
                 }
-                onClick={() => (window.location.href = card.path)}
+                onClick={() => {
+                  window.location.href = card.path;
+                }}
                 style={{ height: '100%', border: '1px solid rgba(0 0 0 / 0)' }}>
                 <Card.Meta
                   title={t(`main_page.feature_cards.${card.key}.title`)}
@@ -53,7 +58,7 @@ export const MainPage = () => {
         <Space direction="vertical" size="small">
           <Text type="secondary">
             {t('main_page.footer.copyright', {
-              year: new Date().getFullYear(),
+              year: currentYear,
             })}{' '}
           </Text>
         </Space>
