@@ -11,6 +11,11 @@ export default defineConfig({
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
