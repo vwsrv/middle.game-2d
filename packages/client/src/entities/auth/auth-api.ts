@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { AUTH_URL, USER_KEY } from './keys';
-import { IUserData, SingInResponse, SingUpResponse } from './types';
+import { IUserData, SingInResponse } from './types';
 import { setIsAuth, setUser } from '@/features/global-slice/globalSlice'; // Импорт setUser
 import { useDispatch } from 'react-redux';
 
@@ -10,14 +10,13 @@ export function useSignUp() {
   const dispatch = useDispatch();
 
   return useMutation({
-    mutationFn: async (data: SingUpResponse) => {
+    mutationFn: async (data: SingInResponse) => {
       const response = await axios.post(`${AUTH_URL}/signup`, data, {
         withCredentials: true,
       });
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USER_KEY] });
       queryClient.refetchQueries({ queryKey: [USER_KEY] });
       dispatch(setIsAuth(true));
     },
@@ -36,7 +35,6 @@ export function useSignIn() {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USER_KEY] });
       queryClient.refetchQueries({ queryKey: [USER_KEY] });
       dispatch(setIsAuth(true));
     },
@@ -72,7 +70,6 @@ export function useGetUser(enabled = true) {
     },
     onSuccess: (data: IUserData) => {
       dispatch(setUser(data));
-      console.log('123');
     },
     onError: () => {
       dispatch(setUser(null));

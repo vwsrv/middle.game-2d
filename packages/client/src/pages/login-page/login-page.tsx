@@ -5,8 +5,9 @@ import PageWrapper from '@/shared/components/PageWrapper';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
 import './login-page.scss';
-import { useGetUser, useSignIn } from '@/entities/auth/auth-api';
+import { useSignIn } from '@/entities/auth/auth-api';
 import { loginValidation, passwordValidation } from '@/shared/lib/validation';
+import { OauthButton } from './components/OauthButton';
 
 type TFormValues = {
   login: string;
@@ -16,7 +17,6 @@ type TFormValues = {
 export function LoginPage() {
   const navigate = useNavigate();
   const signInMutation = useSignIn();
-  const { refetch } = useGetUser();
 
   const {
     handleSubmit,
@@ -26,16 +26,8 @@ export function LoginPage() {
     mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<TFormValues> = data => {
-    signInMutation.mutate(
-      { login: data.login, password: data.password },
-      {
-        onSuccess: () => {
-          refetch();
-          navigate(EPages.LEADER_BOARD_PAGE);
-        },
-      },
-    );
+  const onSubmit: SubmitHandler<TFormValues> = async data => {
+    signInMutation.mutateAsync({ login: data.login, password: data.password });
   };
 
   return (
@@ -91,6 +83,10 @@ export function LoginPage() {
             className="login-form__button">
             Войти
           </Button>
+        </Form.Item>
+
+        <Form.Item>
+          <OauthButton />
         </Form.Item>
 
         <Form.Item>

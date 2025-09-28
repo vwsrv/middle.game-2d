@@ -2,12 +2,33 @@ import { Layout, Card, Row, Col, Space, Typography } from 'antd';
 import { featureCards } from './constants/data';
 import { HeaderApp } from '@/widgets/header';
 import { useTranslation } from '@/shared/i18n';
+import { EPages } from '@/shared/constants/paths';
+import { useNavigate } from 'react-router-dom';
+import { useOauth } from '@/entities/auth/oauth-api';
+import { useEffect } from 'react';
 
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
+const redirectUrl = 'http://localhost:3000';
+
 export const MainPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const oauthApi = useOauth();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      oauthApi.mutateAsync({ code, redirect_url: redirectUrl });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else {
+      console.log('Код авторизации не найден в URL');
+      navigate(EPages.LOGIN_PAGE);
+    }
+  }, [navigate]);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <HeaderApp />

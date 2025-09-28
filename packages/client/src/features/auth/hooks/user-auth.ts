@@ -8,6 +8,5 @@ export const useAuth = () => {
   const isAuth = useSelector(
     (state: { global: IGlobalStore }) => state.global.isAuth,
   );
-  console.log(user, isAuth);
   return { isAuth };
 };
