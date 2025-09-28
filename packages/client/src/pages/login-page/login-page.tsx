@@ -5,7 +5,8 @@ import PageWrapper from '@/shared/components/PageWrapper';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
 import './login-page.scss';
-import { ErrorMessages } from '@/shared/constants/error-message';
+import { useGetUser, useSignIn } from '@/entities/auth/auth-api';
+import { loginValidation, passwordValidation } from '@/shared/lib/validation';
 
 type TFormValues = {
   login: string;
@@ -14,6 +15,9 @@ type TFormValues = {
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const signInMutation = useSignIn();
+  const { refetch } = useGetUser();
+
   const {
     handleSubmit,
     control,
@@ -23,7 +27,15 @@ export function LoginPage() {
   });
 
   const onSubmit: SubmitHandler<TFormValues> = data => {
-    console.log(data);
+    signInMutation.mutate(
+      { login: data.login, password: data.password },
+      {
+        onSuccess: () => {
+          refetch();
+          navigate(EPages.LEADER_BOARD_PAGE);
+        },
+      },
+    );
   };
 
   return (
@@ -38,24 +50,7 @@ export function LoginPage() {
           <Controller
             name="login"
             control={control}
-            rules={{
-              minLength: {
-                value: 3,
-                message: ErrorMessages.MIN_SYMBOLS(3),
-              },
-              maxLength: {
-                value: 20,
-                message: ErrorMessages.MAX_SYMBOLS(20),
-              },
-              pattern: {
-                value: /^(?![0-9]+$)[A-Za-z0-9_-]{3,20}$/,
-                message: ErrorMessages.LOGIN,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={loginValidation}
             render={({ field }) => (
               <Input
                 {...field}
@@ -73,24 +68,7 @@ export function LoginPage() {
           <Controller
             name="password"
             control={control}
-            rules={{
-              minLength: {
-                value: 8,
-                message: ErrorMessages.MIN_SYMBOLS(8),
-              },
-              maxLength: {
-                value: 40,
-                message: ErrorMessages.MAX_SYMBOLS(40),
-              },
-              pattern: {
-                value: /^(?=.*[A-Z])(?=.*\d).+$/,
-                message: ErrorMessages.PASSWORD,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={passwordValidation}
             render={({ field }) => (
               <Input.Password
                 {...field}
@@ -119,7 +97,7 @@ export function LoginPage() {
           <Button
             type="link"
             color="default"
-            onClick={() => navigate(`/${EPages.REGISTER_PAGE}`)}
+            onClick={() => navigate(EPages.REGISTER_PAGE)}
             size="middle"
             className="login-form__button">
             Нет аккаунта?

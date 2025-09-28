@@ -5,7 +5,14 @@ import PageWrapper from '@/shared/components/PageWrapper';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
 import './register-page.scss';
-import { ErrorMessages } from '@/shared/constants/error-message';
+import {
+  emailValidation,
+  loginValidation,
+  nameUserValidation,
+  passwordValidation,
+  phoneValidation,
+} from '@/shared/lib/validation';
+import { useSignUp } from '@/entities/auth/auth-api';
 
 type TFormValues = {
   first_name: string;
@@ -18,6 +25,7 @@ type TFormValues = {
 
 export function RegisterPage() {
   const navigate = useNavigate();
+  const signUpMutation = useSignUp();
   const {
     handleSubmit,
     control,
@@ -27,7 +35,14 @@ export function RegisterPage() {
   });
 
   const onSubmit: SubmitHandler<TFormValues> = data => {
-    console.log(data);
+    signUpMutation.mutate(
+      { ...data },
+      {
+        onSuccess: () => {
+          navigate(EPages.LEADER_BOARD_PAGE);
+        },
+      },
+    );
   };
 
   return (
@@ -42,16 +57,7 @@ export function RegisterPage() {
           <Controller
             name="first_name"
             control={control}
-            rules={{
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-              pattern: {
-                value: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
-                message: ErrorMessages.NAME,
-              },
-            }}
+            rules={nameUserValidation}
             render={({ field }) => (
               <Input
                 {...field}
@@ -68,16 +74,7 @@ export function RegisterPage() {
           <Controller
             name="second_name"
             control={control}
-            rules={{
-              pattern: {
-                value: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
-                message: ErrorMessages.NAME,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={nameUserValidation}
             render={({ field }) => (
               <Input
                 {...field}
@@ -94,16 +91,7 @@ export function RegisterPage() {
           <Controller
             name="email"
             control={control}
-            rules={{
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: ErrorMessages.EMAIL,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={emailValidation}
             render={({ field }) => (
               <Input
                 {...field}
@@ -120,16 +108,7 @@ export function RegisterPage() {
           <Controller
             name="phone"
             control={control}
-            rules={{
-              pattern: {
-                value: /^\+?\d{10,15}$/,
-                message: ErrorMessages.PHONE,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={phoneValidation}
             render={({ field }) => (
               <Input
                 {...field}
@@ -146,24 +125,7 @@ export function RegisterPage() {
           <Controller
             name="login"
             control={control}
-            rules={{
-              minLength: {
-                value: 3,
-                message: ErrorMessages.MIN_SYMBOLS(3),
-              },
-              maxLength: {
-                value: 20,
-                message: ErrorMessages.MAX_SYMBOLS(20),
-              },
-              pattern: {
-                value: /^(?![0-9]+$)[A-Za-z0-9_-]{3,20}$/,
-                message: ErrorMessages.LOGIN,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={loginValidation}
             render={({ field }) => (
               <Input
                 {...field}
@@ -181,24 +143,7 @@ export function RegisterPage() {
           <Controller
             name="password"
             control={control}
-            rules={{
-              minLength: {
-                value: 8,
-                message: ErrorMessages.MIN_SYMBOLS(8),
-              },
-              maxLength: {
-                value: 40,
-                message: ErrorMessages.MAX_SYMBOLS(40),
-              },
-              pattern: {
-                value: /^(?=.*[A-Z])(?=.*\d).+$/,
-                message: ErrorMessages.PASSWORD,
-              },
-              required: {
-                value: true,
-                message: ErrorMessages.REQUIRED,
-              },
-            }}
+            rules={passwordValidation}
             render={({ field }) => (
               <Input.Password
                 {...field}
@@ -226,7 +171,7 @@ export function RegisterPage() {
           <Button
             type="link"
             color="default"
-            onClick={() => navigate(`/${EPages.LOGIN_PAGE}`)}
+            onClick={() => navigate(EPages.LOGIN_PAGE)}
             size="middle"
             className="register-form__button">
             Уже есть аккаунт?

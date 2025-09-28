@@ -1,8 +1,11 @@
+import { IUserData } from '@/entities/auth/types';
 import { IGlobalStore } from '@/shared/global-store/global-store.interface';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IGlobalStore = {
   language: 'en',
+  isAuth: false,
+  user: null,
 };
 
 const globalSlice = createSlice({
@@ -12,26 +15,14 @@ const globalSlice = createSlice({
     setLanguage(state, action: PayloadAction<string>) {
       state.language = action.payload;
     },
-    setTokens(
-      state,
-      action: PayloadAction<{
-        accessToken?: string;
-        refreshToken?: string;
-        userId?: string;
-      }>,
-    ) {
-      const { accessToken, refreshToken, userId } = action.payload;
-      if (accessToken) state.accessToken = accessToken;
-      if (refreshToken) state.refreshToken = refreshToken;
-      if (userId) state.userId = userId;
+    setIsAuth(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload;
     },
-    clearTokens(state) {
-      state.accessToken = undefined;
-      state.refreshToken = undefined;
-      state.userId = undefined;
+    setUser(state, action: PayloadAction<IUserData | null>) {
+      state.user = action.payload;
     },
   },
 });
 
-export const { setLanguage, setTokens, clearTokens } = globalSlice.actions;
+export const { setLanguage, setIsAuth, setUser } = globalSlice.actions;
 export default globalSlice.reducer;

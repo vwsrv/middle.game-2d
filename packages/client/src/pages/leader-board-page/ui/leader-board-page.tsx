@@ -1,26 +1,32 @@
-import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd'
-import { dataSource, columns } from '../mock/data'
-import { HeaderApp } from '@/widgets/header'
-import { Content } from 'antd/es/layout/layout'
-import { IUser } from '@/app/router/types'
-import { useEffect, useState } from 'react'
+import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd';
+import { columns } from '../mock/data';
+import { HeaderApp } from '@/widgets/header';
+import { Content } from 'antd/es/layout/layout';
+import { useCallback, useMemo, useState } from 'react';
+import { useLeaderboardAll } from '../api/leaderboardApi';
+import { SortType } from '../types/leaderboard';
 
-const { Title } = Typography
-
-type SortType = 'count' | 'level'
+const { Title } = Typography;
 
 export const LeaderBoardPage = () => {
-  const [userArr, setUserArr] = useState<IUser[]>([])
-  let loading
+  const [ratingFieldName, setRatingFieldName] = useState<SortType>('count');
+  const { data: leaderBoardData, isLoading } = useLeaderboardAll({
+    ratingFieldName,
+  });
 
-  useEffect(() => {
-    setUserArr(dataSource)
-  }, [dataSource])
+  const leaderBoard = useMemo(() => {
+    if (!leaderBoardData) return [];
+    return leaderBoardData;
+  }, [leaderBoardData, ratingFieldName]);
 
-  const setSort = (type: SortType) => {
-    const result = [...userArr].sort((a, b) => b[type] - a[type])
-    setUserArr(result)
+  const changeSortRating = useCallback(() => {
+    setRatingFieldName(ratingFieldName === 'count' ? 'level' : 'count');
+  }, []);
+
+  if (isLoading) {
+    return <p>Загрузка...</p>;
   }
+
   return (
     <Layout>
       <HeaderApp />
@@ -37,7 +43,7 @@ export const LeaderBoardPage = () => {
 
             <Col>
               <Select
-                onChange={setSort}
+                onChange={changeSortRating}
                 options={[
                   { value: 'count', label: 'Счет' },
                   { value: 'level', label: 'Уровень' },
@@ -49,13 +55,13 @@ export const LeaderBoardPage = () => {
 
           <Row>
             <Col span={24}>
-              {loading ? (
+              {isLoading ? (
                 <div>
                   <Spin size="large" />
                 </div>
               ) : (
                 <Table
-                  dataSource={userArr}
+                  dataSource={leaderBoard}
                   columns={columns}
                   rowKey="id"
                   pagination={false}
@@ -67,5 +73,5 @@ export const LeaderBoardPage = () => {
         </Space>
       </Content>
     </Layout>
-  )
-}
+  );
+};

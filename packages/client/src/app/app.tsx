@@ -9,19 +9,22 @@ import AppAI18NextProvider from '@/app/app-ai-18-next-provider';
 import ServiceWorkerProvider from '@/app/providers';
 import { ThemeProvider } from './providers/theme-provider/theme-provider';
 import global_store from '@/shared/global-store/global-store';
+import { QueryProvider } from './providers/app-query-provider';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <ServiceWorkerProvider>
-        <ThemeProvider>
-          <Provider store={global_store}>
-            <AppAI18NextProvider>
-              <RouterProvider router={router} />
-            </AppAI18NextProvider>
-          </Provider>
-        </ThemeProvider>
-      </ServiceWorkerProvider>
+      <QueryProvider>
+        <ServiceWorkerProvider>
+          <ThemeProvider>
+            <Provider store={global_store}>
+              <AppAI18NextProvider>
+                <RouterProvider router={router} />
+              </AppAI18NextProvider>
+            </Provider>
+          </ThemeProvider>
+        </ServiceWorkerProvider>
+      </QueryProvider>
     </ErrorBoundary>
   </React.StrictMode>,
 );
