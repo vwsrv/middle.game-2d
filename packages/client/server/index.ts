@@ -23,7 +23,7 @@ async function createServer() {
 
   app.use(vite.middlewares);
 
-  app.get('*', async (req, res, next) => {
+  app.use(async (req, res, next) => {
     const url = req.originalUrl;
 
     try {
@@ -38,7 +38,7 @@ async function createServer() {
 
       try {
         const { render } = await vite.ssrLoadModule(
-          './src/app/app-entry-server.tsx',
+          './src/app/entry-server.tsx',
         );
         appHtml = await render(url);
       } catch (ssrError) {

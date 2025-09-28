@@ -1,11 +1,11 @@
 import { Button, Menu, Space, Typography } from 'antd';
 import { Header as Head } from 'antd/es/layout/layout';
 import { getMenuItems } from '@/pages/main-page/constants/data';
-import useBreakpoint from 'antd/es/grid/hooks/useBreakpoint';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/shared/i18n';
 import { useDispatch } from 'react-redux';
 import { setLanguage } from '@/features/global-slice/global-slice';
+import useBreakpoint from 'antd/es/grid/hooks/useBreakpoint';
 
 const { Title } = Typography;
 
