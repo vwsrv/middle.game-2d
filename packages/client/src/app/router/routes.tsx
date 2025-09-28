@@ -23,7 +23,11 @@ import AppSpinner from '@/shared/ui/app-spinner/app-spinner';
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <MainPage />,
+    element: (
+      <Suspense fallback={<AppSpinner />}>
+        <MainPage />
+      </Suspense>
+    ),
   },
   {
     path: `/${EPages.LOGIN_PAGE}`,

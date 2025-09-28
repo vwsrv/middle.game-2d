@@ -5,16 +5,17 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/shared/i18n';
 import { useDispatch } from 'react-redux';
 import { setLanguage } from '@/features/global-slice/global-slice';
-import useBreakpoint from 'antd/es/grid/hooks/useBreakpoint';
+import { useSSRConfig } from '@/shared/contexts/ssr-context';
 
 const { Title } = Typography;
 
 const Header = () => {
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
-  const screens = useBreakpoint();
-  const isMobile = !screens.md;
+
+  const { isMobile, language } = useSSRConfig();
   const menuItems = getMenuItems(isMobile);
+
   const location = useLocation();
   const selectedKey =
     menuItems.find(item => item.path === location.pathname)?.key || 'home';
@@ -37,14 +38,14 @@ const Header = () => {
 
       <Space style={{ float: 'right' }}>
         <Button
-          type={i18n.language === 'ru' ? 'primary' : 'default'}
+          type={language === 'ru' ? 'primary' : 'default'}
           size="small"
           onClick={() => onChangeLanguage('ru')}>
           RU
         </Button>
 
         <Button
-          type={i18n.language === 'en' ? 'primary' : 'default'}
+          type={language === 'en' ? 'primary' : 'default'}
           size="small"
           onClick={() => onChangeLanguage('en')}>
           EN

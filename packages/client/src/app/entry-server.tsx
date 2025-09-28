@@ -1,13 +1,13 @@
-import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { Suspense } from 'react';
 import {
   createStaticHandler,
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router';
-import { StyleProvider, createCache, extractStyle } from '@ant-design/cssinjs';
 import { routes } from './router/routes';
 import { AppProviders } from './providers/app-providers';
+import { createServerConfig } from '@/shared/utils/ssr-config';
 
 export async function render(url: string): Promise<{ html: string }> {
   try {
@@ -17,15 +17,20 @@ export async function render(url: string): Promise<{ html: string }> {
 
     const handler = createStaticHandler(routes);
     const context = await handler.query(new Request('http://localhost' + url));
-    const router = createStaticRouter(handler.dataRoutes, context);
 
-    const cache = createCache();
+    if (context instanceof Response) {
+      throw new Error('Router context is a Response, not a context object');
+    }
+
+    const router = createStaticRouter(handler.dataRoutes, context);
+    const ssrConfig = createServerConfig();
+
     const app = (
-      <StyleProvider cache={cache} hashPriority="high">
-        <AppProviders>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppProviders config={ssrConfig}>
           <StaticRouterProvider router={router} context={context} />
         </AppProviders>
-      </StyleProvider>
+      </Suspense>
     );
 
     const html = renderToString(app);

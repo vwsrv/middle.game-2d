@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import styles from './card.module.scss';
+import styles from './app-card.module.scss';
 
 type TCard = {
   className?: string;
