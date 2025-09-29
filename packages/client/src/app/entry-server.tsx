@@ -1,19 +1,25 @@
 import { renderToString } from 'react-dom/server';
-import { Suspense } from 'react';
 import {
   createStaticHandler,
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router';
+import { Provider } from 'react-redux';
 import { routes } from './router/routes';
 import { AppProviders } from './providers/app-providers';
 import { createServerConfig } from '@/shared/utils/ssr-config';
+import { createStore } from '@/shared/global-store/global-store';
 
-export async function render(url: string): Promise<{ html: string }> {
+export async function render(
+  url: string,
+): Promise<{ html: string; initialState: any }> {
   try {
     if (typeof window === 'undefined') {
       process.env.ANTD_DISABLE_LOCALE = 'true';
     }
+
+    // Создаем store для SSR
+    const store = createStore();
 
     const handler = createStaticHandler(routes);
     const context = await handler.query(new Request('http://localhost' + url));
@@ -26,19 +32,20 @@ export async function render(url: string): Promise<{ html: string }> {
     const ssrConfig = createServerConfig();
 
     const app = (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Provider store={store}>
         <AppProviders config={ssrConfig}>
           <StaticRouterProvider router={router} context={context} />
         </AppProviders>
-      </Suspense>
+      </Provider>
     );
 
     const html = renderToString(app);
+    const initialState = store.getState();
 
-    return { html };
+    return { html, initialState };
   } catch (error) {
     console.error('SSR Error:', error);
-    return { html: '<div id="root"></div>' };
+    return { html: '<div id="root"></div>', initialState: {} };
   }
 }
 
