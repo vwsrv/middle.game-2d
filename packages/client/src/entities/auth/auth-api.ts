@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { AUTH_URL, USER_KEY } from './keys';
 import { IUserData, SingInResponse } from './types';
-import { setIsAuth, setUser } from '@/features/global-slice/globalSlice'; // Импорт setUser
 import { useDispatch } from 'react-redux';
+import { setIsAuth, setUser } from '@/features/global-slice/global-slice';
 
 export function useSignUp() {
   const queryClient = useQueryClient();
