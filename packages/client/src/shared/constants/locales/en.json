@@ -10,8 +10,8 @@
   },
   "main_page": {
     "hero": {
-      "title": "AppleWorm - classic snake with new possibilities",
-      "subtitle": "Play, communicate, compete!"
+      "title": "AppleWorm",
+      "subtitle": "Командный проект"
     },
     "navigation": {
       "home": "Home",
@@ -56,7 +56,7 @@
       }
     },
     "footer": {
-      "copyright": "AppleWorm © {{year}}"
+      "copyright": "Yandex © {{year}}"
     }
   }
 }

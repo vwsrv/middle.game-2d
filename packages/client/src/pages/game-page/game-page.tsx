@@ -1,6 +1,6 @@
 import './game-page.scss';
-import { AppleWormGame } from '@/game';
-import { GameFooter } from '@/game/ui/game-footer/game-footer';
+import { AppleWormGame } from '@/features/game';
+import { GameFooter } from '@/features/game/ui/game-footer/game-footer';
 
 export const GamePage = () => (
   <div className="game-page-container">

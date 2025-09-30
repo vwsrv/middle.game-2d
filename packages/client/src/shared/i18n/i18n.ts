@@ -9,16 +9,24 @@ const resources = {
   ru: { translation: ruJSON },
 };
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: 'ru',
-    debug: true,
-    resources,
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+const isBrowser = typeof window !== 'undefined';
+
+if (isBrowser) {
+  i18n.use(LanguageDetector);
+}
+
+i18n.use(initReactI18next).init({
+  fallbackLng: 'ru',
+  lng: 'ru',
+  debug: true,
+  resources,
+  interpolation: {
+    escapeValue: false,
+  },
+  react: {
+    useSuspense: false,
+  },
+  initImmediate: false,
+});
 
 export default i18n;

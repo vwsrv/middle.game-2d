@@ -10,8 +10,8 @@
   },
   "main_page": {
     "hero": {
-      "title": "AppleWorm - классическая змейка с новыми возможностями",
-      "subtitle": "Играйте, общайтесь, соревнуйтесь!"
+      "title": "AppleWorm",
+      "subtitle": "Командный проект"
     },
     "navigation": {
       "home": "Главная",
@@ -56,7 +56,7 @@
       }
     },
     "footer": {
-      "copyright": "AppleWorm © {{year}}"
+      "copyright": "Яндекс © {{year}}"
     }
   }
 }

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
-  register,
-  unregister,
-  send as sendMessage,
-  isSupported,
   get,
+  isSupported,
+  register,
+  send as sendMessage,
+  unregister,
 } from '@/utils/service-worker.util';
 
 interface IProps {

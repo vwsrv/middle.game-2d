@@ -1,7 +1,7 @@
-import { Button, Input, Form } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import PageWrapper from '@/shared/components/PageWrapper';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import PageWrapper from '@/shared/ui/page-wrapper/page-wrapper';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
 import './login-page.scss';

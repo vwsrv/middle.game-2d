@@ -18,18 +18,24 @@ import { PublicOnlyRoute } from './public-only-route';
 import { EPages } from '@/shared/constants/paths';
 import { Suspense } from 'react';
 import { Spin } from 'antd';
-import { AppSpinner } from '@/shared/components/app-spinner';
+import AppSpinner from '@/shared/ui/app-spinner/app-spinner';
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <MainPage />,
+    element: (
+      <Suspense fallback={<AppSpinner />}>
+        <MainPage />
+      </Suspense>
+    ),
   },
   {
     path: `/${EPages.LOGIN_PAGE}`,
     element: (
       <PublicOnlyRoute>
-        <LoginPage />
+        <Suspense fallback={<AppSpinner />}>
+          <LoginPage />
+        </Suspense>
       </PublicOnlyRoute>
     ),
   },
@@ -37,7 +43,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.REGISTER_PAGE}`,
     element: (
       <PublicOnlyRoute>
-        <RegisterPage />
+        <Suspense fallback={<AppSpinner />}>
+          <RegisterPage />
+        </Suspense>
       </PublicOnlyRoute>
     ),
   },
@@ -81,7 +89,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.GAME_PAGE}`,
     element: (
       <ProtectedRoute>
-        <GamePage />
+        <Suspense fallback={<AppSpinner />}>
+          <GamePage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -89,7 +99,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.APPLE_WORN_GAME_PAGE}`,
     element: (
       <ProtectedRoute>
-        <GamePage />
+        <Suspense fallback={<AppSpinner />}>
+          <GamePage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -97,7 +109,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.FORUM_PAGE}`,
     element: (
       <ProtectedRoute>
-        <ForumPage />
+        <Suspense fallback={<AppSpinner />}>
+          <ForumPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -105,7 +119,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.LEADER_BOARD_PAGE}`,
     element: (
       <ProtectedRoute>
-        <LeaderBoardPage />
+        <Suspense fallback={<AppSpinner />}>
+          <LeaderBoardPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -118,7 +134,7 @@ export const routes: RouteObject[] = [
     element: <ServerErrorPage />,
   },
   {
-    path: '*', // Любой несуществующий путь → 404
+    path: '*',
     element: <NotFoundErrorPage />,
   },
 ];

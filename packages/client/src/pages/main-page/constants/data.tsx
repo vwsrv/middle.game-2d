@@ -1,13 +1,13 @@
 import {
-  HomeOutlined,
-  PlayCircleOutlined,
-  LoginOutlined,
-  UserAddOutlined,
-  ProfileOutlined,
-  MessageOutlined,
-  TrophyOutlined,
-  WarningOutlined,
   FrownOutlined,
+  HomeOutlined,
+  LoginOutlined,
+  MessageOutlined,
+  PlayCircleOutlined,
+  ProfileOutlined,
+  TrophyOutlined,
+  UserAddOutlined,
+  WarningOutlined,
 } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
 

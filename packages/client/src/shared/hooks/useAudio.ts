@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IAudioHooksProps } from '@/app/router/types';
 
 const useAudio = (url: string, loop: boolean): IAudioHooksProps => {

@@ -1,29 +1,29 @@
-import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd'
-import { dataSource, columns } from '../mock/data'
-import { HeaderApp } from '@/widgets/header'
-import { Content } from 'antd/es/layout/layout'
-import { IUser } from '@/app/router/types'
-import { useEffect, useState } from 'react'
+import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd';
+import { columns, dataSource } from '../mock/data';
+import Header from '@/widgets/header/header';
+import { Content } from 'antd/es/layout/layout';
+import { IUser } from '@/app/router/types';
+import { useEffect, useState } from 'react';
 
-const { Title } = Typography
+const { Title } = Typography;
 
-type SortType = 'count' | 'level'
+type SortType = 'count' | 'level';
 
 export const LeaderBoardPage = () => {
-  const [userArr, setUserArr] = useState<IUser[]>([])
-  let loading
+  const [userArr, setUserArr] = useState<IUser[]>([]);
+  let loading;
 
   useEffect(() => {
-    setUserArr(dataSource)
-  }, [dataSource])
+    setUserArr(dataSource);
+  }, [dataSource]);
 
   const setSort = (type: SortType) => {
-    const result = [...userArr].sort((a, b) => b[type] - a[type])
-    setUserArr(result)
-  }
+    const result = [...userArr].sort((a, b) => b[type] - a[type]);
+    setUserArr(result);
+  };
   return (
     <Layout>
-      <HeaderApp />
+      <Header />
 
       <Content>
         <Space
@@ -67,5 +67,5 @@ export const LeaderBoardPage = () => {
         </Space>
       </Content>
     </Layout>
-  )
-}
+  );
+};

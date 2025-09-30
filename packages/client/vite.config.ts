@@ -5,13 +5,42 @@ import path from 'path';
 
 dotenv.config();
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
+  build: {
+    outDir: path.join(__dirname, 'dist/client'),
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
+  },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router',
+      'react-router-dom',
+      'antd',
+      '@ant-design/cssinjs',
+      'rc-util',
+    ],
+  },
+  ssr: {
+    noExternal: [
+      'antd',
+      '@ant-design/cssinjs',
+      '@ant-design/icons',
+      /@ant-design\/.*$/,
+      /rc-.*$/,
+      'rc-util',
+      '@emotion/hash',
+    ],
   },
   plugins: [react()],
   resolve: {
@@ -25,5 +54,13 @@ export default defineConfig({
       '@/app': path.resolve(__dirname, './src/app'),
       '@/styles/': path.resolve(__dirname, './src/styles'),
     },
+    dedupe: [
+      'react',
+      'react-dom',
+      'react-router',
+      'react-router-dom',
+      '@ant-design/cssinjs',
+      'rc-util',
+    ],
   },
 });
