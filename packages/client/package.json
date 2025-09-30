@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npx tsc --project tsconfig.server.json && cross-env NODE_ENV=development node dist/server/server/index.js",
+    "dev": "npx tsc --project tsconfig.server.json && cross-env NODE_ENV=development node --experimental-modules dist/server/server/index.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint .",

@@ -4,6 +4,12 @@ import path from 'path';
 import fs from 'fs/promises';
 import { createServer as createViteServer } from 'vite';
 import { fileURLToPath } from 'url';
+import { webcrypto } from 'crypto';
+
+// Polyfill для crypto в Node.js 16
+if (!globalThis.crypto) {
+  globalThis.crypto = webcrypto as never;
+}
 
 dotenv.config();
 
@@ -35,12 +41,20 @@ async function createServer() {
       template = await vite.transformIndexHtml(url, template);
 
       let appHtml = '';
+      let initialState = {};
 
       try {
         const { render } = await vite.ssrLoadModule(
           './src/app/entry-server.tsx',
         );
-        appHtml = await render(url);
+        const result = await render(url);
+        if (typeof result === 'object' && result.html) {
+          appHtml = result.html;
+          initialState = result.initialState;
+        } else {
+          // Fallback для старого формата
+          appHtml = result;
+        }
       } catch (ssrError) {
         console.warn(
           'SSR failed, falling back to client-side rendering:',
@@ -49,7 +63,13 @@ async function createServer() {
         appHtml = '<div id="root">Загрузка...</div>';
       }
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+      const stateScript = `<script>window.__INITIAL_STATE__ = ${JSON.stringify(
+        initialState,
+      ).replace(/</g, '\\u003c')}</script>`;
+      const html = template.replace(
+        `<!--ssr-outlet-->`,
+        `${appHtml}${stateScript}`,
+      );
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
