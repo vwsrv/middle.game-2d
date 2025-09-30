@@ -1,30 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { FC, Suspense } from 'react';
 import '../styles/index.scss';
-import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './router';
-import ErrorBoundary from '@/shared/error-boundary/error-boundary';
-import AppAI18NextProvider from '@/app/app-ai-18-next-provider';
-import ServiceWorkerProvider from '@/app/providers';
-import { ThemeProvider } from './providers/theme-provider/theme-provider';
-import global_store from '@/shared/global-store/global-store';
-import { QueryProvider } from './providers/app-query-provider';
+import { RouterProvider, RouterProviderProps } from 'react-router-dom';
+import { useRouter } from './router/use-router';
+import { AppProviders } from './providers/app-providers';
+import { createClientConfig } from '@/shared/utils/ssr-config';
+import AppSpinner from '@/shared/ui/app-spinner/app-spinner';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <QueryProvider>
-        <ServiceWorkerProvider>
-          <ThemeProvider>
-            <Provider store={global_store}>
-              <AppAI18NextProvider>
-                <RouterProvider router={router} />
-              </AppAI18NextProvider>
-            </Provider>
-          </ThemeProvider>
-        </ServiceWorkerProvider>
-      </QueryProvider>
-    </ErrorBoundary>
-  </React.StrictMode>,
-);
+const App: FC = () => {
+  const { router } = useRouter();
+  const ssrConfig = createClientConfig();
+
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <AppSpinner />
+        </div>
+      }>
+      <AppProviders config={ssrConfig}>
+        <RouterProvider router={router as RouterProviderProps['router']} />
+      </AppProviders>
+    </Suspense>
+  );
+};
+
+export default App;

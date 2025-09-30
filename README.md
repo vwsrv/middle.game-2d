@@ -213,13 +213,28 @@ yarn test
 ### Production в Docker
 
 Перед первым запуском выполните:
+Это необходимо для создания файла конфигурации на вашем локальном компьютере.
 ```bash
+
 node init.js
 ```
 
 Запуск всех сервисов:
+Для запуска нужно быть в папке `docker`
+`cd docker`
+
 ```bash
-docker compose up
+  # Сборка и запуск
+  docker-compose up --build
+
+  # Запуск в фоновом режиме
+  docker-compose up -d
+
+  # Остановка
+  docker-compose down
+
+  # Остановка с удалением volumes
+  docker-compose down -v
 ```
 
 Сервисы:

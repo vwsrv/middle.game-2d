@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "composite": true,
+      "target": "ES2022",
+      "module": "ESNext",
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "lib": ["ES2022", "DOM"],
+      "moduleResolution": "bundler",
+      "resolveJsonModule": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "allowImportingTsExtensions": false,
+      "noEmit": false,
+      "outDir": "./dist/server",
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"],
+        "@/shared/*": ["src/shared/*"],
+        "@/entities/*": ["src/entities/*"],
+        "@/features/*": ["src/features/*"],
+        "@/widgets/*": ["src/widgets/*"],
+        "@/pages/*": ["src/pages/*"],
+        "@/app/*": ["src/app/*"],
+        "@/styles/*": ["src/styles/*"]
+      }
+    },
+    "include": ["server/index.ts"]
+  }

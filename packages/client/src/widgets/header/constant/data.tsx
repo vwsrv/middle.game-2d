@@ -1,15 +1,15 @@
 import {
-  HomeOutlined,
-  PlayCircleOutlined,
-  LoginOutlined,
-  UserAddOutlined,
-  ProfileOutlined,
-  MessageOutlined,
-  TrophyOutlined,
-  WarningOutlined,
   FrownOutlined,
-} from '@ant-design/icons'
-import { EPages } from '@/shared/constants/paths'
+  HomeOutlined,
+  LoginOutlined,
+  MessageOutlined,
+  PlayCircleOutlined,
+  ProfileOutlined,
+  TrophyOutlined,
+  UserAddOutlined,
+  WarningOutlined,
+} from '@ant-design/icons';
+import { EPages } from '@/shared/constants/paths';
 
 export const getMenuItems = (isMobile: boolean) => {
   const mainItems = [
@@ -37,7 +37,7 @@ export const getMenuItems = (isMobile: boolean) => {
       label: <a href={EPages.LEADER_BOARD_PAGE}>Рейтинг</a>,
       icon: !isMobile && <TrophyOutlined />,
     },
-  ]
+  ];
 
   const authItems = [
     {
@@ -51,10 +51,10 @@ export const getMenuItems = (isMobile: boolean) => {
       label: <a href={EPages.REGISTER_PAGE}>Регистрация</a>,
       icon: !isMobile && <UserAddOutlined />,
     },
-  ]
+  ];
 
-  return [...mainItems, ...authItems]
-}
+  return [...mainItems, ...authItems];
+};
 
 export const featureCards = [
   {
@@ -105,4 +105,4 @@ export const featureCards = [
     title: 'Ошибка 404',
     description: "Тестовая страница 'Не найдено'",
   },
-]
+];

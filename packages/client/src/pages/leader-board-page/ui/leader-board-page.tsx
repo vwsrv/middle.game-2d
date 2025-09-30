@@ -1,12 +1,13 @@
 import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd';
-import { columns } from '../mock/data';
-import { HeaderApp } from '@/widgets/header';
+import { dataSource, columns } from '../mock/data';
+import Header from '@/widgets/header/header';
 import { Content } from 'antd/es/layout/layout';
-import { useCallback, useMemo, useState } from 'react';
-import { useLeaderboardAll } from '../api/leaderboardApi';
-import { SortType } from '../types/leaderboard';
+import { IUser } from '@/app/router/types';
+import { useEffect, useState } from 'react';
 
 const { Title } = Typography;
+
+type SortType = 'count' | 'level';
 
 export const LeaderBoardPage = () => {
   const [ratingFieldName, setRatingFieldName] = useState<SortType>('count');
@@ -29,7 +30,7 @@ export const LeaderBoardPage = () => {
 
   return (
     <Layout>
-      <HeaderApp />
+      <Header />
 
       <Content>
         <Space
