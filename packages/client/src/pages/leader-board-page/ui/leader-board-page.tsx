@@ -1,9 +1,9 @@
 import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd';
-import { dataSource, columns } from '../mock/data';
+import { columns } from '../mock/data';
 import Header from '@/widgets/header/header';
 import { Content } from 'antd/es/layout/layout';
-import { IUser } from '@/app/router/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useLeaderboardAll } from '../api/leaderboardApi';
 
 const { Title } = Typography;
 
