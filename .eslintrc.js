@@ -20,6 +20,23 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
 
     'filenames/match-exported': [1, 'kebab'],
+    
+     // Правила для иммутабельности (предупреждения)
+    'no-param-reassign': ['warn', { 
+      props: true,
+      ignorePropertyModificationsFor: [
+        'acc', // для reduce accumulator
+        'accumulator', 
+        'e', // для событий
+        'ctx', // для контекста
+        'req', // для Express requests
+        'request', 
+        'res', // для Express responses
+        'response'
+      ]
+    }],
+    'prefer-const': 'warn',
+    'no-var': 'error',
   },
   ignorePatterns: [
     'packages/*/dist/',
