@@ -1,5 +1,5 @@
 import { Col, Layout, Row, Select, Space, Spin, Table, Typography } from 'antd';
-import { columns, dataSource } from '../mock/data';
+import { dataSource, columns } from '../mock/data';
 import Header from '@/widgets/header/header';
 import { Content } from 'antd/es/layout/layout';
 import { IUser } from '@/app/router/types';
@@ -10,17 +10,24 @@ const { Title } = Typography;
 type SortType = 'count' | 'level';
 
 export const LeaderBoardPage = () => {
-  const [userArr, setUserArr] = useState<IUser[]>([]);
-  let loading;
+  const [ratingFieldName, setRatingFieldName] = useState<SortType>('count');
+  const { data: leaderBoardData, isLoading } = useLeaderboardAll({
+    ratingFieldName,
+  });
 
-  useEffect(() => {
-    setUserArr(dataSource);
-  }, [dataSource]);
+  const leaderBoard = useMemo(() => {
+    if (!leaderBoardData) return [];
+    return leaderBoardData;
+  }, [leaderBoardData, ratingFieldName]);
 
-  const setSort = (type: SortType) => {
-    const result = [...userArr].sort((a, b) => b[type] - a[type]);
-    setUserArr(result);
-  };
+  const changeSortRating = useCallback(() => {
+    setRatingFieldName(ratingFieldName === 'count' ? 'level' : 'count');
+  }, []);
+
+  if (isLoading) {
+    return <p>Загрузка...</p>;
+  }
+
   return (
     <Layout>
       <Header />
@@ -37,7 +44,7 @@ export const LeaderBoardPage = () => {
 
             <Col>
               <Select
-                onChange={setSort}
+                onChange={changeSortRating}
                 options={[
                   { value: 'count', label: 'Счет' },
                   { value: 'level', label: 'Уровень' },
@@ -49,13 +56,13 @@ export const LeaderBoardPage = () => {
 
           <Row>
             <Col span={24}>
-              {loading ? (
+              {isLoading ? (
                 <div>
                   <Spin size="large" />
                 </div>
               ) : (
                 <Table
-                  dataSource={userArr}
+                  dataSource={leaderBoard}
                   columns={columns}
                   rowKey="id"
                   pagination={false}

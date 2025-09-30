@@ -7,6 +7,7 @@ import { ThemeProvider } from './theme-provider/theme-provider';
 import { SSRProvider } from '@/shared/contexts/ssr-context';
 import { SSRConfig } from '@/shared/contexts/ssr-context';
 import global_store from '@/shared/global-store/global-store';
+import { QueryProvider } from './app-query-provider';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -16,24 +17,26 @@ interface AppProvidersProps {
 export const AppProviders: FC<AppProvidersProps> = ({ children, config }) => {
   return (
     <ErrorBoundary>
-      <ServiceWorkerProvider>
-        <SSRProvider
-          config={
-            config || {
-              isServer: false,
-              isDarkMode: false,
-              isMobile: false,
-              language: 'ru',
-              currentYear: new Date().getFullYear(),
-            }
-          }>
-          <ThemeProvider>
-            <Provider store={global_store}>
-              <AppAi18NextProvider>{children}</AppAi18NextProvider>
-            </Provider>
-          </ThemeProvider>
-        </SSRProvider>
-      </ServiceWorkerProvider>
+      <QueryProvider>
+        <ServiceWorkerProvider>
+          <SSRProvider
+            config={
+              config || {
+                isServer: false,
+                isDarkMode: false,
+                isMobile: false,
+                language: 'ru',
+                currentYear: new Date().getFullYear(),
+              }
+            }>
+            <ThemeProvider>
+              <Provider store={global_store}>
+                <AppAi18NextProvider>{children}</AppAi18NextProvider>
+              </Provider>
+            </ThemeProvider>
+          </SSRProvider>
+        </ServiceWorkerProvider>
+      </QueryProvider>
     </ErrorBoundary>
   );
 };

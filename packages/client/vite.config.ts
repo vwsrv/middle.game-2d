@@ -8,6 +8,14 @@ dotenv.config();
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
+    proxy: {
+      '/api': {
+        target: 'https://ya-praktikum.tech',
+        changeOrigin: true,
+        secure: true,
+        cookieDomainRewrite: { 'ya-praktikum.tech': 'localhost' },
+      },
+    },
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),

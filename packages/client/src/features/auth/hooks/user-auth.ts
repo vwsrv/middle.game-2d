@@ -1,7 +1,9 @@
-// import { useSelector } from 'react-redux'
+import { IGlobalStore } from '@/shared/global-store/global-store.interface';
+import { useSelector } from 'react-redux';
 
 export const useAuth = () => {
-  // TODO: Добавить логику проверки авторизации и избавиться от any
-  const user = true; // useSelector((state: any) => state.auth)
-  return { isAuth: !!user };
+  const isAuth = useSelector(
+    (state: { global: IGlobalStore }) => state.global.isAuth,
+  );
+  return { isAuth };
 };

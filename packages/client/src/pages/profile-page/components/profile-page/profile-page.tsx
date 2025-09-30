@@ -14,33 +14,13 @@ import { EPages } from '@/shared/constants/paths';
 import { LogoutBtn } from '@/features/auth/components/logout-btn';
 import { ProfileDataItem } from '../data-item/data-item';
 import './profile-page.scss';
+import { useGetUser } from '@/entities/auth/auth-api';
 
 const { Title } = Typography;
 
-type TUser = {
-  firstName: string;
-  lastName: string;
-  username: string;
-  login: string;
-  email: string;
-  phone?: string;
-  avatar?: string;
-};
-
-// TODO: это моки, нужно будет удалить
-const tempUser: TUser = {
-  firstName: 'Иван',
-  lastName: 'Иванов',
-  username: 'ivan_the_best',
-  login: 'ivan_the_best',
-  email: 'ivan@example.com',
-  phone: '+7 (123) 456-78-90',
-  avatar: 'https://example.com/path/to/avatar.jpg', // можно оставить undefined для дефолтного аватара
-};
-
 const ProfilePage = () => {
-  const user = tempUser;
   const navigate = useNavigate();
+  const { data: user } = useGetUser();
 
   return (
     <div className="profile-page">
@@ -76,31 +56,31 @@ const ProfilePage = () => {
         </div>
       </div>
       <div className="profile-content">
-        <AppAvatar size={96} src={user.avatar} />
+        <AppAvatar size={96} src={user?.avatar} />
         <Card className="form-layout">
           <Title level={2}>
-            {user.firstName} {user.lastName}
+            {user?.first_name} {user?.second_name}
           </Title>
 
           <div className="form-layout">
             <ProfileDataItem
               label="логин"
-              value={user.login}
+              value={user?.login || ''}
               icon={<LoginOutlined />}
             />
             <ProfileDataItem
               label="никнейм"
-              value={user.username}
+              value={user?.display_name || ''}
               icon={<UserOutlined />}
             />
             <ProfileDataItem
               label="телефон"
-              value={user.phone ?? 'не указан'}
+              value={user?.phone ?? 'не указан'}
               icon={<PhoneOutlined />}
             />
             <ProfileDataItem
               label="e-mail"
-              value={user.email}
+              value={user?.email || ''}
               icon={<MailOutlined />}
             />
           </div>

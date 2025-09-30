@@ -1,6 +1,7 @@
+import { IUserData } from '@/entities/auth/types';
+
 export interface IGlobalStore {
   language: string;
-  accessToken?: string;
-  refreshToken?: string;
-  userId?: string;
+  user: IUserData | null;
+  isAuth?: boolean;
 }
