@@ -1,1 +1,1 @@
-export * from './app-ai-18-next.provider';
+export * from './app-ai-18-next-provider';

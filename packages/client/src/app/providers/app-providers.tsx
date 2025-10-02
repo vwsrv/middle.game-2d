@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import ErrorBoundary from '@/shared/ui/error-boundary/error-boundary';
-import AppAi18NextProvider from '@/app/providers/app-ai18-next/app-ai-18-next.provider';
+import AppAi18NextProvider from '@/app/providers/app-ai18-next/app-ai-18-next-provider';
 import { ServiceWorkerProvider } from '@/app/providers/servce-worker';
 import { ThemeProvider } from './theme-provider/theme-provider';
 import { SSRProvider } from '@/shared/contexts/ssr-context';

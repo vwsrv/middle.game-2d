@@ -7,7 +7,7 @@ import {
   SoundOutlined,
 } from '@ant-design/icons';
 import styles from './game-footer.module.scss';
-import useFullScreen from '@/shared/hooks/use-fullscreen';
+import useFullScreen from '@/shared/hooks/use-full-screen';
 
 export const GameFooter = () => {
   const {

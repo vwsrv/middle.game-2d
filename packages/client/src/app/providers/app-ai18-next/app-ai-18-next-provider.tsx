@@ -8,10 +8,9 @@ const AppAi18NextProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (i18n.language !== language) {
-      console.log('i18n changeLanguage', { from: i18n.language, to: language });
       i18n.changeLanguage(language);
     } else {
-      console.log('i18n keepLanguage', { language });
+      console.error('i18n keepLanguage', { language });
     }
   }, [language]);
 

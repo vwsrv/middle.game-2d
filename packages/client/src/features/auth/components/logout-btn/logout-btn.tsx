@@ -1,12 +1,12 @@
 import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { LogoutOutlined } from '@ant-design/icons';
-import { useLogout } from '../../hooks/logout';
 import { EPages } from '@/shared/constants/paths';
+import { useLogout } from '@/entities/user/auth/api/auth.api';
 
 export const LogoutBtn = () => {
   const navigate = useNavigate();
-  const logout = useLogout();
+  const { logout } = useLogout();
 
   const handleLogout = () => {
     Modal.confirm({
@@ -17,7 +17,7 @@ export const LogoutBtn = () => {
       onOk: () => {
         logout();
         console.log('Пользователь вышел');
-        navigate(`/${EPages.LOGIN_PAGE}`);
+        navigate(EPages.LOGIN_PAGE);
       },
     });
   };
