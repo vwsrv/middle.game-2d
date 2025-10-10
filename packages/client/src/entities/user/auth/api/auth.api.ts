@@ -1,9 +1,6 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { useDispatch } from 'react-redux';
-import { setIsAuth, setUser } from '@/features/global-slice/global-slice';
-import { AUTH_URL, USER_KEY } from '@/entities/keys';
-import { IUserData, SingInResponse, SingUpResponse } from '../types/auth.type';
+import { AUTH_URL } from '@/entities/keys';
+import { SingInResponse, SingUpResponse } from '../types/auth.type';
 
 export async function useSignUp() {
   const { fetchUser } = useGetUser();

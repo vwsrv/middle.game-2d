@@ -1,4 +1,4 @@
-import { Button, Card, Typography } from 'antd';
+/* import { Button, Card, Typography } from 'antd';
 import {
   ArrowLeftOutlined,
   LockOutlined,
@@ -14,13 +14,12 @@ import { EPages } from '@/shared/constants/paths';
 import { LogoutBtn } from '@/features/auth/components/logout-btn';
 import { ProfileDataItem } from '../data-item/data-item';
 import './profile-page.scss';
-import { useGetUser } from '@/entities/auth/auth-api';
 
 const { Title } = Typography;
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { data: user } = useGetUser();
+   const { data: user } = useGetUser();
 
   return (
     <div className="profile-page">
@@ -91,3 +90,4 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+ */

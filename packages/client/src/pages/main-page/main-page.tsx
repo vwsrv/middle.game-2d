@@ -4,9 +4,9 @@ import Header from '@/widgets/header/header';
 import { useTranslation } from '@/shared/i18n';
 import { EPages } from '@/shared/constants/paths';
 import { useNavigate } from 'react-router-dom';
-import { useOauth } from '@/entities/auth/oauth-api';
 import { useEffect } from 'react';
 import { useSSRConfig } from '@/shared/contexts/ssr-context';
+import { useOauth } from '@/entities/user/auth/api/oauth.api';
 
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;

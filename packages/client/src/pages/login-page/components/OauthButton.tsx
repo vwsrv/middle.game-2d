@@ -1,4 +1,4 @@
-import { useOauthGetServiceId } from '@/entities/auth/oauth-api';
+import { useOauthGetServiceId } from '@/entities/user/auth/api/oauth.api';
 import { Button } from 'antd';
 import { useCallback } from 'react';
 

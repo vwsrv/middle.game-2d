@@ -5,9 +5,9 @@ import PageWrapper from '@/shared/ui/page-wrapper/page-wrapper';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
 import './login-page.scss';
-import { useSignIn } from '@/entities/auth/auth-api';
 import { loginValidation, passwordValidation } from '@/shared/lib/validation';
 import { OauthButton } from './components/OauthButton';
+import { useSignIn } from '@/entities/user/auth/api/auth.api';
 
 type TFormValues = {
   login: string;
@@ -16,7 +16,7 @@ type TFormValues = {
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const signInMutation = useSignIn();
+  const { signIn } = useSignIn();
 
   const {
     handleSubmit,
@@ -27,7 +27,7 @@ export function LoginPage() {
   });
 
   const onSubmit: SubmitHandler<TFormValues> = async data => {
-    signInMutation.mutateAsync({ login: data.login, password: data.password });
+    signIn({ login: data.login, password: data.password });
   };
 
   return (
