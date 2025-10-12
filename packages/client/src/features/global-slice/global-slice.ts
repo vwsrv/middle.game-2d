@@ -1,4 +1,4 @@
-import { IUserData } from '@/entities/auth/types';
+import { IUserData } from '@/entities/auth/types/auth.type';
 import { IGlobalStore } from '@/shared/global-store/global-store.interface';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 

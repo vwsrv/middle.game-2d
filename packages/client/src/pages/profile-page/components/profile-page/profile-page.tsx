@@ -14,13 +14,16 @@ import { EPages } from '@/shared/constants/paths';
 import { LogoutBtn } from '@/features/auth/components/logout-btn';
 import { ProfileDataItem } from '../data-item/data-item';
 import './profile-page.scss';
-import { useGetUser } from '@/entities/auth/auth-api';
+import { useSelector } from 'react-redux';
+import { IGlobalStore } from '@/shared/global-store/global-store.interface';
 
 const { Title } = Typography;
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { data: user } = useGetUser();
+  const user = useSelector(
+    (state: { global: IGlobalStore }) => state.global.user,
+  );
 
   return (
     <div className="profile-page">
