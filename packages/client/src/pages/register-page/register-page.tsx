@@ -12,7 +12,7 @@ import {
   passwordValidation,
   phoneValidation,
 } from '@/shared/lib/validation';
-import { useSignUp } from '@/entities/auth/auth-api';
+import { useSignUp } from '@/entities/auth/api/auth.api';
 
 type TFormValues = {
   first_name: string;
@@ -25,7 +25,7 @@ type TFormValues = {
 
 export function RegisterPage() {
   const navigate = useNavigate();
-  const signUpMutation = useSignUp();
+  const { signUp } = useSignUp();
   const {
     handleSubmit,
     control,
@@ -34,15 +34,8 @@ export function RegisterPage() {
     mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<TFormValues> = data => {
-    signUpMutation.mutate(
-      { ...data },
-      {
-        onSuccess: () => {
-          navigate(EPages.LEADER_BOARD_PAGE);
-        },
-      },
-    );
+  const onSubmit: SubmitHandler<TFormValues> = async data => {
+    await signUp({ ...data });
   };
 
   return (

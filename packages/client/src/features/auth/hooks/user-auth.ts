@@ -5,5 +5,6 @@ export const useAuth = () => {
   const isAuth = useSelector(
     (state: { global: IGlobalStore }) => state.global.isAuth,
   );
+
   return { isAuth };
 };
