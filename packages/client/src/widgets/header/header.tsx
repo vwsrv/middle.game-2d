@@ -1,56 +1,147 @@
-import { Button, Menu, Space, Typography } from 'antd';
+import { Button, Space, Switch } from 'antd';
+import { MoonOutlined, SunOutlined } from '@ant-design/icons';
 import { Header as Head } from 'antd/es/layout/layout';
-import { getMenuItems } from '@/pages/main-page/constants/data';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/shared/i18n';
 import { useDispatch } from 'react-redux';
 import { setLanguage } from '@/features/global-slice/global-slice';
-import { useSSRConfig } from '@/shared/contexts/ssr-context';
+import { useState, useEffect, ReactNode, FC } from 'react';
+import { LogoutBtn } from '@/features/auth/components/logout-btn/logout-btn';
+import { EPages } from '@/shared/constants/paths';
 
-const { Title } = Typography;
+import {
+  ArrowLeftOutlined,
+  HomeOutlined,
+  MessageOutlined,
+  TrophyOutlined,
+  ProfileOutlined,
+} from '@ant-design/icons';
 
-const Header = () => {
+import './header.scss';
+
+export type HeadWrapperProps = {
+  children?: ReactNode;
+  backButton?: string | undefined;
+};
+
+const mainItems = [
+  {
+    key: 'home',
+    href: EPages.MAIN_PAGE,
+    label: 'Главная',
+    icon: <HomeOutlined />,
+  },
+  {
+    key: 'forum',
+    href: EPages.FORUM_PAGE,
+    label: 'Форум',
+    icon: <MessageOutlined />,
+  },
+  {
+    key: 'leaderboard',
+    href: EPages.LEADER_BOARD_PAGE,
+    label: 'Рейтинг',
+    icon: <TrophyOutlined />,
+  },
+  {
+    key: 'profile',
+    href: EPages.PROFILE_PAGE,
+    label: 'Профиль',
+    icon: <ProfileOutlined />,
+  },
+];
+
+const Menu = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="header-menu">
+      {mainItems.map(item => {
+        return (
+          <Button
+            key={item.key}
+            type="default"
+            onClick={() => navigate(item.href)}
+            icon={item.icon}
+            size="middle">
+            {item.label}
+          </Button>
+        );
+      })}
+    </div>
+  );
+};
+
+const Header: FC<HeadWrapperProps> = ({ children, backButton }) => {
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const { isMobile, language } = useSSRConfig();
-  const menuItems = getMenuItems(isMobile);
-
-  const location = useLocation();
-  const selectedKey =
-    menuItems.find(item => item.path === location.pathname)?.key || 'home';
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('app-theme');
+    if (savedTheme) {
+      const isDark = savedTheme === 'dark';
+      setIsDarkMode(isDark);
+      document.body.setAttribute('data-theme', savedTheme);
+    } else {
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+      ).matches;
+      setIsDarkMode(prefersDark);
+      document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      localStorage.setItem('app-theme', prefersDark ? 'dark' : 'light');
+    }
+  }, []);
 
   const onChangeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
     dispatch(setLanguage(lang));
   };
 
+  const toggleTheme = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    setIsDarkMode(!isDarkMode);
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('app-theme', newTheme);
+  };
+
+  const navigate = useNavigate();
   return (
-    <Head>
-      <div className="logo" style={{ float: 'left', marginRight: '24px' }}>
-        <Title level={3} style={{ margin: 0 }}>
-          <span style={{ color: '#ff4d4f' }}>Apple</span>
-          <span style={{ color: '#52c41a' }}>Worm</span>
-        </Title>
+    <Head className="page-header">
+      <div className="page-header__actions">
+        <div className="actions-start">
+          {backButton && (
+            <Button
+              type="primary"
+              onClick={() => navigate(-1)}
+              icon={<ArrowLeftOutlined />}
+              size="middle">
+              {backButton}
+            </Button>
+          )}
+          <Menu />
+        </div>
+        <div className="actions-end">
+          {children || null}
+
+          <Space>
+            <Switch
+              checkedChildren={<MoonOutlined />}
+              unCheckedChildren={<SunOutlined />}
+              onClick={toggleTheme}
+            />
+
+            <Switch
+              checkedChildren="EN"
+              unCheckedChildren="RU"
+              onClick={checked => {
+                onChangeLanguage(checked ? 'ru' : 'en');
+              }}
+            />
+          </Space>
+
+          <LogoutBtn />
+        </div>
       </div>
-
-      <Menu mode="horizontal" selectedKeys={[selectedKey]} items={menuItems} />
-
-      <Space style={{ float: 'right' }}>
-        <Button
-          type={language === 'ru' ? 'primary' : 'default'}
-          size="small"
-          onClick={() => onChangeLanguage('ru')}>
-          RU
-        </Button>
-
-        <Button
-          type={language === 'en' ? 'primary' : 'default'}
-          size="small"
-          onClick={() => onChangeLanguage('en')}>
-          EN
-        </Button>
-      </Space>
     </Head>
   );
 };

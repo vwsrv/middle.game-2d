@@ -1,26 +1,5 @@
 @use '@/styles/_mixins.scss' as *;
 
-.profile-page {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 30px;
-  height: 100%;
-  
-  &__actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-
-    .actions__end {
-      display: flex;
-      gap: 0.5rem;
-
-      @include xs {
-        flex-direction: column-reverse;
-      }
-    }
-  }
-}
 
 .profile-content {
   margin: auto;
@@ -45,3 +24,18 @@
   gap: 1.5rem;
 }
 
+
+.profile {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    justify-content: space-around;
+    margin-bottom: 30px;
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

@@ -11,7 +11,7 @@ export const columns = [
   },
   {
     title: 'Уровни',
-    dataIndex: 'level',
-    key: 'level',
+    dataIndex: 'firstGuessWins',
+    key: 'firstGuessWins',
   },
 ];

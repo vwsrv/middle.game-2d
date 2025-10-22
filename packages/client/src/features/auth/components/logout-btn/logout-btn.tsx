@@ -1,12 +1,12 @@
 import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { LogoutOutlined } from '@ant-design/icons';
-import { useLogout } from '../../hooks/logout';
 import { EPages } from '@/shared/constants/paths';
+import { useLogout } from '@/entities/auth/api/auth.api';
 
 export const LogoutBtn = () => {
   const navigate = useNavigate();
-  const logout = useLogout();
+  const { logout } = useLogout();
 
   const handleLogout = () => {
     Modal.confirm({
@@ -14,10 +14,9 @@ export const LogoutBtn = () => {
       okText: 'Выйти',
       cancelText: 'Отмена',
       okButtonProps: { danger: true },
-      onOk: () => {
-        logout();
-        console.log('Пользователь вышел');
-        navigate(`/${EPages.LOGIN_PAGE}`);
+      onOk: async () => {
+        await logout();
+        navigate(EPages.LOGIN_PAGE);
       },
     });
   };
@@ -27,7 +26,7 @@ export const LogoutBtn = () => {
       type="primary"
       danger
       icon={<LogoutOutlined />}
-      size="small"
+      size="middle"
       onClick={handleLogout}>
       Выйти
     </Button>

@@ -6,8 +6,9 @@ import { ServiceWorkerProvider } from '@/app/providers/servce-worker';
 import { ThemeProvider } from './theme-provider/theme-provider';
 import { SSRProvider } from '@/shared/contexts/ssr-context';
 import { SSRConfig } from '@/shared/contexts/ssr-context';
-import global_store from '@/shared/global-store/global-store';
+import global_store, { persistor } from '@/shared/global-store/global-store';
 import { QueryProvider } from './app-query-provider';
+import { PersistGate } from 'redux-persist/integration/react';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -31,7 +32,11 @@ export const AppProviders: FC<AppProvidersProps> = ({ children, config }) => {
             }>
             <ThemeProvider>
               <Provider store={global_store}>
-                <AppAi18NextProvider>{children}</AppAi18NextProvider>
+                <PersistGate
+                  loading={<div>Loading...</div>}
+                  persistor={persistor}>
+                  <AppAi18NextProvider>{children}</AppAi18NextProvider>
+                </PersistGate>
               </Provider>
             </ThemeProvider>
           </SSRProvider>

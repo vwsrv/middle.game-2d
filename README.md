@@ -1,6 +1,8 @@
 # Middle Game 2D
 ---
-## Ссылка на обзор по проделанной работе в 5 - 6 спринтаох: https://drive.google.com/file/d/1iZnuMBhSgFAG401tFStqKbTNVO9rHMm4/view?usp=sharing
+## Ссылка на обзор по проделанной работе в 5 - 6 спринтах: https://drive.google.com/file/d/1iZnuMBhSgFAG401tFStqKbTNVO9rHMm4/view?usp=sharing
+## Ссылка на обзор по проделанной работе в 7 - 8 спринтах: https://disk.yandex.ru/d/1v-XcHOl30EGNQ
+
 
 ## Preview: https://clck.ru/3NcJKR
 ---
