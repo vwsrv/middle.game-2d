@@ -22,6 +22,13 @@ export function useSignUp() {
       });
     } catch (e) {
       if (e instanceof AxiosError) {
+        if (e.response?.status === 400) {
+          await fetchUser().then(userData => {
+            dispatch(setUser(userData));
+            dispatch(setIsAuth(true));
+          });
+          return;
+        }
         throw new Error(e.response?.data.message);
       }
     }
@@ -45,6 +52,13 @@ export function useSignIn() {
       });
     } catch (e) {
       if (e instanceof AxiosError) {
+        if (e.response?.status === 400) {
+          await fetchUser().then(userData => {
+            dispatch(setUser(userData));
+            dispatch(setIsAuth(true));
+          });
+          return;
+        }
         throw new Error(e.response?.data.message);
       }
     }
@@ -56,7 +70,7 @@ export function useLogout() {
   const dispatch = useDispatch();
 
   const logout = async () => {
-    await axios.post(`${AUTH_URL}/logout`, {
+    await axios.post(`${AUTH_URL}/logout`, null, {
       withCredentials: true,
     });
 

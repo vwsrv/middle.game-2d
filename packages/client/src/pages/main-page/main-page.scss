@@ -1,0 +1,21 @@
+.main-page-container {
+    height: 100vh;
+    background: none !important;
+    background-image: url('../../../../public/background.png') !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.main-page {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+  }
+}

@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { useCallback } from 'react';
 
 export const OauthButton = () => {
-  const redirectUrl = 'http://localhost:3000';
+  const redirectUrl = window.location.origin;
   const { getOauthServiceId } = useGetOauthServiceId(redirectUrl);
 
   const onClickOauthSubmit = useCallback(async () => {
