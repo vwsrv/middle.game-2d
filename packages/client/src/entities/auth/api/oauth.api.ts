@@ -48,6 +48,13 @@ export function useOauth() {
       return response.data;
     } catch (e) {
       if (e instanceof AxiosError) {
+        if (e.response?.status === 400) {
+          await fetchUser().then(userData => {
+            dispatch(setUser(userData));
+            dispatch(setIsAuth(true));
+          });
+          return;
+        }
         throw new Error(e.response?.data.message);
       }
     }

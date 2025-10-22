@@ -14,9 +14,8 @@ export const LogoutBtn = () => {
       okText: 'Выйти',
       cancelText: 'Отмена',
       okButtonProps: { danger: true },
-      onOk: () => {
-        logout();
-        console.log('Пользователь вышел');
+      onOk: async () => {
+        await logout();
         navigate(EPages.LOGIN_PAGE);
       },
     });
@@ -27,7 +26,7 @@ export const LogoutBtn = () => {
       type="primary"
       danger
       icon={<LogoutOutlined />}
-      size="small"
+      size="middle"
       onClick={handleLogout}>
       Выйти
     </Button>

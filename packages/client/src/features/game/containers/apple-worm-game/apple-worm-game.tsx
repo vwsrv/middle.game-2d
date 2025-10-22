@@ -13,8 +13,11 @@ import { levels } from '@/features/game/constants';
 import { GameBoard } from '@/features/game/ui/game-board/game-board';
 import { GameCanvas } from '@/features/game/ui/game-canvas/game-canvas';
 import { TDirection } from '@/features/game/models/types';
+import { useNavigate } from 'react-router-dom';
+import { EPages } from '@/shared/constants/paths';
 
 export const AppleWormGame: React.FC = () => {
+  const navigate = useNavigate();
   const gameEngineRef = useRef<AppleWormGameEngine | null>(null);
   const [gameState, setGameState] = useState<IGame>({
     snake: [],
@@ -127,9 +130,23 @@ export const AppleWormGame: React.FC = () => {
               <h2>🍎 Игра окончена! 🍏</h2>
               <p>Счет: {gameState.score}</p>
               <p>Уровень: {gameState.currentLevel + 1}</p>
-              <Button type="primary" size="large" onClick={restartGame}>
-                Играть снова
-              </Button>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '16px',
+                  justifyContent: 'center',
+                }}>
+                <Button type="primary" size="large" onClick={restartGame}>
+                  Играть снова
+                </Button>
+                <Button
+                  type="primary"
+                  danger
+                  size="large"
+                  onClick={() => navigate(EPages.MAIN_PAGE)}>
+                  Выйти
+                </Button>
+              </div>
             </>
           ) : (
             <>

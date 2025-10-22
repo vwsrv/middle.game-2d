@@ -1,6 +1,5 @@
 import {
   FrownOutlined,
-  HomeOutlined,
   LoginOutlined,
   MessageOutlined,
   PlayCircleOutlined,
@@ -10,53 +9,6 @@ import {
   WarningOutlined,
 } from '@ant-design/icons';
 import { EPages } from '@/shared/constants/paths';
-
-export const getMenuItems = (isMobile: boolean) => {
-  const mainItems = [
-    {
-      key: 'home',
-      path: '/',
-      label: <a href={EPages.MAIN_PAGE}>Главная</a>,
-      icon: !isMobile && <HomeOutlined />,
-    },
-    {
-      key: 'game',
-      path: '/game',
-      label: <a href={EPages.GAME_PAGE}>Игра</a>,
-      icon: !isMobile && <PlayCircleOutlined />,
-    },
-    {
-      key: 'forum',
-      path: '/forum',
-      label: <a href={EPages.FORUM_PAGE}>Форум</a>,
-      icon: !isMobile && <MessageOutlined />,
-    },
-    {
-      key: 'leaderboard',
-      path: '/leaderboard',
-      label: <a href={EPages.LEADER_BOARD_PAGE}>Рейтинг</a>,
-      icon: !isMobile && <TrophyOutlined />,
-    },
-  ];
-
-  const authItems = [
-    {
-      key: 'login',
-      path: '/login',
-      label: <a href={EPages.LOGIN_PAGE}>Вход</a>,
-      icon: !isMobile && <LoginOutlined />,
-      style: { marginLeft: 'auto' },
-    },
-    {
-      key: 'register',
-      path: '/register',
-      label: <a href={EPages.REGISTER_PAGE}>Регистрация</a>,
-      icon: !isMobile && <UserAddOutlined />,
-    },
-  ];
-
-  return [...mainItems, ...authItems];
-};
 
 export const featureCards = [
   {

@@ -1,0 +1,51 @@
+@use '@/styles/_mixins.scss' as *;
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(49, 110, 73, 0.1) !important;
+  height: auto !important;
+
+  border-bottom: 1px solid #316E49;
+  padding: 8px 50px !important;
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.actions-start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  @include xs {
+    flex-direction: column-reverse;
+  }
+}
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  @include xs {
+    flex-direction: column-reverse;
+  }
+}
+
+.actions-end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  @include xs {
+    flex-direction: column-reverse;
+  }
+}
