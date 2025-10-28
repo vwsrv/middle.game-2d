@@ -1,63 +1,50 @@
-import { Layout, Menu, Card, Row, Col, Space, Typography, Grid } from 'antd'
-import { featureCards, getMenuItems } from './constants/data'
-
-const { Header, Content, Footer } = Layout
-const { Title, Text } = Typography
-const { useBreakpoint } = Grid
+import { Button, Layout, Typography } from 'antd';
+import { useOauth } from '@/entities/auth/api/oauth.api';
+import { useEffect } from 'react';
+import './main-page.scss';
+import PageWrapper from '@/shared/ui/page-wrapper/page-wrapper';
+import { EPages } from '@/shared/constants/paths';
+import { useNavigate } from 'react-router-dom';
+const { Content } = Layout;
+const { Title, Text } = Typography;
 
 export const MainPage = () => {
-  const screens = useBreakpoint()
-  const isMobile = !screens.md
-  const menuItems = getMenuItems(isMobile)
+  const navigate = useNavigate();
+  const { oauth } = useOauth();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const redirectUrl = window.location.origin;
+
+    if (code) {
+      oauth({ code, redirect_uri: redirectUrl });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ background: '#fff', boxShadow: '0 2px 8px #f0f1f2' }}>
+    <PageWrapper>
+      <Content className="main-page__wrapper">
         <div className="logo" style={{ float: 'left', marginRight: '24px' }}>
-          <Title level={3} style={{ margin: 0 }}>
-            <span style={{ color: '#ff4d4f' }}>Apple</span>
-            <span style={{ color: '#52c41a' }}>Worm</span>
+          <Title style={{ margin: 0 }}>
+            <span style={{ color: '#ff4d4f', fontSize: '50px' }}>Apple</span>
+            <span style={{ color: '#52c41a', fontSize: '50px' }}>Worm</span>
           </Title>
+          <Text>
+            <span style={{ fontSize: '16px', color: 'grey' }}>
+              Начните играть прямо сейчас!
+            </span>
+          </Text>
         </div>
-        <Menu
-          theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={['home']}
-          items={menuItems}
-          style={{ flex: 1 }}
-        />
-      </Header>
-
-      <Content style={{ padding: '50px 50px 0', flex: 1 }}>
-        <Row gutter={[24, 24]} justify="center">
-          {featureCards.map((card, index) => (
-            <Col key={index} xs={24} sm={12} md={8} lg={6}>
-              <Card
-                hoverable
-                cover={<div style={{ margin: '24px 0' }}>{card.icon}</div>}
-                onClick={() => (window.location.href = card.path)}
-                style={{ height: '100%' }}>
-                <Card.Meta title={card.title} description={card.description} />
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        <Row justify="center" style={{ marginTop: '48px' }}>
-          <Col span={24} style={{ textAlign: 'center' }}>
-            <Title level={2}>
-              AppleWorm - классическая змейка с новыми возможностями
-            </Title>
-            <Text type="secondary">Играйте, общайтесь, соревнуйтесь!</Text>
-          </Col>
-        </Row>
+        <Button
+          type="primary"
+          size="large"
+          className="main-page__button"
+          onClick={() => navigate(EPages.APPLE_WORN_GAME_PAGE)}>
+          Играть!
+        </Button>
       </Content>
-
-      <Footer style={{ textAlign: 'center' }}>
-        <Space direction="vertical" size="small">
-          <Text type="secondary">AppleWorm © {new Date().getFullYear()}</Text>
-        </Space>
-      </Footer>
-    </Layout>
-  )
-}
+    </PageWrapper>
+  );
+};

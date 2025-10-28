@@ -1,21 +1,32 @@
-import cors = require('cors')
-import dotenv = require('dotenv')
-import express = require('express')
+import cors = require('cors');
+import dotenv = require('dotenv');
+import express = require('express');
+import { authMiddleware } from './middleware/auth';
+import { initializeDatabase } from '@/shared/lib';
+import apiRoutes from '@/pages/api';
 
-import { createClientAndConnect } from './db'
+dotenv.config();
 
-dotenv.config()
+const app = express();
 
-const app = express()
-app.use(cors())
-const port = Number(process.env.SERVER_PORT) || 3001
+app.use(cors());
+app.use(express.json());
+app.use(authMiddleware);
 
-createClientAndConnect()
+app.use(apiRoutes);
 
 app.get('/', (_, res) => {
-  res.json('👋 Howdy from the server :)')
-})
+  res.json('👋 Howdy from the server :)');
+});
 
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
-})
+const port = Number(process.env.SERVER_PORT) || 3002;
+
+const startServer = async () => {
+  await initializeDatabase();
+
+  app.listen(port, () => {
+    console.log(`➜ 🎸 Server is listening on port: ${port}`);
+  });
+};
+
+startServer().catch(console.error);

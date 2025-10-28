@@ -1,0 +1,9 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  &__button {
+    width: auto;
+    align-self: center;
+  }
+}

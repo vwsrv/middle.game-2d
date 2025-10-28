@@ -1,0 +1,28 @@
+# Исключаем серверную часть
+packages/server/
+
+# Исключаем node_modules
+node_modules/
+packages/*/node_modules/
+
+# Исключаем временные файлы
+packages/*/dist/
+packages/*/build/
+*.log
+
+# Исключаем Docker файлы
+Dockerfile*
+docker-compose.yml
+
+# Исключаем документацию
+README.md
+TEAM_README.md
+*.md
+
+# Исключаем git
+.git/
+.github/
+
+# Исключаем lock файлы (Vercel сам их создаст)
+yarn.lock
+package-lock.json

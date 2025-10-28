@@ -1,1 +1,1 @@
-export * from './game-board'
+export * from './header';

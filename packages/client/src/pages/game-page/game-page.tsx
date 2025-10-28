@@ -1,10 +1,10 @@
-import { GameBoard } from '@/widgets'
+import './game-page.scss';
+import { AppleWormGame } from '@/features/game';
+import { GameFooter } from '@/features/game/ui/game-footer/game-footer';
 
-export function GamePage() {
-  return (
-    <div>
-      GamePage Component
-      <GameBoard />
-    </div>
-  )
-}
+export const GamePage = () => (
+  <div className="game-page-container">
+    <AppleWormGame />
+    <GameFooter />
+  </div>
+);

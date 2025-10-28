@@ -6,22 +6,36 @@ import {
   ForumPage,
   MainPage,
   LeaderBoardPage,
-} from '@/pages'
-import { RouteObject } from 'react-router-dom'
-import { ProtectedRoute } from './protected-route'
-import { PublicOnlyRoute } from './public-only-route'
-import { EPages } from '@/shared/constants/paths'
+  RegisterPage,
+  ProfilePage,
+  ChangePasswordPage,
+  EditProfilePage,
+  ProfileLayout,
+} from '@/pages';
+import { RouteObject } from 'react-router-dom';
+import { ProtectedRoute } from './protected-route';
+import { PublicOnlyRoute } from './public-only-route';
+import { EPages } from '@/shared/constants/paths';
+import { Suspense } from 'react';
+import { Spin } from 'antd';
+import AppSpinner from '@/shared/ui/app-spinner/app-spinner';
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <MainPage />,
+    element: (
+      <Suspense fallback={<AppSpinner />}>
+        <MainPage />
+      </Suspense>
+    ),
   },
   {
     path: `/${EPages.LOGIN_PAGE}`,
     element: (
       <PublicOnlyRoute>
-        <LoginPage />
+        <Suspense fallback={<AppSpinner />}>
+          <LoginPage />
+        </Suspense>
       </PublicOnlyRoute>
     ),
   },
@@ -29,7 +43,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.REGISTER_PAGE}`,
     element: (
       <PublicOnlyRoute>
-        <LoginPage />
+        <Suspense fallback={<AppSpinner />}>
+          <RegisterPage />
+        </Suspense>
       </PublicOnlyRoute>
     ),
   },
@@ -37,15 +53,55 @@ export const routes: RouteObject[] = [
     path: `/${EPages.PROFILE_PAGE}`,
     element: (
       <ProtectedRoute>
-        <LoginPage />
+        <Suspense fallback={<Spin size="large" style={{ margin: '20%' }} />}>
+          <ProfileLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<AppSpinner />}>
+            <ProfilePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: EPages.CHANGE_PASSWORD_PAGE,
+        element: (
+          <Suspense fallback={<AppSpinner />}>
+            <ChangePasswordPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: EPages.EDIT_PROFILE_PAGE,
+        element: (
+          <Suspense fallback={<AppSpinner />}>
+            <EditProfilePage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: `/${EPages.GAME_PAGE}`,
     element: (
       <ProtectedRoute>
-        <GamePage />
+        <Suspense fallback={<AppSpinner />}>
+          <GamePage />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: `/${EPages.APPLE_WORN_GAME_PAGE}`,
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<AppSpinner />}>
+          <GamePage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -53,7 +109,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.FORUM_PAGE}`,
     element: (
       <ProtectedRoute>
-        <ForumPage />
+        <Suspense fallback={<AppSpinner />}>
+          <ForumPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -61,7 +119,9 @@ export const routes: RouteObject[] = [
     path: `/${EPages.LEADER_BOARD_PAGE}`,
     element: (
       <ProtectedRoute>
-        <LeaderBoardPage />
+        <Suspense fallback={<AppSpinner />}>
+          <LeaderBoardPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -74,7 +134,7 @@ export const routes: RouteObject[] = [
     element: <ServerErrorPage />,
   },
   {
-    path: '*', // Любой несуществующий путь → 404
+    path: '*',
     element: <NotFoundErrorPage />,
   },
-]
+];

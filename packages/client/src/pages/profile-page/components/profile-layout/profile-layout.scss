@@ -1,0 +1,8 @@
+@use '@/styles/_mixins.scss' as *;
+
+.profile-layout-container {
+  @include main-background;
+  
+  position: relative;
+  height: 100vh;
+}

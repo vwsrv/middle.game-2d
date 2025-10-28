@@ -1,0 +1,14 @@
+.not-found-error-container {
+  position: relative;
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100vh;
+  background-image: url('./assets/404.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: var(--game-primary-bg);
+
+  animation: fadeIn 1.5s ease-out;
+}

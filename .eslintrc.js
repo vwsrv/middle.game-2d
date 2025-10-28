@@ -16,10 +16,32 @@ module.exports = {
   plugins: ['@typescript-eslint', 'filenames'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
-    
-    // Kebab-case для файлов (только предупреждения)
-    'filenames/match-regex': [1, '^[a-z][a-z0-9-]*[a-z0-9]$', true],
+
+    'comma-dangle': ['error', 'always-multiline'],
+
     'filenames/match-exported': [1, 'kebab'],
+    
+     // Правила для иммутабельности (предупреждения)
+    'no-param-reassign': ['warn', { 
+      props: true,
+      ignorePropertyModificationsFor: [
+        'acc', // для reduce accumulator
+        'accumulator', 
+        'e', // для событий
+        'ctx', // для контекста
+        'req', // для Express requests
+        'request', 
+        'res', // для Express responses
+        'response'
+      ]
+    }],
+    'prefer-const': 'warn',
+    'no-var': 'error',
   },
-  ignorePatterns: ['packages/*/dist/', 'node_modules/', '*.js.map', '*.d.ts.map'],
-}
+  ignorePatterns: [
+    'packages/*/dist/',
+    'node_modules/',
+    '*.js.map',
+    '*.d.ts.map',
+  ],
+};

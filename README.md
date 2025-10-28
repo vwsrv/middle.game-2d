@@ -1,7 +1,55 @@
 # Middle Game 2D
+---
+## Ссылка на обзор по проделанной работе в 5 - 6 спринтах: https://drive.google.com/file/d/1iZnuMBhSgFAG401tFStqKbTNVO9rHMm4/view?usp=sharing
+## Ссылка на обзор по проделанной работе в 7 - 8 спринтах: https://disk.yandex.ru/d/1v-XcHOl30EGNQ
+
 
 ## Preview: https://clck.ru/3NcJKR
+---
+### Установка и запуск
 
+1. **Клонируйте репозиторий**
+   ```bash
+   git clone <repository-url>
+   cd middle.game-2d
+   ```
+
+2. **Установите зависимости** (обязательный шаг!)
+   ```bash
+   yarn bootstrap
+   ```
+
+3. **Запустите проект**
+   ```bash
+   yarn dev
+   ```
+
+### Дополнительные команды
+
+```bash
+# Запуск только клиента
+yarn dev --scope=client
+
+# Запуск только сервера
+yarn dev --scope=server
+
+# Запуск тестов
+yarn test
+
+# Линтинг
+yarn lint
+
+# Форматирование кода
+yarn format
+
+# Сборка для production
+yarn build
+
+# Предварительный просмотр
+yarn preview --scope=client
+yarn preview --scope=server
+```
+---
 ## Алиасы (Path Mapping)
 
 Проект поддерживает алиасы для удобства импорта модулей.
@@ -116,50 +164,6 @@ packages/
 - **Docker** (для production)
 - **Yarn** (рекомендуется)
 
-### Установка и запуск
-
-1. **Клонируйте репозиторий**
-   ```bash
-   git clone <repository-url>
-   cd middle.game-2d
-   ```
-
-2. **Установите зависимости** (обязательный шаг!)
-   ```bash
-   yarn bootstrap
-   ```
-
-3. **Запустите проект**
-   ```bash
-   yarn dev
-   ```
-
-### Дополнительные команды
-
-```bash
-# Запуск только клиента
-yarn dev --scope=client
-
-# Запуск только сервера
-yarn dev --scope=server
-
-# Запуск тестов
-yarn test
-
-# Линтинг
-yarn lint
-
-# Форматирование кода
-yarn format
-
-# Сборка для production
-yarn build
-
-# Предварительный просмотр
-yarn preview --scope=client
-yarn preview --scope=server
-```
-
 ## 📦 Управление зависимостями
 
 Проект использует монорепозиторий на основе Lerna:
@@ -211,13 +215,28 @@ yarn test
 ### Production в Docker
 
 Перед первым запуском выполните:
+Это необходимо для создания файла конфигурации на вашем локальном компьютере.
 ```bash
+
 node init.js
 ```
 
 Запуск всех сервисов:
+Для запуска нужно быть в папке `docker`
+`cd docker`
+
 ```bash
-docker compose up
+  # Сборка и запуск
+  docker-compose up --build
+
+  # Запуск в фоновом режиме
+  docker-compose up -d
+
+  # Остановка
+  docker-compose down
+
+  # Остановка с удалением volumes
+  docker-compose down -v
 ```
 
 Сервисы:

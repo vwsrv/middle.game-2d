@@ -1,11 +1,27 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import '../styles/index.scss'
-import { RouterProvider } from 'react-router-dom'
-import { router } from './router'
+import { FC, Suspense } from 'react';
+import '../styles/index.scss';
+import { RouterProvider, RouterProviderProps } from 'react-router-dom';
+import { useRouter } from './router/use-router';
+import { AppProviders } from './providers/app-providers';
+import { createClientConfig } from '@/shared/utils/ssr-config';
+import AppSpinner from '@/shared/ui/app-spinner/app-spinner';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-)
+const App: FC = () => {
+  const { router } = useRouter();
+  const ssrConfig = createClientConfig();
+
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <AppSpinner />
+        </div>
+      }>
+      <AppProviders config={ssrConfig}>
+        <RouterProvider router={router as RouterProviderProps['router']} />
+      </AppProviders>
+    </Suspense>
+  );
+};
+
+export default App;

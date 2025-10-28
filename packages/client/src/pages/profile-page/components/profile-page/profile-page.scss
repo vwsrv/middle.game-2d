@@ -1,0 +1,41 @@
+@use '@/styles/_mixins.scss' as *;
+
+
+.profile-content {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
+  width: min-content;
+
+  @include sm {
+    flex-wrap: wrap;
+  }
+}
+
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: 1.5rem;
+}
+
+
+.profile {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    justify-content: space-around;
+    margin-bottom: 30px;
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,47 @@
+import { FC, ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import ErrorBoundary from '@/shared/ui/error-boundary/error-boundary';
+import AppAi18NextProvider from '@/app/providers/app-ai18-next/app-ai-18-next.provider';
+import { ServiceWorkerProvider } from '@/app/providers/servce-worker';
+import { ThemeProvider } from './theme-provider/theme-provider';
+import { SSRProvider } from '@/shared/contexts/ssr-context';
+import { SSRConfig } from '@/shared/contexts/ssr-context';
+import global_store, { persistor } from '@/shared/global-store/global-store';
+import { QueryProvider } from './app-query-provider';
+import { PersistGate } from 'redux-persist/integration/react';
+
+interface AppProvidersProps {
+  children: ReactNode;
+  config?: SSRConfig;
+}
+
+export const AppProviders: FC<AppProvidersProps> = ({ children, config }) => {
+  return (
+    <ErrorBoundary>
+      <QueryProvider>
+        <ServiceWorkerProvider>
+          <SSRProvider
+            config={
+              config || {
+                isServer: false,
+                isDarkMode: false,
+                isMobile: false,
+                language: 'ru',
+                currentYear: new Date().getFullYear(),
+              }
+            }>
+            <ThemeProvider>
+              <Provider store={global_store}>
+                <PersistGate
+                  loading={<div>Loading...</div>}
+                  persistor={persistor}>
+                  <AppAi18NextProvider>{children}</AppAi18NextProvider>
+                </PersistGate>
+              </Provider>
+            </ThemeProvider>
+          </SSRProvider>
+        </ServiceWorkerProvider>
+      </QueryProvider>
+    </ErrorBoundary>
+  );
+};

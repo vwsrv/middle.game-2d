@@ -1,0 +1,23 @@
+@use '@/styles/_variables.scss' as *;
+@use '@/styles/_mixins.scss' as *;
+
+.item {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  gap: 3rem;
+	border-block-end: var(--border);
+
+  &__label {
+    display: flex;
+    gap: 0.3rem;
+    white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  &__value {
+    white-space: nowrap;
+  }
+}
