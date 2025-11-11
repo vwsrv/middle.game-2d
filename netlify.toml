@@ -1,8 +1,12 @@
 [build]
-  # Команда установки зависимостей для монорепозитория
-  command = "yarn install && lerna bootstrap && lerna run build --scope=client"
+  # Базовая директория - корень репозитория
+  base = "."
   
-  # Директория с собранным приложением
+  # Команда установки зависимостей и сборки для монорепозитория
+  # yarn workspaces автоматически установит зависимости для всех пакетов
+  command = "yarn install && yarn lerna run build --scope=client"
+  
+  # Директория с собранным приложением (относительно корня репозитория)
   publish = "packages/client/dist/client"
   
   # Функции Netlify (если понадобятся в будущем)
