@@ -1,0 +1,45 @@
+[build]
+  # Команда установки зависимостей для монорепозитория
+  command = "yarn install && lerna bootstrap && lerna run build --scope=client"
+  
+  # Директория с собранным приложением
+  publish = "packages/client/dist/client"
+  
+  # Функции Netlify (если понадобятся в будущем)
+  functions = "netlify/functions"
+
+# Настройки для обработки SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Настройки заголовков для безопасности и производительности
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Переменные окружения (можно настроить в панели Netlify)
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--legacy-peer-deps"
+
